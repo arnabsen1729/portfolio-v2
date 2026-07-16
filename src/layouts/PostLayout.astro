@@ -1,0 +1,89 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
+import TagPill from '@/components/TagPill.astro';
+import { readingTime } from '@/utils/readingTime';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  title: string;
+  dek?: string;
+  date: Date;
+  tags: string[];
+  headings: Heading[];
+  body: string;
+  readingTimeOverride?: number;
+  ogImage?: string;
+  numberedSections?: boolean;
+}
+
+const { title, dek, date, tags, headings, body, readingTimeOverride, ogImage, numberedSections = false } =
+  Astro.props;
+
+const minutes = readingTime(body, readingTimeOverride);
+const dateLabel = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={dek} ogImage={ogImage}>
+  <div id="reading-progress"></div>
+  <div class="page-grid post-page">
+    <article class="content">
+      <header class="post-header">
+        <h1>{title}</h1>
+        {dek && <p class="post-dek">{dek}</p>}
+        <div class="post-card-meta">
+          <span class="meta">{dateLabel} · {minutes} min read</span>
+          {tags.map((tag) => <TagPill tag={tag} />)}
+        </div>
+      </header>
+      <div class:list={['post-content', { 'numbered-sections': numberedSections }]}>
+        <slot />
+      </div>
+    </article>
+    <aside class="rail">
+      <TableOfContents headings={headings} />
+    </aside>
+  </div>
+</BaseLayout>
+
+<script>
+  function initReadingProgress() {
+    const bar = document.getElementById('reading-progress');
+    if (!bar) return;
+    const onScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+  initReadingProgress();
+  document.addEventListener('astro:after-swap', initReadingProgress);
+</script>
+
+<style>
+  .post-dek {
+    font-size: 1.15rem;
+    color: var(--ink-soft);
+    margin: 0.25em 0 1em;
+  }
+  .post-header {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 1.5rem;
+  }
+  .post-content :global(p) {
+    margin: 1.25em 0;
+  }
+</style>

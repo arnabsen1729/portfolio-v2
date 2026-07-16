@@ -1,0 +1,52 @@
+---
+title: 'Why the Halting Problem Still Bites'
+dek: 'A short, hopefully honest walk through the diagonalization argument, and where it shows up in tools you use.'
+date: 2026-05-18
+tags: ['cs-theory', 'math']
+numberedSections: true
+---
+
+import Sidenote from '@/components/Sidenote.astro';
+
+Most engineers can recite "the halting problem is undecidable" without ever
+having sat with the proof. It's short enough that it's worth doing once.
+
+## The claim
+
+There is no program $H(P, x)$ that, given the source of a program $P$ and an
+input $x$, always correctly decides whether $P$ halts on $x$.
+
+## The construction
+
+Suppose such an $H$ existed. Build a new program $D$ that takes a program $P$
+as input, and does the opposite of what $H$ predicts about $P$ run on
+itself<Sidenote>This self-application step is the whole trick — it's the same
+move Cantor used to show the reals are uncountable.</Sidenote>:
+
+$$
+D(P) = \begin{cases}
+\text{loop forever} & \text{if } H(P, P) = \text{halts} \\
+\text{halt} & \text{if } H(P, P) = \text{loops}
+\end{cases}
+$$
+
+Now ask what $D(D)$ does.
+
+- If $H(D, D)$ says "halts," then by definition $D(D)$ loops forever — contradiction.
+- If $H(D, D)$ says "loops," then by definition $D(D)$ halts — contradiction.
+
+Either way $H$ was wrong about at least one input. So no such $H$ can exist
+for all programs and inputs.
+
+## Where this actually shows up
+
+It's not just a theory-class party trick. Compilers can't always prove your
+loop terminates; static analyzers hit this constantly and fall back to
+heuristics or bounded checking<Sidenote>This is also why linters and type
+checkers sometimes reject perfectly correct code — some infinite-loop-safe
+proofs are undecidable in the general case, so tools conservatively reject
+anything they can't prove safe.</Sidenote>. Type checkers with sufficiently
+expressive type systems (dependent types included) inherit versions of the
+same limitation. The halting problem isn't really about halting — it's the
+first example of a whole family of undecidable questions about program
+behavior, most of which reduce back to this same diagonalization.

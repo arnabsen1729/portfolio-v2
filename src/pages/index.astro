@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Writing">
+  <div class="simple-page">
+    <h1>Writing</h1>
+    <p class="intro-dek">
+      Notes on distributed systems, CS theory, math, and whatever else is occupying my head this
+      week.
+    </p>
+    <div class="post-list">
+      {
+        posts.map((post) => (
+          <PostCard
+            slug={post.id}
+            title={post.data.title}
+            dek={post.data.dek}
+            date={post.data.date}
+            tags={post.data.tags}
+            body={post.body ?? ''}
+            readingTimeOverride={post.data.readingTimeOverride}
+          />
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .intro-dek {
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+  }
+</style>

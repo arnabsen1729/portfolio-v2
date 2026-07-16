@@ -1,0 +1,33 @@
+---
+import TagPill from './TagPill.astro';
+import { readingTime } from '@/utils/readingTime';
+
+interface Props {
+  slug: string;
+  title: string;
+  dek?: string;
+  date: Date;
+  tags: string[];
+  body: string;
+  readingTimeOverride?: number;
+}
+
+const { slug, title, dek, date, tags, body, readingTimeOverride } = Astro.props;
+const minutes = readingTime(body, readingTimeOverride);
+const dateLabel = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="post-card">
+  <h2 class="post-card-title">
+    <a href={`/blog/${slug}`}>{title}</a>
+  </h2>
+  {dek && <p class="post-card-dek">{dek}</p>}
+  <div class="post-card-meta">
+    <span class="meta">{dateLabel} · {minutes} min read</span>
+    {tags.map((tag) => <TagPill tag={tag} />)}
+  </div>
+</article>

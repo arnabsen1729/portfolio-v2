@@ -1,0 +1,18 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import SearchModal from './SearchModal.astro';
+---
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-title" href="/">Arnab Sen</a>
+    <nav class="site-nav">
+      <a href="/">Writing</a>
+      <a href="/papershelf">Papershelf</a>
+      <a href="/resume">Résumé</a>
+      <a href="/about">About</a>
+      <SearchModal />
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,27 @@
+---
+---
+
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button">
+  <span id="theme-toggle-label">···</span>
+</button>
+
+<script>
+  function updateLabel() {
+    const label = document.getElementById('theme-toggle-label');
+    if (!label) return;
+    label.textContent = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+  }
+
+  function initThemeToggle() {
+    updateLabel();
+    const button = document.getElementById('theme-toggle');
+    button?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateLabel();
+    });
+  }
+
+  initThemeToggle();
+  document.addEventListener('astro:after-swap', initThemeToggle);
+</script>

@@ -1,0 +1,104 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+// Edit this to reflect your actual background. Also drop a matching PDF at
+// public/resume.pdf so the download link below works.
+const experience = [
+  {
+    role: 'Software Engineer',
+    org: 'Your Company',
+    dates: '2023 — Present',
+    bullets: [
+      'One line describing a concrete, quantified accomplishment.',
+      'Another line — systems you built, scale you operated at.',
+    ],
+  },
+];
+
+const education = [{ school: 'Your University', degree: 'B.S. Computer Science', dates: '2019 — 2023' }];
+---
+
+<BaseLayout title="Résumé" description="Arnab Sen's résumé.">
+  <div class="simple-page">
+    <div class="resume-header">
+      <h1>Résumé</h1>
+      <a class="download-link" href="/resume.pdf" download>Download PDF ↓</a>
+    </div>
+
+    <section>
+      <h2>Experience</h2>
+      {
+        experience.map((job) => (
+          <div class="resume-entry">
+            <div class="resume-entry-head">
+              <strong>{job.role}</strong> · {job.org}
+              <span class="meta resume-dates">{job.dates}</span>
+            </div>
+            <ul>
+              {job.bullets.map((b) => (
+                <li>{b}</li>
+              ))}
+            </ul>
+          </div>
+        )
+        )
+      }
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      {
+        education.map((ed) => (
+          <div class="resume-entry">
+            <div class="resume-entry-head">
+              <strong>{ed.school}</strong> · {ed.degree}
+              <span class="meta resume-dates">{ed.dates}</span>
+            </div>
+          </div>
+        ))
+      }
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .resume-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .download-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 0.4em 0.9em;
+    color: var(--ink-soft);
+  }
+  .download-link:hover {
+    border-color: var(--oxblood);
+    color: var(--oxblood);
+  }
+  section {
+    margin-top: 2.5rem;
+  }
+  .resume-entry {
+    margin: 1.25em 0;
+  }
+  .resume-entry-head {
+    display: flex;
+    gap: 0.5em;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .resume-dates {
+    margin-left: auto;
+  }
+  ul {
+    margin: 0.5em 0 0;
+    padding-left: 1.25em;
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  items.length > 0 && (
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ul style="list-style: none; margin: 0; padding: 0;">
+        {items.map((h) => (
+          <li>
+            <a href={`#${h.slug}`} class={h.depth === 3 ? 'toc-h3' : ''} data-toc-link>
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  function initTocScrollSpy() {
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+    if (links.length === 0) return;
+
+    const targets = links
+      .map((link) => {
+        const id = link.getAttribute('href')?.slice(1);
+        return id ? document.getElementById(id) : null;
+      })
+      .filter((el): el is HTMLElement => el !== null);
+
+    const setActive = (id: string) => {
+      links.forEach((link) => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      },
+      { rootMargin: '0px 0px -70% 0px', threshold: 0 },
+    );
+
+    targets.forEach((el) => observer.observe(el));
+  }
+
+  initTocScrollSpy();
+  document.addEventListener('astro:after-swap', initTocScrollSpy);
+</script>
