@@ -1,0 +1,84 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import Pagination from '@/components/Pagination.astro';
+import { introCopy } from '@/content/site';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return paginate(posts, { pageSize: 5 });
+}) satisfies GetStaticPaths;
+
+interface Props {
+  page: Page<CollectionEntry<'blog'>>;
+}
+
+const { page } = Astro.props as Props;
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Arnab Sen">
+  <div class="simple-page">
+    <section class="intro">
+      {introCopy.map((paragraph) => <p>{paragraph}</p>)}
+      <div class="key-links">
+        <a href="https://github.com/arnabsen" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={`${base}resume`}>Résumé</a>
+        <a href="mailto:hello@arnabsen.dev">Email</a>
+        <a href={`${base}rss.xml`}>RSS</a>
+      </div>
+    </section>
+
+    <div class="post-list">
+      {
+        page.data.map((post) => (
+          <PostCard
+            slug={post.id}
+            title={post.data.title}
+            dek={post.data.dek}
+            date={post.data.date}
+            tags={post.data.tags}
+            body={post.body ?? ''}
+            readingTimeOverride={post.data.readingTimeOverride}
+            variant="compact"
+          />
+        ))
+      }
+    </div>
+
+    <Pagination
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+      currentPage={page.currentPage}
+      lastPage={page.lastPage}
+    />
+  </div>
+</BaseLayout>
+
+<style>
+  .intro {
+    margin-bottom: 2.5rem;
+  }
+  .intro p {
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+  }
+  .key-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    margin-top: 1.25rem;
+  }
+  .key-links a {
+    color: var(--oxblood);
+    text-decoration: none;
+  }
+  .key-links a:hover {
+    text-decoration: underline;
+  }
+</style>

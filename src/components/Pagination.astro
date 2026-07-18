@@ -1,0 +1,58 @@
+---
+interface Props {
+  prevUrl?: string;
+  nextUrl?: string;
+  currentPage: number;
+  lastPage: number;
+}
+
+const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
+---
+
+<nav class="pagination" aria-label="Pagination">
+  {
+    prevUrl ? (
+      <a class="pagination-link" href={prevUrl}>
+        ← Newer posts
+      </a>
+    ) : (
+      <span class="pagination-link is-disabled">← Newer posts</span>
+    )
+  }
+  <span class="meta pagination-count">
+    Page {currentPage} of {lastPage}
+  </span>
+  {
+    nextUrl ? (
+      <a class="pagination-link" href={nextUrl}>
+        Older posts →
+      </a>
+    ) : (
+      <span class="pagination-link is-disabled">Older posts →</span>
+    )
+  }
+</nav>
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .pagination-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--oxblood);
+    text-decoration: none;
+  }
+  .pagination-link:hover {
+    text-decoration: underline;
+  }
+  .pagination-link.is-disabled {
+    color: var(--ink-soft);
+    opacity: 0.5;
+  }
+</style>

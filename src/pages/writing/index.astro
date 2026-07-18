@@ -2,9 +2,11 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
+import TagPill from '@/components/TagPill.astro';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const tags = Array.from(new Set(posts.flatMap((post) => post.data.tags))).sort();
 ---
 
 <BaseLayout title="Writing">
@@ -14,6 +16,15 @@ const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueO
       Notes on distributed systems, CS theory, math, and whatever else is occupying my head this
       week.
     </p>
+    {
+      tags.length > 0 && (
+        <div class="tag-filter">
+          {tags.map((tag) => (
+            <TagPill tag={tag} />
+          ))}
+        </div>
+      )
+    }
     <div class="post-list">
       {
         posts.map((post) => (
@@ -36,6 +47,12 @@ const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueO
   .intro-dek {
     color: var(--ink-soft);
     font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  .tag-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
     margin-bottom: 2.5rem;
   }
 </style>

@@ -14,9 +14,9 @@ dependencies:
   '@astrojs/sitemap':
     specifier: ^3.2.1
     version: 3.7.3
-  '@fontsource-variable/source-serif-4':
-    specifier: ^5.2.9
-    version: 5.2.9
+  '@fontsource-variable/ibm-plex-sans':
+    specifier: ^5.2.8
+    version: 5.2.8
   '@fontsource/ibm-plex-mono':
     specifier: ^5.2.7
     version: 5.2.7
@@ -754,8 +754,8 @@ packages:
     dev: false
     optional: true
 
-  /@fontsource-variable/source-serif-4@5.2.9:
-    resolution: {integrity: sha512-PPcxjLFk/fS0WHg79pDM2YNvz61kC+oYZ5cWZZyCS0DHpJncmuYOuiZAsvj4tDxlWPBEvxxcRLQQNmSaRbPkqw==}
+  /@fontsource-variable/ibm-plex-sans@5.2.8:
+    resolution: {integrity: sha512-n5PF2iFa0CZT0QYTPzxvZ39opC9LnU0zdoRccoADbs+Dtsd+lbXOZF7RNuIPHcQX1dKjF63sxnRImQIB5eD0Ag==}
     dev: false
 
   /@fontsource/ibm-plex-mono@5.2.7:

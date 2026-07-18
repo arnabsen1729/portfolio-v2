@@ -54,6 +54,14 @@ const base = import.meta.env.BASE_URL;
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         openDialog();
+        return;
+      }
+      if (e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        const target = e.target as HTMLElement | null;
+        const tag = target?.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || target?.isContentEditable) return;
+        e.preventDefault();
+        openDialog();
       }
     });
   }

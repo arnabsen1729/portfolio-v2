@@ -3,14 +3,19 @@ import { getCollection, render } from 'astro:content';
 import PostLayout from '@/layouts/PostLayout.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map((post) => ({
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  return posts.map((post, index) => ({
     params: { slug: post.id },
-    props: { post },
+    props: {
+      post,
+      newerPost: index > 0 ? posts[index - 1] : undefined,
+      olderPost: index < posts.length - 1 ? posts[index + 1] : undefined,
+    },
   }));
 }
 
-const { post } = Astro.props;
+const { post, newerPost, olderPost } = Astro.props;
 const { Content, headings } = await render(post);
 ---
 
@@ -24,6 +29,8 @@ const { Content, headings } = await render(post);
   readingTimeOverride={post.data.readingTimeOverride}
   ogImage={post.data.ogImage ?? `${import.meta.env.BASE_URL}og/${post.id}.png`}
   numberedSections={post.data.numberedSections}
+  newerPost={newerPost && { slug: newerPost.id, title: newerPost.data.title }}
+  olderPost={olderPost && { slug: olderPost.id, title: olderPost.data.title }}
 >
   <Content />
 </PostLayout>

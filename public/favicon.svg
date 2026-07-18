@@ -1,4 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#8C2F26"/>
-  <text x="16" y="22" font-family="Georgia, serif" font-size="18" fill="#FBFAF7" text-anchor="middle">A</text>
+  <style>
+    .bg { fill: #FBFAF7; }
+    .mark { fill: #8C2F26; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #14161B; }
+      .mark { fill: #D9776A; }
+    }
+  </style>
+  <rect class="bg" width="32" height="32" rx="6" />
+  <text
+    class="mark"
+    x="16"
+    y="22"
+    font-family="'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif"
+    font-weight="700"
+    font-size="17"
+    text-anchor="middle"
+  >A</text>
 </svg>

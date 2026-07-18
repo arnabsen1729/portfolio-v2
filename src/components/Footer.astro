@@ -1,13 +1,40 @@
 ---
+import Icon from './icons/Icon.astro';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="site-footer-inner">
     <span class="meta">© {year} Arnab Sen</span>
-    <nav class="site-nav">
-      <a href={`${import.meta.env.BASE_URL}rss.xml`}>RSS</a>
-      <a href="https://github.com/arnabsen" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <nav class="site-nav footer-icons">
+      <a href={`${import.meta.env.BASE_URL}rss.xml`} title="RSS" aria-label="RSS feed">
+        <Icon name="rss" size={18} />
+      </a>
+      <a
+        href="https://github.com/arnabsen"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="GitHub"
+        aria-label="GitHub"
+      >
+        <Icon name="github" size={18} />
+      </a>
+      <a href="mailto:hello@arnabsen.dev" title="Email" aria-label="Email">
+        <Icon name="mail" size={18} />
+      </a>
     </nav>
   </div>
 </footer>
+
+<style>
+  .footer-icons {
+    gap: 1rem;
+  }
+  .footer-icons a {
+    display: inline-flex;
+    color: var(--ink-soft);
+  }
+  .footer-icons a:hover {
+    color: var(--oxblood);
+  }
+</style>

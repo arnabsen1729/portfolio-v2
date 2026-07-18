@@ -1,5 +1,6 @@
 ---
 import TagPill from './TagPill.astro';
+import Icon from './icons/Icon.astro';
 import { readingTime } from '@/utils/readingTime';
 
 interface Props {
@@ -10,9 +11,19 @@ interface Props {
   tags: string[];
   body: string;
   readingTimeOverride?: number;
+  variant?: 'full' | 'compact';
 }
 
-const { slug, title, dek, date, tags, body, readingTimeOverride } = Astro.props;
+const {
+  slug,
+  title,
+  dek,
+  date,
+  tags,
+  body,
+  readingTimeOverride,
+  variant = 'full',
+} = Astro.props;
 const minutes = readingTime(body, readingTimeOverride);
 const dateLabel = date.toLocaleDateString('en-US', {
   year: 'numeric',
@@ -26,8 +37,28 @@ const dateLabel = date.toLocaleDateString('en-US', {
     <a href={`${import.meta.env.BASE_URL}blog/${slug}`}>{title}</a>
   </h2>
   {dek && <p class="post-card-dek">{dek}</p>}
-  <div class="post-card-meta">
-    <span class="meta">{dateLabel} · {minutes} min read</span>
-    {tags.map((tag) => <TagPill tag={tag} />)}
-  </div>
+  {
+    variant === 'full' && (
+      <div class="post-card-meta">
+        <span class="meta post-card-meta-item">
+          <Icon name="calendar" size={13} />
+          {dateLabel}
+        </span>
+        <span class="meta post-card-meta-item">
+          <Icon name="clock" size={13} />
+          {minutes} min read
+        </span>
+        {tags.map((tag) => <TagPill tag={tag} />)}
+      </div>
+    )
+  }
 </article>
+
+<style>
+  .post-card-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    color: var(--ink-soft);
+  }
+</style>
