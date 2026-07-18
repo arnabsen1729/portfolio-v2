@@ -22,7 +22,7 @@ const { Content, headings } = await render(post);
   headings={headings}
   body={post.body ?? ''}
   readingTimeOverride={post.data.readingTimeOverride}
-  ogImage={post.data.ogImage ?? `/og/${post.id}.png`}
+  ogImage={post.data.ogImage ?? `${import.meta.env.BASE_URL}og/${post.id}.png`}
   numberedSections={post.data.numberedSections}
 >
   <Content />

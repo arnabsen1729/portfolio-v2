@@ -9,12 +9,12 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Arnab Sen',
     description: 'Writing on distributed systems, CS theory, math, and other things.',
-    site: context.site ?? 'https://arnabsen.dev',
+    site: context.site!,
     items: sorted.map((post) => ({
       title: post.data.title,
       description: post.data.dek ?? '',
       pubDate: post.data.date,
-      link: `/blog/${post.id}/`,
+      link: `${import.meta.env.BASE_URL}blog/${post.id}/`,
     })),
   });
 }

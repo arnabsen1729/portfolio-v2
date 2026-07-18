@@ -1,4 +1,5 @@
 ---
+const base = import.meta.env.BASE_URL;
 ---
 
 <button class="search-trigger" id="search-trigger" type="button" aria-label="Search">
@@ -25,7 +26,7 @@
       // import) since the file doesn't exist at Vite build time.
       return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = '/pagefind/pagefind-ui.js';
+        script.src = `${import.meta.env.BASE_URL}pagefind/pagefind-ui.js`;
         script.onload = () => {
           const PagefindUI = (window as any).PagefindUI;
           if (PagefindUI) {
@@ -61,7 +62,7 @@
   document.addEventListener('astro:after-swap', initSearch);
 </script>
 
-<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<link rel="stylesheet" href={`${base}pagefind/pagefind-ui.css`} />
 
 <style>
   .search-trigger {

@@ -5,4 +5,4 @@ interface Props {
 const { tag } = Astro.props;
 ---
 
-<a class="tag-pill" href={`/tags/${tag}`}>{tag}</a>
+<a class="tag-pill" href={`${import.meta.env.BASE_URL}tags/${tag}`}>{tag}</a>
