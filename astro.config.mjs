@@ -42,6 +42,11 @@ export default defineConfig({
         light: 'github-light',
         dark: 'github-dark',
       },
+      // Dual themes default to a `prefers-color-scheme` media query, which
+      // ignores this site's manual `html.dark` class toggle. Disabling the
+      // default color lets global.css switch the --shiki-* vars off the
+      // class instead (see "Code blocks" in global.css).
+      defaultColor: false,
     },
   },
 });

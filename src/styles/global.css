@@ -222,22 +222,60 @@ code {
   font-size: 0.88em;
 }
 
+/* Shiki dual-theme output ships `defaultColor: false`, so tokens carry
+   --shiki-light/--shiki-dark custom props but no active color by default.
+   Wire the dark set to our manual `.dark` class toggle instead of the
+   `prefers-color-scheme` media query Shiki defaults to. */
+.astro-code,
+.astro-code span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg) !important;
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+html.dark .astro-code,
+html.dark .astro-code span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+
 .copy-button {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
   background: var(--paper);
   border: 1px solid var(--hairline);
   border-radius: 4px;
-  padding: 0.25em 0.6em;
+  padding: 0;
   cursor: pointer;
   color: var(--ink-soft);
 }
 .copy-button:hover {
   border-color: var(--slate);
   color: var(--ink);
+}
+.copy-button svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.copy-button .icon-check {
+  display: none;
+  color: var(--oxblood);
+}
+.copy-button.copied .icon-copy {
+  display: none;
+}
+.copy-button.copied .icon-check {
+  display: block;
 }
 
 /* ---------- Math ---------- */
@@ -358,6 +396,12 @@ code {
 .site-header,
 .site-footer {
   border-bottom: 1px solid var(--hairline);
+}
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
 }
 .site-footer {
   border-bottom: none;
