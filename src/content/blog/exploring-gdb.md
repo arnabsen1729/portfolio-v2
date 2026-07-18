@@ -1,0 +1,499 @@
+---
+title: 'Exploring GDB'
+dek: 'A hands-on introduction to debugging C/C++ programs with GDB, covering breakpoints, symbol tables, variables, and the call stack.'
+date: 2022-01-31
+tags: ['gdb', 'debugging', 'tutorial']
+---
+
+## Introduction
+
+No matter how big or small the codebase is, errors and bugs are inevitable. So as a developer we should know how to fix them. But, even before fixing an error, we have a more daunting task. Can you guess it? Yes, finding where the error is in the first place.
+
+**Debugging** is the process of detecting and removing existing and potential errors (also called 'bugs') in a software code.
+
+In our day-to-day programming scenarios, we often use the print statements (like `console.log()`) to debug. But imagine this scenario. You are working on a large codebase and compiling the entire code takes like 3-4 mins. Now if you are stuck somewhere and you add a print statement you have to recompile the code. And if you keep doing that repeatedly, you will have to recompile the code every single time you make a change. This is too inefficient and a huge waste of time.
+
+![image.png](/images/blog/exploring-gdb/5u8sv4rce.png)
+
+This is where **Debuggers** come to the rescue. In this article, we will look at **GDB**.
+
+## What is GDB?
+
+**GDB (GNU Debugger)** is a debugger for C and C++.
+
+> GDB allows you to do things like run the program up to a certain point then stop and print out the values of certain variables at that point, or step through the program one line at a time and print out the values of each variable after executing each line.
+
+GDB uses a command-line interface which might be intimidating at first but once you get used to the commands it becomes very easy to use. We will explore some of the basic commands in this article.
+
+Let's start with installing `gdb` first.
+
+## Installing GDB
+
+If you are using Linux, you probably already have gdb, but if you are using Windows, you will need to install it.
+
+Check if you already have gdb installed by running the following command in your terminal:
+
+```bash
+gdb --version # if you are in a Unix based system
+
+c:\mingw\bin\gdb.exe --version # if you are in windows
+```
+
+### Linux
+
+You can install gdb on Debian-based Linux distro (e.g. Ubuntu, Mint, etc) by the following command.
+
+```bash
+sudo apt-get update
+sudo apt-get install gdb
+```
+
+### Windows
+
+If you have MinGW installed then you already have `gdb`. Otherwise, download the latest MinGW installer from [here](https://sourceforge.net/projects/mingw/files/).
+
+- Install MinGW from the installer.
+- Run the "MinGW Installation Manager" (which might be located in `C:\MinGW\libexec\mingw-get\guimain.exe` )
+- Make sure that the `mingw32-gdb` bin package is installed.
+
+After installation is complete, check the version once again with the commands above. Let's get started with debugging a simple program now.
+
+> **NOTE:** GDB is good but it isn't very fancy, so instead you can use [GDB-GEF](https://gef.readthedocs.io/en/master/). It's very easy to install. I will be using GEF throughout this article and you should use it too.
+
+## Starting GDB
+
+To debug we need to have some code. Let's write a simple program to calculate factorial in C.
+
+```c++
+#include <stdio.h>
+
+const int MAX_FACTORIAL = 20;
+
+int factorial(int n) {
+  int res = 1;
+  for (int i = 1; i <= n; i++) {
+    res = res * i;
+  }
+  return res;
+}
+
+int main() {
+  int val;
+  printf("Enter a number: ");
+  scanf("%d", &val);
+  printf("Factorial of %d is %d\n", val, factorial(val));
+  return 0;
+}
+```
+
+Let's compile the code:
+
+```bash
+gcc main.c -o factorial
+```
+
+Now, let's run `gdb` on the binary file `factorial`. We do that by the `gdb program` command.
+
+```bash
+gdb factorial
+```
+
+Do you see some errors like this?
+
+```gdb
+Reading symbols from factorial...
+(No debugging symbols found in factorial)
+```
+
+> To quit gdb press `Ctrl+C`.
+
+This is because to prepare our program for debugging with `gdb`, we must compile it with the `-g` flag. So, let's recompile our program this time with the `-g` flag.
+
+```bash
+gcc -g main.c -o factorial
+gdb factorial
+```
+
+Now, we don't see the error `(No debugging symbols found in factorial)` anymore. So now we can use `gdb` to debug our code.
+
+> What gdb did under the hood is that it automatically loaded the symbol table. We will look into Symbol Table later.
+
+## Breakpoint
+
+A `breakpoint` is a spot in your program where you would like to temporarily stop execution in order to check the values of variables, or to try to find out where the program is crashing, etc. To set a breakpoint you use the `break` command.
+
+> **Remember: ** Almost all the commonly used gdb commands have a shorter version and we should use them heavily to improve speed. 
+
+```h
+break main
+# OR a shorter version
+b main
+```
+
+Output:
+
+```h
+gef➤  b main
+Breakpoint 1 at 0x117f: file main.c, line 15.
+```
+
+This means we have set a breakpoint at the `main` function so that as soon as the instruction pointer reaches the main function it will stop the execution and wait for our commands.
+
+To see the list of all the breakpoints use the command `info break`. As the command name suggests it will give us information about all the breakpoints we have set.
+
+```h
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000000117f in main at main.c:15
+```
+
+There is an index associated with each breakpoint. These index values will be used if you want to delete a breakpoint or disable it. First, let's run the program with the breakpoint set. To run, use the `run` command (or just `r` as a shorter version).
+
+```h
+gef➤  run
+// OR
+gef➤  r
+```
+
+You will see the program execution stopped. Let's just resume the execution with the command `continue` (or just `c`).
+
+```h
+gef➤  c
+Continuing.
+Enter a number: 5
+Factorial of 5 is 120
+[Inferior 1 (process 128334) exited normally]
+```
+
+You will notice it will prompt for the number and then display the factorial of that number and exit normally. Why? Because there were no other breakpoints in our code and execution hence didn't stop anywhere else.
+
+Sometimes, we don't need to stop at a breakpoint so we can disable it. To disable a breakpoint use the `disable` command.
+
+```h
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000000117f in main at main.c:15
+gef➤  disable 1
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep n   0x000000000000117f in main at main.c:15
+```
+
+Once, disabled you can notice the value under `Enb` is not `y` anymore. It's `n` representing it's not enabled anymore. If you run the program now, you will notice that it didn't stop at any place. This is because the breakpoint is disabled.
+
+```h
+gef➤  r
+Starting program: /home/arnab/Desktop/SWE-Lab/ass2/prog/factorial
+Enter a number: 5
+Factorial of 5 is 120
+[Inferior 1 (process 411121) exited normally]
+```
+
+Sometimes, we add a breakpoint to a function inside the loop. And we don't want to stop for every iteration of the loop. In that scenario, we can ignore the breakpoint for a fixed number of times using the `ignore` command. Let's try that. We have a loop in our `factorial()` function. Let's add a breakpoint to the loop.
+
+> **TIP:** You can see the code of a function directly from the gdb terminal using the `list` command. So do `list factorial` and it will display the source code of `factorial()`.
+
+We want to set the breakpoint at line 8 of this `main.c` file. So, we will use the command `b main.c:8`.
+
+```bash
+gef➤  info break  # to list our breakpoints
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep n   0x000000000000117f in main at main.c:15
+gef➤  list factorial # to see the source code
+1 #include <stdio.h>
+2
+3 const int MAX_FACTORIAL = 20;
+4
+5 int factorial(int n) {
+6   int res = 1;
+7   for (int i = 1; i <= n; i++) {
+8     res = res * I;  # <-- breakpoint here
+9   }
+10   return res;
+11 }
+
+gef➤  b main.c:8 # add breakpoint to line 8 of main.c
+Breakpoint 2 at 0x115c: file main.c, line 8.
+gef➤  info break # to check if the breakpoint was added
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep n   0x000000000000117f in main at main.c:15
+2       breakpoint     keep y   0x000000000000115c in factorial at main.c:8
+```
+
+Now, if you run the program with the `r` command. It will prompt you for a number (enter something like 5). You will then see it hits the breakpoint at the `factorial()` function (Remember we disabled the breakpoint at the `main()` function). Type the command `continue` or `c` and it will again hit the same point. Cause not we are now inside a loop. Keep doing this 5 times. Finally, when the loop ends you will notice the factorial result is displayed.
+
+In this scenario, if we want to ignore the breakpoint for the first 4 times maybe. We will use the `ignore <index of breakpoint> 4` command.
+
+```h
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep n   0x000055555555517f in main at main.c:15
+2       breakpoint     keep y   0x000055555555515c in factorial at main.c:8
+ breakpoint already hit 5 times
+gef➤  ignore 2 4
+Will ignore next 4 crossings of breakpoint 2.
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep n   0x000055555555517f in main at main.c:15
+2       breakpoint     keep y   0x000055555555515c in factorial at main.c:8
+ breakpoint already hit 5 times
+ ignore next 4 hits
+```
+
+Let's run the program. This time when it prompts for a number, we will enter 5. After that, it will hit the breakpoint at the `factorial()` function. Press `c` to continue, and the program ends. This is because gdb ignored the breakpoint for the first 4 times and only hit the 5-th time we hit the breakpoint.
+
+Now, let's delete that breakpoint using the command `delete breakpoints <index>`.
+
+```h
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep n   0x000055555555517f in main at main.c:15
+2       breakpoint     keep y   0x000055555555515c in factorial at main.c:8
+ breakpoint already hit 5 times
+gef➤  delete 2
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep n   0x000055555555517f in main at main.c:15
+gef➤  delete 1
+gef➤  info break
+No breakpoints or watchpoints.
+```
+
+## Symbol Table
+
+Have you ever wondered how a compiler remembers which data structure is of which type and so on?
+Well, the answer is **Symbol Table**. It is a data structure used by a compiler to keep track of semantics of variable names like:
+
+- **Data type** of the variable.
+- When is used: **scope** (The effective context where a name is valid).
+- Where it is stored: **storage address**.
+
+In gdb, when you run `gdb factorial` it will load the symbol table. Let's quit the gdb now by pressing `Ctrl+C` or typing `q` and Enter. This time just run `gdb`.
+
+To load a program and its symbol table use the command `file <program>`.
+
+```h
+gef➤  file ./prog/factorial
+Reading symbols from ./prog/factorial...
+```
+
+Now that it has read the symbols, we can interact with them. Run the command `info address <symbol name>` to see the address of that symbol.
+
+```h
+gef➤  info address main
+Symbol "main" is a function at address 0x1177.
+gef➤  info address factorial
+Symbol "factorial" is a function at address 0x1145.
+gef➤  info address MAX_FACTORIAL
+Symbol "MAX_FACTORIAL" is static storage at address 0x2004.
+```
+
+Now since you know the address you can reverse lookup the symbol name with the command `info symbol <address>`.
+
+```h
+gef➤  info symbol 0x1177
+main in section .text
+gef➤  info symbol 0x1145
+factorial in section .text
+```
+
+The best part of this `info symbol` is that if you don't specify the exact address, show the offset from the beginning of the symbol. So in my case, the `main` symbol is at address `0x1177`. So let's try to see what the symbol name of the address `0x1180`.
+
+```h
+gef➤  info symbol 0x1180
+main + 9 in section .text
+```
+
+Now, remember we had a variable called `val` in main. Let's see the address of that.
+
+```h
+gef➤  info address val
+No symbol "val" in current context.
+```
+
+This means we are not in the correct scope yet. Because the variable `val` was declared inside the `main()` function, we cannot access it outside the `main()` function. So let's set a breakpoint at the main and run the program and then we will see the address of `val` in the symbol table.
+
+```h
+gef➤  b main
+Breakpoint 1 at 0x117f: file main.c, line 15.
+gef➤  r
+gef➤  info address val
+Symbol "val" is a complex DWARF expression:
+     0: DW_OP_fbreg -20
+.
+```
+
+To see the **list of all the functions** in the symbol table use the command `info func`. You can also filter the functions with regexes. Let's search for our `factorial` function. The exact regex match will be `^facorial$`.
+
+```h
+gef➤  info func ^factorial$
+All functions matching regular expression "^factorial$":
+
+File main.c:
+5: int factorial(int);
+```
+
+We can do the same for **global variables** using the command `info var`. Let's look for our global variable `MAX_FACTORIAL`.
+
+```h
+gef➤  info var ^MAX_FACTORIAL$
+All variables matching regular expression "^MAX_FACTORIAL$":
+
+File main.c:
+3: const int MAX_FACTORIAL;
+```
+
+The symbol table also stores the type of the variable. We can use the command `whatis <variable name>` to see the type of the variable.
+
+```h
+gef➤  whatis MAX_FACTORIAL
+type = const int
+gef➤  whatis val
+type = int
+```
+
+## Working with Variables
+
+So far we have seen how to set breakpoints, run the program and get the symbol table. Now let's see how to work with variables. Most of the time we don't need all the global variables rather want to see the local variables. For that, we have the command `info locals` which will show us the local variables.
+
+First, let's set a breakpoint after the `scanf` statement (which is line number 17 in main.c file). So run:
+
+```h
+gef➤  b main.c:17
+Breakpoint 2 at 0x11a8: file main.c, line 17.
+```
+
+If the program is not running press `r` (to run) otherwise press `c` (to continue). It will show the prompt `Enter a number:` to which you should type a value and the program will reach another breakpoint.
+
+Now run the command to get the local variables.
+
+```h
+gef➤  info locals
+val = 0xa
+```
+
+It says the value of the variable `val` is `0xa`. We can also print the values with the command `print` (or just `p`).
+
+```h
+gef➤  p val
+$1 = 0xa
+gef➤  p/d val
+$2 = 10
+```
+
+By default, the value will be in hex, but we can specify `/d` to display in decimal. Here are other formats:
+
+| format | description |
+|---|---|
+| x | hexadecimal |
+| d | signed decimal |
+| u | unsigned decimal |
+| o | octal |
+| t | binary |
+| a | address, absolute and relative |
+| c | character |
+| f | floating-point |
+
+We can also set the variable values, using the `set variable` command.
+
+```h
+gef➤  set variable val=5
+gef➤  p/d val
+$3 = 5
+```
+
+## Functions
+
+Functions play an important role in programs. So, let's see how gdb handles them. In our code, we have two functions `main` and `factorial`. So, let's start with setting a breakpoint at `main`.
+
+```h
+gef➤  b main
+Breakpoint 1 at 0x117f: file main.c, line 15.
+gef➤  info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000000117f in main at main.c:15
+```
+
+Run the program with `r`. GDB will stop execution at the first line of the function `main`. Before moving ahead, let's try to understand the difference between this `next` command and another very similar command called `stepi`.
+
+- `next`: execute next line, including any function calls.
+- `stepi`: step by machine instructions rather than source lines
+
+So, at any point, if we are at a function call, do `si` (step into) to enter the function.
+
+> **TIP :** You can use a count with `next` or `stepi` to perform the command multiple times.
+
+We will perform `next 2` i.e next twice. This time you will be prompted for a number. After that, we will step into the instruction that will take us to the factorial function.
+
+```h
+gef➤  r
+gef➤  n 2 // we will be in that line where factorial is called
+gef➤  si 3 // we will be in the factorial function
+gef➤  n // the first line of the factorial function
+```
+
+> We are doing `si 3` because, `si` steps one instruction at a time, so to go through the function prologue we have to do it thrice.
+
+Now, to see the function arguments we will again use the `info` command. This time with `args`. So perform `info args`.
+
+```h
+gef➤  info args
+n = 0xa
+gef➤  p/d n
+$1 = 10
+```
+
+If you know the name of the function argument then we can use the `print` command to print the value of that argument as well.
+
+## Program Stack
+
+Since, we are inside the function `factorial()` which was called from `main()` so if we return from `factorial()` we will be back in `main()`. For a simple program like this, it's not much of a big deal to remember which function is called by whom. But for a large codebase, it becomes difficult to keep track of it. So we have a command called `backtrace` that shows us exactly this.
+
+```h
+gef➤  backtrace
+#0  factorial (n=0xa) at main.c:6
+#1  0x00005555555551b2 in main () at main.c:17
+```
+
+This very clearly tells us that we left `main()` on line 17 and now we are in `factorial()` on line 6.
+
+## Cheatsheet
+
+| Command | Description |
+|---|---|
+| `gdb program` | to load the symbol table of the program and run the debugger |
+| `break <function name>` | to set a breakpoint at a function |
+| `break *<address>` | to set a breakpoint at a specific address |
+| `info break`|  to see the list of all the breakpoints |
+| `delete break <index>` | to delete a breakpoint |
+| `disable break <index>` | to disable a breakpoint |
+| `ignore <index> <count>` | to ignore a breakpoint for count number of times |
+| `run <arglist>` | start your program with arglist |
+| `continue` | continue the program execution |
+| `next` | to execute the next line, including function calls |
+| `stepi` | to step into the next machine instruction |
+| `info address <symbol-name>` | show where symbol s is stored |
+| `info func <regex>` | show names, types of defined functions (all, or matching regex) |
+| `info var <regex>` | show names, types of global variables (all,or matching regex) |
+| `info locals` | show names, types of local variables |
+| `info args` | show names, types of function arguments |
+| `whatis <expr>` | show data type of expr |
+| `p/<format> <expr>` | print the value of expr in the specified format |
+| `backtrace` | show the call stack |
+
+## Final Notes
+
+Even though there is still a lot more to cover this article should give a basic understanding of how the debugger GDB works. If you are working with a large codebase you will have no option but to use debuggers like GDB. If properly used, these tools make your life a lot easier. 
+
+Also, if you are a CTF player you might have come across Binary Exploitation challenges where again the only way to get the flag is by debugging the code and understanding the binary. There are more to GDB, like looking up the registers, finding a variable in a stack, watchpoints, threads, etc but those will be covered in later articles.
+
+---
+
+I am a college undergrad who is constantly learning. If you have any feedback feel free to put it in the comments. I would really appreciate that. Also, feel free to contact me through any of these social handles (mainly active on Twitter):
+
+- [Twitter @ArnabSen1729](https://twitter.com/ArnabSen1729)
+- [LinkedIn arnabsen1729](https://www.linkedin.com/in/arnabsen1729/)
+- [Github arnabsen1729](https://github.com/arnabsen1729)
+- [Gmail](arnabsen1729@gmail.com)
+- [Peerlist.io](https://peerlist.io/arnabsen)
+- [arnabsen.bio.link](https://arnabsen.bio.link/)

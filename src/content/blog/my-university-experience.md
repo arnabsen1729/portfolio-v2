@@ -1,0 +1,229 @@
+---
+title: 'My University Experience'
+dek: 'A look back at four years of college, from tinkering with Linux and competitive coding to CTFs, open source, a Google internship, and startups.'
+date: 2023-08-21
+tags: ['personal', 'university']
+---
+
+## Intro
+
+> **Heads up:** I initially wrote this blog at the end of my 3rd year, now that I have successfully graduated I figured why not take a stroll down memory lane and spill the beans on my last year too. Unlike my usual techy blogs, this one's more like the adventure of a super curious nerd trying to do it all! 😅
+
+Hi there 👋
+
+![](/images/blog/my-university-experience/e4488a4b-d92e-4add-921c-72f468e9dea7.jpeg)
+
+Let me start with a brief introduction. I am **Arnab Sen**, <s>currently, a </s> **<s>final year undergraduate</s>** <s>at </s> **<s>IIEST Shibpur</s>** <s>pursuing my</s> graduate with **B.Tech** in Computer Science. In this article, I will share my 4 years of experience as an undergrad exploring various technologies. It includes:
+
+1. *What* technologies have I learned? *When? Why? How?* resources that I referred to.
+    
+2. My journey from **CP** → **CTF** → **Open Source** → **Google Intern** → Multiple Startups → Google (presently).
+    
+3. The various communities I am currently a part of. And many more...
+    
+
+## Before Joining College
+
+As a kid, I have always been into computers. I would always tinker with the PC that I got in my 5th standard. And when I say *"tinker"*, I mean breaking stuff by installing pirated games that had a lot of viruses and you know what I mean 🤷‍♂️.
+
+![image.png](/images/blog/my-university-experience/lwe3mnzb2.png)
+
+So, every month or so my dad had to call this Tech guy who would then "format" my PC and install a pirated Windows 7 and charge my dad 500 Rs. At one point, I got pretty frustrated because my dad would restrict my PC usage and at the same time felt a bit sad that he had to pay 500 Rs every time for my misdeeds (to a kid 500 was a lot of money). So I started looking for a free alternative. That's when I came across Linux for the first time.
+
+I remember installing **Ubuntu 14** by myself and I felt like I am going to become the next Bill Gates. To be honest, on the first try, I ended up wiping the entire hard disk. So it was actually after a bunch of tries that I was able to successfully install it. This kind of sparked my interest in computers and I ended up taking CS as my stream in College.
+
+I even wrote another blog sharing my very initial days of programming here (but don't jump there directly, first complete this one and maybe then you can decide if it's worth it).
+
+[https://arnabsen.dev/my-tech-journey#heading-where-it-all-started](https://arnabsen.dev/my-tech-journey#heading-where-it-all-started)
+
+## 1st Year
+
+By this time I had very basic knowledge about **C++** since we had it on our CBSE Boards. And the first thing that I was exposed to was **Competitive Coding**. I practised my **Data Structures and Algorithms** from:
+
+* [MIT 6.006 Introduction To Algorithms](https://www.youtube.com/watch?v=HtSuA80QTyo&list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb&ab_channel=MITOpenCourseWare).
+    
+* [CLRS (The Bible of Algorithms and Data Structures)](http://www.cs.ucf.edu/~sharma/Algorithms_notes.pdf) and its [solutions](https://sites.math.rutgers.edu/~ajl213/CLRS/CLRS.html).
+    
+
+For problem-solving, I used to refer to:
+
+* [Hackerrank](https://www.hackerrank.com/)
+    
+* [Codeforces](https://codeforces.com/)
+    
+* [Codechef](https://www.codechef.com/)
+    
+* [Atcoder](https://atcoder.jp/)
+    
+* [CSES](https://cses.fi/)
+    
+* [Project Euler](https://projecteuler.net/)
+    
+
+My main motive at that time was to prepare for [ICPC](https://icpc.global/) and improve my general coding skills and my knowledge of C++.
+
+By the end of the 1st year, I became pretty good at CP and even reached **Experts** in [Codeforces](https://codeforces.com/profile/arnab1729). But I started losing interest in this field, cause they were mainly about solving abstract problems. I wanted to tackle some real-world problems and came across Cybersecurity.
+
+## 2nd Year
+
+This is when COVID happened, I had a lot of free time to explore. With my interest in CP declining, I wanted to know more about computer internals and its fundamental workings. So I started solving CTF Challenges.
+
+Since not many people may know about this, let me explain CTFs. CTF stands for **Capture The Flag**. You will be given a security challenge, it can be an encrypted text or a vulnerable website. You have to bypass the security or decrypt the ciphertext to get a token which is called the **flag**. Finding the flag wins some points and finally, the team/individual with the most points wins. This category of CTF is called **Jeopardy style**.
+
+There is another style of CTF called **Attack-N-Defense**. Here we have two teams one *Red team* and another *Blue team*. The Red team's job is to break into a machine/system by finding loopholes and security flaws, while the Blue team's job is to fix those loopholes and patch those vulnerabilities before the Red team is able to enter the system.
+
+[https://www.youtube.com/watch?v=Lus7aNf2xDg&ab_channel=LiveOverflow](https://www.youtube.com/watch?v=Lus7aNf2xDg&ab_channel=LiveOverflow)
+
+The reason these CTF challenges intrigued me was that they are based on more real-life scenarios. To solve CTF challenges I had to learn:
+
+* Assembly Language
+    
+* Reversing
+    
+* Binary Exploitation
+    
+* Web Vulnerabilities like CSRF, XSS, SQL Injection
+    
+* Cryptography like RSA, Symmetric and Asymmetric key encryption
+    
+* Computer Networking dealing with network packet capture
+    
+* Steganography, learning how PNGs work, how zip compression works, etc
+    
+* Writing scripts in bash, python, C .etc and many more
+    
+
+My knowledge of computer fundamentals grew and I learned how to use tools like gdb, tcpdump, burpsuite, etc.
+
+With rigorous practice and participating in a bunch of CTF challenges my team (which included me and my friend) ranked **67th in CTFTime** in India.
+
+There are no one-place resources for CTFs cause it is a huge domain. To even understand the vulnerabilities of a particular technology you have to be proficient in that technology first. For example, to understand the weakness of RSA, one needs to know how RSA works and what is the significance of exponent (e) and the primes (p and q).
+
+But these are some of the YouTube channels I followed:
+
+* [LiveOverflow](https://www.youtube.com/c/LiveOverflow)
+    
+* [John Hammond](https://www.youtube.com/c/JohnHammond010)
+    
+* [ippsec](https://www.youtube.com/c/ippsec)
+    
+* [GynvaelEN](https://www.youtube.com/c/GynvaelEN)
+    
+
+However the best way to learn is to participate in the CTF challenges and then read the writeups or have discussions with other teams after the CTF is over.
+
+By the end of 2nd year, I got into a fellowship program called [Pupilfirst Coronasafe Fellowship](https://fullstack.pupilfirst.org/). I was in the top **24 out of 50k** applicants. So, for the rest of the 2nd year, I was learning technologies like *Ruby on Rails*, and **Rescript React** and started my open source journey. As a Pupilfirst Coronasafe Fellow, I contributed to two open source health care projects called [Arike](https://github.com/coronasafe/arike/commits?author=arnabsen1729) and [Life](https://github.com/coronasafe/life/commits?author=arnabsen1729). Through this experience, I learned about:
+
+* Building and **designing** software, the workflow of the applications, and understanding the user experience
+    
+* **Pair programming**, is a cool way to learn and work. [Read more](https://martinfowler.com/articles/on-pair-programming.html).
+    
+* The importance of **networking** and having 1:1s with industry experts
+    
+* **Open-source** best practices
+    
+
+![image.png](/images/blog/my-university-experience/x8kv4zqyo.png)
+
+## 3rd Year
+
+This is when my internship prep started. I got rejected by Microsoft for both Engage program and the on-campus drive. It was a bit disheartening.
+
+But then I came across [Summer of Bitcoin](https://www.summerofbitcoin.org/). It was an open-source opportunity and since I knew open-source won't dishearten me I applied. And guess what? I got selected. I was among the **51 mentees** for the first ever batch of Summer of Bitcoin. My project was to improve support for **User Statically Defined Tracing** (USDT) in [Bitcoin core](https://github.com/bitcoin/bitcoin) by adding new tracepoints and scripts, leveraging **eBPF (extended Berkeley Packet Filter)** technology. But what's more interesting is that during this mentorship, I had to work with:
+
+* C++ (which I did in my *1st year for CP*)
+    
+* gdb for debugging (which I did during my *2nd year for CTFs*)
+    
+* Github and Open Source practices (which I gained from the *coronasafe fellowship experience*)
+    
+
+My point is you might not see a direct advantage of what you are learning right now, but knowledge never goes to waste.
+
+There is this very popular story of **Steve Jobs**. Jobs took a calligraphy class at Reed College based on campus posters he saw after dropping out. He knew the class would earn him no credit towards a degree but he still did it anyway. This knowledge of calligraphy, later on, inspired Jobs during his Apple days to include multiple typefaces in Macintosh.
+
+> "If I had never dropped in on that single course in college, the Mac would have never had multiple typefaces or proportionally spaced fonts. And since Windows just copied the Mac, it's likely that no personal computer would have them." ~ Steve Jobs
+
+The takeaway is **to be curious and keep learning**.
+
+I have shared my Summer of Bitcoin journey in detail in my other blog.
+
+[https://arnabsen.hashnode.dev/my-experience-of-summer-of-bitcoin21](https://arnabsen.hashnode.dev/my-experience-of-summer-of-bitcoin21)
+
+A couple of days later, I saw there was an opening at Google for SWE Internship. I asked my senior to refer me and I applied. After a week I got a mail saying that I have 10 days before my interviews. So, I just got back into interview prep. I mostly referred to these resources:
+
+* Leetcode and Leetcode discuss
+    
+* CLRS
+    
+* MIT Lectures
+    
+* Gave a bunch of mock interviews at [pramp](https://www.pramp.com/#/).
+    
+
+> I am not a big fan of practicing from different resources and platforms. I like to keep things simple 😇
+
+Both of my Google interviews went really well, and after a long wait of 2 months, I heard back that I got the internship. I was on cloud nine because at that point I was starting to get a bit depressed about having no internships even after working really hard.
+
+[https://media.giphy.com/media/1ThndC5odGuUU/giphy.gif](https://media.giphy.com/media/1ThndC5odGuUU/giphy.gif)
+
+[https://arnabsen.dev/landing-a-google-swe-internship](https://arnabsen.dev/landing-a-google-swe-internship)
+
+## My first corporate internship
+
+Luckily, I got a really interesting and impactful project. It had to be built from scratch. So, a lot of time was spent writing design docs, making sequence diagrams, brainstorming the component workflows, and designing models. I worked for Google Ads.
+
+The main codebase was in **Java** and at Google, we have a lot of private frameworks and technologies for internal usage. But some of my key learnings were:
+
+* **Communication** is the key. It doesn't matter if you have a solution in your head if you can't explain it to the other person.
+    
+* **Reach out** for doubts. No one knows everything, so don't shy away from asking doubts. But while asking doubts make sure you have **researched** properly, provide enough **information** regarding the doubts, your thought process, your **approaches**, etc.
+    
+* Always keep your manager/host **updated** about your work.
+    
+* **Meet new people**, ask them about their project, their work what they like the most, etc. Getting insights from people who are more experienced than you helps a lot in gaining a new perspective which is really important as a fresher. The more you network the more you grow. At Google, we have this Lunch Ninja where we are paired with a random Googler to have a 1:1 discussion. I met so many amazing people that way, people from different roles like DevRel, SRE, UI/UX Designer, etc.
+    
+* Writing **high-quality code**. In most of our personal projects, we don't care much about the code quality, but in industry, it's the code that is readable and is working that get's merged. So writing code that follows the readability standards and the style guides was a big takeaway.
+    
+
+![image.png](/images/blog/my-university-experience/4faqbgeby.png)
+
+I also wanted to add, that after the successful completion of my 10-week internship, I even got a pre-placement offer from Google and will be joining them next year 😊.
+
+[https://twitter.com/ArnabSen1729/status/1551660735440179201](https://twitter.com/ArnabSen1729/status/1551660735440179201)
+
+[https://arnabsen.dev/important-tips-on-bagging-ppo-during-internship-and-securing-a-full-time-role](https://arnabsen.dev/important-tips-on-bagging-ppo-during-internship-and-securing-a-full-time-role)
+
+## 4th Year
+
+Having the PPO at hand gave me some confidence to try out even more stuff. Even during my internship my entire team at Google praised me for my blogs. So, my first thought was to take up blogging.
+
+### Codedamn
+
+I got the opportunity to write technical content for [Codedamn](https://www.youtube.com/@codedamn). I worked with them for like 2 months and got a lot of articles published. You can find them here: [https://codedamn.com/news/author/arnabsen](https://codedamn.com/news/author/arnabsen).
+
+The issue I had with blogging for someone else was that I had very limited freedom to decide on the topics to research and blog. It went against the very essence of why I started blogging in the first place. So, even after leaving Codedamn, I continued to blog about random stuff on my personal website.
+
+### Cypherock
+
+But I still felt the need to do something more challenging, so I started applying for various startups and interviewed a bunch of them. Finally, I decided to start another internship with [Cypherock](https://www.cypherock.com/).
+
+[https://twitter.com/ArnabSen1729/status/1583496781131763712](https://twitter.com/ArnabSen1729/status/1583496781131763712)
+
+In the next 6 months, I learned a lot about firmware and embedded systems development, various cryptographic, hashing, and encryption algorithms and how fast-paced startups work.
+
+### XROS Fellowship
+
+Again the curiosity in me sparked and I found another perfect opportunity. Meta, Digital India and FICCI came up with a fellowship opportunity to train young devs in the field of Augmented Reality/Virtual Reality. It was called XROS Fellowship and I applied and was among the 100 devs who were selected for this opportunity. I worked for an org called GMetriXR.
+
+[https://arnabsen.dev/xros-fellowship](https://arnabsen.dev/xros-fellowship)
+
+While doing this I was also working as a Teaching Assistant at Pupilfirst, reviewing the submissions of the students in the cohort, conducting sessions and solving doubts.
+
+## Outro
+
+As you might have seen I have tried out different stuff throughout my college days and still doing. I have also participated in hackathons, kept sessions at our GDSC, and facilitated campaigns. I love sharing my knowledge through blogs.
+
+My approach remains the same for everything, **"no matter what you are doing, give your best and try to go the extra mile".**
+
+Feel free to connect with me on any of my social handles.

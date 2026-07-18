@@ -1,0 +1,29 @@
+name: Compress Images
+
+on:
+  pull_request:
+    paths:
+      - 'public/images/**.png'
+      - 'public/images/**.jpg'
+      - 'public/images/**.jpeg'
+      - 'public/images/**.webp'
+      - 'public/images/**.gif'
+
+jobs:
+  compress:
+    name: Compress new/changed images
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Compress images
+        id: compress
+        uses: calibreapp/image-actions@main
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: ${{ github.event.pull_request.head.repo.fork == true }}

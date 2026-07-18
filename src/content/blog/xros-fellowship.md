@@ -1,0 +1,156 @@
+---
+title: 'My XROS Fellowship Experience'
+dek: 'A look back at what Extended Reality means, what the XROS Fellowship is, and how it led to a 3-month AI-driven metaverse project at GMetri.'
+date: 2023-08-20
+tags: ['internships', 'mentorship', 'augmented-reality']
+---
+
+**What does XROS even stand for?** It stands for "XR Open Source".
+
+**Ok, but what is XR?** XR refers to Extended Reality.
+
+**Umm, and what's that?....**
+
+## Understanding "Extended Reality"
+
+Extended Reality (XR) is a term that encompasses the entire spectrum of computer-generated environments, including both **virtual reality (VR)** and **augmented reality (AR)**, as well as **mixed reality (MR)** and other related technologies. XR combines real and virtual elements to create immersive experiences that go beyond the physical world.
+
+**Virtual Reality (VR)** refers to a simulated environment that is completely computer-generated, allowing users to be fully immersed in a digital world. Users typically wear a VR headset that tracks their head movements and provides a visual and auditory experience that feels like being in a different reality.
+
+![This is what Virtual Reality looks like](/images/blog/xros-fellowship/180314-virtual-reality-headset-ew-1243p.jpg)
+
+**Augmented Reality (AR)** overlays virtual elements onto the real world. AR technology superimposes computer-generated images, videos, or information onto the user's view of the physical environment. This can be experienced through devices like smartphones, tablets, or smart glasses.
+
+You might have heard about AR from the game that went viral (for a lot of reasons 🥲) in 2016. Remember the game? Yes, it is **Pokemon Go**.
+
+![Augmented Reality being implemented in Pokemon Go.](/images/blog/xros-fellowship/file-20181114-194494-1p82jkx.jpg)
+
+**Mixed Reality (MR)** is just a blend of AR and VR. In other words in mixed reality, virtual objects, and the real world coexist and interact in real-time, enabling users to engage with both simultaneously.
+
+Now that you know what XR means, let's get back to XROS Fellowship.
+
+## XROS Fellowship
+
+Here's a snippet from their website, which pretty much covers everything about what XROS Fellowship is.
+
+> XROS Fellowship Program is a uniquely curated initiative aimed at supporting Indian developers working on XR technologies by providing fellowships which will include a stipend and mentoring by industry experts. The Program will support developers to make contributions to open-source projects related to XR technology.
+>
+> The Program aims to give developers a platform to work with the best resources to create digital public goods and further support their careers by facilitating fellowships in organisations working in the domain of AR, VR, MR, 3D Modelling, etc.
+>
+> XROS Fellowship will provide a learning cohort for 100 developers and selected developers will work on projects with partner organisations and industry mentors.
+
+The initiative was taken by [***FICCI (Federation of Indian Chambers of Commerce & Industry)***](https://ficci.in/) which is the largest and oldest apex business organization in India and was established in 1927. And the fellowship is further supported by [***Meta***](https://www.meta.com/) and implemented by [***Reskilll***](https://reskilll.com/)***.***
+
+![](/images/blog/xros-fellowship/9d258eb8-2891-4356-a481-9d9287068152.png)
+
+### Perks of this fellowship
+
+* 💼 3 months of practical experience on live industry projects.
+    
+* 🤝 Networking with industry experts.
+    
+* 💰 Fellowship stipends of **₹ 4 Lakhs**.
+    
+
+### Eligibility for this fellowship
+
+1. The applicant should be **18+ years of age**.
+    
+2. The applicant should be in the pre-final or final year of graduation.
+    
+3. The applicant should be a resident of India.
+    
+
+## My Journey
+
+### Initial Application
+
+The initial step of the fellowship involved completing a form that requested basic details. This stage aimed to assess whether applicants met the eligibility criteria for the fellowship.
+
+Following this round, I received an email notifying me that my profile had been approved. Additionally, I was provided with a link to the Slack channel, where project mentors and other approved candidates can have a discussion.
+
+![](/images/blog/xros-fellowship/0a19f6f4-f2f8-4e79-8ca7-953b4d269fe0.png)
+
+### Proposal Round
+
+There were approximately 31 organizations listed. Each organization had its own projects, and candidates will need to submit a proposal for the project they wish to work on during their fellowship. A single candidate can only submit a maximum of 4 proposals.
+
+I intended to submit 4 proposals as it would enhance my chances of being selected. Therefore, I would thoroughly review each organization, conduct some research on them, and then examine their respective projects.
+
+My approach involved submitting proposals in the following categories:
+
+1. One proposal would focus on a project that genuinely piques my interest, regardless of my familiarity with the associated technology stack.
+    
+2. Another proposal would target a project aligned with a technology stack in which I possess considerable proficiency.
+    
+3. An additional proposal would be directed towards a project that showed minimal candidate activity, indicating reduced competition.
+    
+4. Lastly, I would submit a proposal for a project considered highly challenging. This choice would ensure limited competition and thus increase my chances of success.
+    
+
+Subsequently, I prepared a Notion document accordingly and commenced working on my proposals.
+
+Here is a glimpse of the doc:
+
+![](/images/blog/xros-fellowship/f852178c-6d6a-4aaf-89d6-0c73a6332f59.png)
+
+The Reskilll team also organized AMA sessions with the project mentors, which I would attend. During these sessions, the mentors addressed all the questions and these sessions provided me with a more comprehensive understanding of the project and the organization.
+
+![](/images/blog/xros-fellowship/af60e66d-28a9-4374-980d-ec0d794c301f.png)
+
+So, I finally sat and wrote 4 proposals. We were also given a very basic proposal template. These were the different sections of my proposal template:
+
+1. **Basic Personal Details.**
+    
+2. **What excited me to work at &lt;org-name&gt;?**
+    
+3. **Understanding &lt;project-name&gt;.** *(I tried to deep dive as much as possible and covered possible approaches. This particular section will be the determining factor)*
+    
+4. **Proposed Timeline.**
+    
+5. **Past Work Experience.**
+    
+6. **Previous Open Source Contribution.**
+    
+7. **Accomplishments.**
+    
+8. **Projects.**
+    
+
+### The Interviews
+
+After the shortlisting of proposals, we needed to choose a time slot for the interviews. I received interview invitations from 2 out of the 4 organizations I applied to. In preparation for the interviews, I thoroughly reviewed the research I conducted to understand the project. Additionally, I dedicated time to practicing technical questions related to the technology stack.
+
+In my view, these preparations are sufficient for the interviews. Both of my interviews went exceptionally well, and I was really excited about the final results.
+
+### The Results
+
+After a long wait (it wasn't very long, but I was so much excited it felt long) I finally got a mail saying that I got into the XROS Fellowship Program for the organization [**GMetriXR**](https://www.gmetri.com/)**.**
+
+![](/images/blog/xros-fellowship/1f131ae7-d653-489a-a4e6-9984ee4b1d31.png)
+
+After the AMA, I found myself genuinely intrigued by the GMetri project and its vision. I devoted significantly more time to reviewing the GMetri proposal than to any other. It is often said that diligent efforts yield fruitful results, and in my situation, it came true.
+
+> I am really proud that I was one of the 100 developers selected out of 10,000 applications.
+
+### The work at GMetri
+
+![Create in minutes, not months](/images/blog/xros-fellowship/editor-resized.webp)
+
+GMetri in simple words is a toolkit designed for no-code construction of the metaverse. In recent days, we've observed the remarkable influence that Artificial Intelligence (AI) - particularly large Language Models like GPT - has had on everyday life. Its capacity to compose poems, craft music, and generate images is just phenomenal. My project at GMetri was aimed at leveraging the prowess of AI to simplify the process of metaverse creation for users.
+
+For an effective generation of Metaverse Scenes, it is crucial that the AI model possesses an adequate understanding of the context. We called this knowledge base the "AI Brain". My primary responsibility entailed designing the user frontend experience to facilitate the creation of these AI Brains. This involved allowing users to upload information in the form of URLs, documents, and even raw text, which would subsequently be uploaded to the AI Brain. And once the AI Brain is trained the users can query the brain and use those results in the metaverse scene creation.
+
+### Final Thoughts
+
+This was my last stint during college, cause I graduated after the fellowship period. I learned a lot about AR, VR, and XR through this experience and seeing how much the big techs like Apple, Meta are invested in this field we can expect some amazing innovations happening soon.
+
+Do let me know if this article helped you and follow me for more technical content. Have a nice day.
+
+---
+
+## XROS Summit
+
+Recently all the selected XROS devs were also invited to attend the XROS Summit at New Delhi. It was truly an amazing experience meeting the amazing folks I worked with and networking with others.
+
+![](/images/blog/xros-fellowship/ddf85ebb-8828-4994-9323-f60af3b47ef0.png)

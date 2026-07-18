@@ -3,6 +3,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import { visit } from 'unist-util-visit';
 
 // Set to the custom domain (e.g. 'arnabsen.dev') once DNS + the GitHub Pages
 // custom domain are configured. Leave as `null` to deploy at
@@ -13,6 +14,21 @@ const site = CUSTOM_DOMAIN
   ? `https://${CUSTOM_DOMAIN}`
   : 'https://arnabsen1729.github.io';
 const base = CUSTOM_DOMAIN ? '/' : '/portfolio-v2/';
+
+// Blog posts reference local images (downloaded by scripts/download-blog-images.mjs)
+// with root-relative paths like /images/blog/<slug>/cover.png, written without
+// knowledge of the deploy base path. This rewrites them to `${base}images/...`
+// at build time so they resolve correctly under both the /portfolio-v2/
+// prototyping base and a future custom-domain base of `/`.
+function remarkBaseUrlImages() {
+  return (tree) => {
+    visit(tree, 'image', (node) => {
+      if (node.url.startsWith('/images/')) {
+        node.url = base + node.url.slice(1);
+      }
+    });
+  };
+}
 
 // Writes a CNAME file to the build output only when a custom domain is set,
 // so prototyping builds don't accidentally register a custom domain in Pages.
@@ -35,7 +51,7 @@ export default defineConfig({
   base,
   integrations: [mdx(), sitemap(), cnameIntegration()],
   markdown: {
-    remarkPlugins: [remarkMath],
+    remarkPlugins: [remarkMath, remarkBaseUrlImages],
     rehypePlugins: [rehypeKatex],
     shikiConfig: {
       themes: {

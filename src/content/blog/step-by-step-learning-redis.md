@@ -1,0 +1,438 @@
+---
+title: 'Step by Step Learning Redis'
+dek: 'A beginner-friendly walkthrough of what Redis is, how it works, and how to use its core commands and data structures.'
+date: 2023-01-28
+tags: ['redis', 'databases', 'tutorial']
+---
+
+In this blog, we will take a look at what Redis is, how it works, and how to use it.
+
+## Introduction
+
+![Redis Logo](/images/blog/step-by-step-learning-redis/9c3989cd-36d0-428d-9022-8158fc4bec00.svg)
+
+Redis stands for **RE**mote **DI**ctionary **S**erver.
+
+In simple words, Redis is an in-memory data structure store and is mainly popular for its very low-level latency. The fact that it is in-memory means that the time taken to access the data is very low compared to in-disk databases. This can be useful for applications that require fast data access and manipulation, such as real-time bidding systems or gaming servers.
+
+Redis was created by **Salvatore Sanfilippo**, also known as `"antirez"`, in order to provide a fast, in-memory database that could be used for a variety of purposes. It has since become widely popular for its performance, reliability, and flexibility.
+
+![](/images/blog/step-by-step-learning-redis/6bde5f21-f4e5-44f0-9e0f-7ef8592f6794.webp)
+
+It is because of its low latency and high performance that Redis is used by a lot of major companies, such as:
+
+* Twitter
+    
+* Snapchat
+    
+* GitHub
+    
+* Pinterest
+    
+* Craigslist
+    
+
+![Companies that use Redis](/images/blog/step-by-step-learning-redis/a933d439-f1d5-49c2-957b-a47998decbc8.jpeg)
+
+## How does Redis work?
+
+Redis is a key-value store, which means that it stores data in the form of key-value pairs. The key is used to access the value, and the value can be of any type, such as a `string`, a `list`, a `set`, a `sorted set`, a `hash`. These data types are supported natively by Redis and provide a rich set of commands for manipulating and querying the data.
+
+In addition to these data types, Redis can be extended with Redis Modules. Some of these modules are provided by Redis Labs, and some are provided by the community. Some of the modules provided by Redis Labs are:
+
+* **RediSearch**: This module provides full-text search capabilities for Redis, allowing users to index, search, and query text data stored in Redis similar to Elasticsearch.
+    
+* **RedisGraph**: This module provides graph database capabilities for Redis, allowing users to store, query, and manipulate graph data structures similar to Neo4j.
+    
+* **RedisTimeSeries**: This module provides time series data management capabilities for Redis, allowing users to store, query, and visualize time series data similar to InfluxDB.
+    
+* **RedisJSON**: This module provides native support for JSON data in Redis, allowing users to store, manipulate, and query JSON data using Redis commands similar to MongoDB.
+    
+* **RedisBloom**: This module provides probabilistic data structures for Redis, allowing users to store and query data using bloom filters, count-min sketches, and other data structures that can approximate data sets.
+    
+
+These are just a few examples of the many Redis Modules that are available. There are many more modules that provide a wide range of additional functionality for Redis. For a complete list of available modules, you can visit the Redis Modules registry at the following URL: [redis.io/resources/modules](http://redis.io/resources/modules).
+
+This makes Redis a **multi-model database**.
+
+## Installing Redis
+
+Redis can be installed on Linux, Windows, and macOS using the following steps:
+
+### Linux
+
+Begin by updating your local package index with the latest package information:
+
+```bash
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+sudo apt-get update
+sudo apt-get install redis
+```
+
+### Windows
+
+Redis is not officially supported on Windows. However, you can install Redis on Windows for development by following the instructions mentioned in the [website](https://redis.io/docs/getting-started/installation/install-redis-on-windows/).
+
+### MacOS
+
+Install the Redis server and command-line tools using Homebrew:
+
+```bash
+brew install redis
+```
+
+Once the installation is complete, you can start the Redis server using the following command:
+
+```bash
+brew services start redis
+```
+
+To enable Redis to start automatically when the system boots, you can use the following command:
+
+```bash
+brew services enable redis
+```
+
+Once, you have Redis installed, you can start it by running the following command:
+
+```bash
+redis-server
+```
+
+![redis-server command on terminal](/images/blog/step-by-step-learning-redis/00d538ef-618a-4fe8-90cc-14d9580b0097.png)
+
+## Using Redis
+
+Redis provides a command-line interface (CLI) that can be used to interact with the Redis server. You can start the Redis CLI using the following command:
+
+```bash
+redis-cli
+```
+
+## Basic Redis Commands
+
+You can set a key-value pair in Redis using the `SET` command. For example, to set the key `name` to the value `John`, you can use the following command:
+
+```bash
+SET name John
+```
+
+It will return `OK` if the operation is successful.
+
+Now, to get the value of the key `name`, you can use the `GET` command:
+
+```bash
+GET name
+```
+
+It will return `John`.
+
+```sql
+127.0.0.1:6379> SET name John
+OK
+127.0.0.1:6379> GET name
+"John"
+```
+
+You can also delete a key using the `DEL` command:
+
+```bash
+DEL name
+```
+
+It will return `1` if the operation is successful. Now, if you try to get the value of the key `name`, it will return `(nil)`.
+
+```sql
+127.0.0.1:6379> SET name John
+OK
+127.0.0.1:6379> GET name
+"John"
+127.0.0.1:6379> DEL name
+(integer) 1
+127.0.0.1:6379> GET name
+(nil)
+127.0.0.1:6379>
+```
+
+To get a list of all the keys in the database, you can use the `KEYS` command:
+
+```bash
+KEYS *
+```
+
+Here is what it looks like:
+
+```sql
+127.0.0.1:6379> SET fname John
+OK
+127.0.0.1:6379> SET lname Doe
+OK
+127.0.0.1:6379> SET age 30
+OK
+127.0.0.1:6379> KEYS *
+1) "lname"
+2) "age"
+3) "fname"
+```
+
+To get the number of keys in the database, you can use the `DBSIZE` command:
+
+```bash
+DBSIZE
+```
+
+It will return `3` in this case.
+
+## Setting Expiration Time
+
+The expiration time of a key refers to the amount of time that the key will remain in the database before it is automatically deleted. We can set the expiration time of a key using the `EXPIRE` command. For example, to set the expiration time of the key `name` to 10 seconds, you can use the following command:
+
+```bash
+EXPIRE name 10
+```
+
+It will return `1` if the operation is successful. Now, if you try to get the value of the key `name`, it will return `(nil)` after 10 seconds.
+
+To find out the remaining time before the key expires, you can use the `TTL` command:
+
+```bash
+TTL name
+```
+
+It will return `-2` if the key does not exist, `-1` if the key does not have an expiration time or the number of seconds remaining before the key expires.
+
+```sql
+127.0.0.1:6379> SET id 1001
+OK
+127.0.0.1:6379> GET id
+"1001"
+127.0.0.1:6379> EXPIRE id 10
+(integer) 1
+127.0.0.1:6379> TTL id
+(integer) 7
+127.0.0.1:6379> TTL id
+(integer) 6
+127.0.0.1:6379> TTL id
+(integer) 4
+127.0.0.1:6379> TTL id
+(integer) 3
+127.0.0.1:6379> TTL id
+(integer) 1
+127.0.0.1:6379> TTL id
+(integer) -2
+127.0.0.1:6379> GET id
+(nil)
+```
+
+## Handling Lists
+
+Redis provides a data structure called a list that can be used to store a collection of strings. You can create a list using the `RPUSH` command. For example, to create a list named `colors` and add the values `red`, `green`, and `blue` to it, you can use the following command:
+
+```bash
+RPUSH colors red green blue
+```
+
+Here `RPUSH` refers to the right push operation. It will return `3` (the number of elements pushed) if the operation is successful.
+
+> **Note:** Like `RPUSH` there are other commands like `LPUSH` (left push), `LPOP` (left pop), and `RPOP` (right pop) that can be used to push and pop elements from the list.
+
+To get all the elements in the list, you cannot use the `GET`. This is because you are dealing with lists, so you have to use the `LRANGE` command:
+
+```bash
+LRANGE colors 0 -1
+```
+
+Here 0 refers to the starting index and -1 refers to the ending index. It will return all the elements in the list.
+
+```sql
+127.0.0.1:6379> RPUSH colors red green blue
+(integer) 3
+127.0.0.1:6379> GET colors
+(error) WRONGTYPE Operation against a key holding the wrong kind of value
+127.0.0.1:6379> LRANGE colors 0 -1
+1) "red"
+2) "green"
+3) "blue"
+127.0.0.1:6379>
+```
+
+## Handling Sets
+
+Sets are similar to lists, but they do not allow duplicate elements. You can create a set using the `SADD` command. For example, to create a set named employee\_ids and add the values 1001, 1002, and 1003 to it, you can use the following command:
+
+```bash
+SADD employee_ids 1001 1002 1003
+```
+
+To get all the elements in the set, you can use the `SMEMBERS` command:
+
+```bash
+SMEMBERS employee_ids
+```
+
+If you try to add an element that already exists in the set, it will be ignored. For example, it will be ignored if you try to add the value 1001 to the set `employee_ids`.
+
+```sql
+127.0.0.1:6379> SADD employee_ids 1001 1002 1003
+(integer) 3
+127.0.0.1:6379> SMEMBERS employee_ids
+1) "1001"
+2) "1002"
+3) "1003"
+127.0.0.1:6379> SADD employee_ids 1001
+(integer) 0 
+127.0.0.1:6379> SMEMBERS employee_ids
+1) "1001"
+2) "1002"
+3) "1003"
+```
+
+In the case of sets, to check if an element exists in the set, you can use the `SISMEMBER` command:
+
+```bash
+SISMEMBER employee_ids 1001
+```
+
+```sql
+127.0.0.1:6379> SISMEMBER employee_ids 1002
+(integer) 1
+127.0.0.1:6379> SISMEMBER employee_ids 1005
+(integer) 0
+```
+
+To remove an element from the set, you can use the `SREM` command:
+
+```bash
+SREM employee_ids 1001
+```
+
+```sql
+127.0.0.1:6379> SMEMBERS employee_ids
+1) "1001"
+2) "1002"
+3) "1003"
+127.0.0.1:6379> SREM employee_ids 1001
+(integer) 1
+127.0.0.1:6379> SMEMBERS employee_ids
+1) "1002"
+2) "1003"
+```
+
+## Handling Hashes
+
+Hashes are also key-value pairs. So, using hashes in Redis is like using key-value pairs inside key-value pairs.
+
+To create a hash, you can use the `HSET` command. For example, to create a hash named `employee` and add the values `id`, `fname`, and `lname` to it, you can use the following command:
+
+```bash
+HSET employee id 1001 fname John lname Doe
+```
+
+And to get the value of a field in the hash, you can use the `HGET` command:
+
+```bash
+HGET employee id
+```
+
+```sql
+127.0.0.1:6379> HSET employee id 1001 fname John lname Doe
+(integer) 3
+127.0.0.1:6379> HGET employee id
+"1001"
+127.0.0.1:6379> HGET employee fname
+"John"
+127.0.0.1:6379> HGET employee lname
+"Doe"
+```
+
+To get all the fields in the hash, you can use the `HKEYS` command:
+
+```bash
+HKEYS employee
+```
+
+To get all the values in the hash, you can use the `HVALS` command:
+
+```bash
+HVALS employee
+```
+
+To get everything in the hash, you can use the `HGETALL` command:
+
+```bash
+HGETALL employee
+```
+
+```sql
+127.0.0.1:6379> HGETALL employee
+1) "id"
+2) "1001"
+3) "fname"
+4) "John"
+5) "lname"
+6) "Doe"
+127.0.0.1:6379> HKEYS employee
+1) "id"
+2) "fname"
+3) "lname"
+127.0.0.1:6379> HVALS employee
+1) "1001"
+2) "John"
+3) "Doe"
+```
+
+To delete a field from the hash, you can use the `HDEL` command:
+
+```plaintext
+HDEL employee id
+```
+
+To check if a field exists in the hash, you can use the `HEXISTS` command:
+
+```bash
+HEXISTS employee id
+```
+
+```sql
+127.0.0.1:6379> HEXISTS employee id
+(integer) 1
+127.0.0.1:6379> HDEL employee id
+(integer) 1
+127.0.0.1:6379> HEXISTS employee id
+(integer) 0
+```
+
+You can see initially the field id exists in the hash employee so the output was 1. After deleting it, it no longer exists and hence the value is 0.
+
+Another very useful command is `flushall`. It will delete all the keys in the database. So, if you want to delete all the keys in the database, you can use the following command:
+
+```sql
+127.0.0.1:6379> KEYS *
+1) "name"
+2) "age"
+3) "employee"
+127.0.0.1:6379> flushall
+OK
+127.0.0.1:6379> KEYS *
+(empty array)
+```
+
+## Conclusion
+
+* In conclusion, Redis is a popular and robust data management tool that is widely used by organizations for a variety of purposes.
+    
+* Its key features and benefits include high performance, flexibility, and support for a wide range of data structures.
+    
+* Once you have installed it, you can use a variety of basic Redis commands, such as `SET`, `GET`, `DEL`, and `KEYS`, to manage and manipulate data in Redis. By understanding and using these commands effectively, you can unlock the full potential of Redis to support your specific use cases.
+    
+
+I would encourage you to experiment with Redis and explore its capabilities to gain a deeper understanding of how it can help your organization.
+
+If you like this article, please share it with your friends and colleagues who are interested in Redis. If you have any questions or comments, please feel free to leave them below. I will be happy to answer them.
+
+My Website: [arnabsen.dev](http://arnabsen.dev)
+
+My Twitter: [@ArnabSen1729](https://twitter.com/ArnabSen1729)

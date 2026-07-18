@@ -1,0 +1,156 @@
+---
+title: 'Important Tips on Bagging a PPO During an Internship and Securing a Full-Time Role'
+dek: 'Technical and non-technical lessons from converting a Google internship into a full-time SWE offer.'
+date: 2023-01-29
+tags: ['internships', 'career', 'tips']
+---
+
+If you are here after you have got an internship, then a big congratulations to you for getting an internship. I hope you are enjoying it and learning a lot. I am sure you are. But now you want to make sure that you get a PPO at the end of it. So, let's get started.
+
+I have been wanting to write this blog for a long time, I will try to include all the important points that I followed and have learned during my internship which helped me bag a PPO. I will break them down into 2 parts mainly, **Technical** and **Non-Technical**. Before that let me give you a little background.
+
+# Background
+
+I applied for Google Summer SWE Intern Opening on the [Google's careers portal](https://careers.google.com/) with a referral. [My Resume](https://arnabsen.dev/resume.pdf) got selected and I was called for 2 Rounds of Interviews. After that, I got the offer and interned at Google for 10 weeks remotely with the Google Ads team. And finally, I was able to crack the PPO and got a full-time offer from Google as an SWE. I am planning to join them in July 2022.
+
+From
+
+[https://twitter.com/ArnabSen1729/status/1528345010164613123](https://twitter.com/ArnabSen1729/status/1528345010164613123)
+
+To
+
+[https://twitter.com/ArnabSen1729/status/1551660735440179201](https://twitter.com/ArnabSen1729/status/1551660735440179201)
+
+# Conversion Process
+
+Before sharing the pieces of advice, I feel it's important to learn about the conversion steps. This will vary from company to company but overall the process remains the same.
+
+1. Every Intern is assigned a **project** and a mentor (at Google we call them **host**) and a **co-host**. The project is usually a part of the product that the team is working on. The mentor is a senior engineer who will be your guide throughout the internship. You will be working with your mentor and other engineers on the team.
+    
+2. There will be two evaluations during the internship. The first evaluation called **Mid Evaluation** happens after 5 weeks (since my internship period was 10 weeks) and the **Final Evaluation** happens in the last week of your internship. The Mid Evaluation is more of a check-in to see how you are doing and if you are on track. The Final Evaluation is more of a review of your work and the project. The host and co-host also get to give feedback on your performance and your project progress. This feedback plays a huge role in the final conversion.
+    
+
+# Technical Advice
+
+## 1\. Learn the basics
+
+You must have strong problem-solving abilities to work on the project that will be assigned to you. There are some basic Computer Science concepts that one should be familiar with. I will list them down below.
+
+### a. Version Control Systems
+
+No matter which company you are working at, you will be using a version control system. You must be familiar with the basics of version control systems. I would recommend you learn Git and GitHub. You can learn it from here.
+
+[https://youtu.be/RGOj5yH7evk](https://youtu.be/RGOj5yH7evk)
+
+At Google, we didn't use `git`, instead, we used Mercurial. But the fundamental concepts are the same. If you know how `git` works, learning a new version control system will just require you to learn the commands specific to that version control system.
+
+![git logo](/images/blog/tips-for-bagging-a-ppo/1da0047e-f988-49ba-8471-75bf637bf95c.jpeg)
+
+### **b. Basic Commandline**
+
+There is a high chance that you will be working in a cloud environment and you must be comfortable with the terminal. You should be able to navigate through the file system, create directories, create files, delete files, etc. You should also be able to use basic commands like `cat`, `grep`, `sed`, `awk`, etc. You can learn about these commands from the man pages. For example, to learn about the `cat` command, you can run `man cat` in your terminal.
+
+[https://youtu.be/ZtqBQ68cfJc](https://youtu.be/ZtqBQ68cfJc)
+
+### **c. Data Structures and Algorithms**
+
+You should be familiar with the basic data structures and algorithms. You should be able to implement them in your language of choice and most importantly be aware of when to use which data structure and algorithm.
+
+> **Note:** You don't need to be an expert in these topics. You just need to be familiar with them. But most of these companies have DSA questions in their interviews. So, you must be familiar with them.
+
+I love the MIT 6.006 Introduction to Algorithms lectures, they have helped me build the foundation of algorithms. You can find the playlist [here](https://youtu.be/HtSuA80QTyo?list=PLUl4u3cNGP61Oq3tWYp6V_F-5jb5L2iHb):
+
+[https://youtu.be/HtSuA80QTyo](https://youtu.be/HtSuA80QTyo)
+
+## 2\. Knowing the syntax of the language you will be using
+
+Sometimes you can ask the recruiter about the tech stack that you will be using. But most of the time, you won't be able to know the tech stack beforehand. But, you can still learn the basics of the language that is popularly used in the company. For example, I knew that Google uses C++, Java, and Golang a lot in their backend. I already knew C++ and Golang. So I learned the basics of Java before joining Google. This helped me save a lot of time during the internship picking up the language.
+
+## 3\. Learn Design Patterns
+
+Design patterns are important for developers to understand because they provide proven solutions to common software design problems. By using design patterns, developers can improve the quality, reusability, and maintainability of their code.
+
+While you don't need to know every design pattern in existence, it's helpful to have a good understanding of the most common design patterns and when to use them. This knowledge can save a lot of time and effort by allowing you to reuse tried-and-true solutions to common problems, rather than having to reinvent the wheel every time you encounter a new challenge.
+
+![23 Design Patterns](https://project-assets.showwcase.com/56320/1673195309976-design-pattern.png)
+
+## 4\. Write clean code
+
+I can't stress this enough. Writing clean code is very important especially if you are interning at a big organization like Google. Every change you make goes through a rigorous review process. If your code is not clean, it will be rejected. So, you must write clean code. Here are some points that you should keep in mind while writing clean code.
+
+* **Keep it simple:** When writing code, it's important to avoid unnecessary complexity. Simple, easy-to-understand code is usually easier to maintain and debug.
+    
+* **Use clear and descriptive names:** Choosing clear and descriptive names for variables, functions, and other elements of the code can make it much easier to read and understand. Avoid using abbreviations or single-letter names, unless they are well-known and widely understood.
+    
+* **Use comments:** Comments can be a helpful tool for explaining the purpose and functionality of different parts of the code. However, it's important to use comments sparingly and only when they are truly necessary, as too many comments can make the code harder to read.
+    
+* **Follow a consistent style:** Consistency is key when it comes to writing clean code. Using a consistent style for indentation, spacing, and other elements of the code can make it easier to read and understand. It's also a good idea to follow established coding standards and guidelines, such as those provided by the programming language's community or the company you work for.
+    
+
+![Code Quality Meme](https://project-assets.showwcase.com/56320/1673195372005-clean-code-image.png)
+
+## 5\. Learn testing
+
+Testing is an important part of software development. It's important to test your code to make sure it works as expected and to catch any bugs that might have been introduced during development. Testing can also help you to ensure that your code is clean and easy to understand. There are different types of testing like unit testing, integration testing, etc. Knowing these testing types will help you a lot.
+
+Here is a free course on [Test Driven Development](https://thoughtbot.com/upcase/fundamentals-of-tdd).
+
+## 6\. Know how to write a Design Doc
+
+At Google, we heavily focus on the Design Doc. Even before we write a piece of code for a particular implementation we have to make sure we have analyzed every possible edge case, and technical and non-technical requirements. Design documents also help with communication among team members and can serve as a reference for future maintenance and updates to the software.
+
+Certain key points need to be covered in a Design Doc like Architecture, Requirements, Design, User Interface, Testing .etc.
+
+[Here](https://www.industrialempathy.com/posts/design-docs-at-google/) is a great post that talks in depth about Design Docs.
+
+This is a [sample template of a Design Document](https://docs.google.com/document/d/1pgMutdDasJb6eN6yK6M95JM8gQ16IKacxxhPXgeL9WY/edit).
+
+# Non-Technical Advice
+
+In addition to the technical advice, I would also like to share some non-technical advice that I followed during my internship.
+
+## 1\. Be proactive
+
+This was something my host pointed out in my mid-evaluation. I was being too dependent initially on my mentor, waiting for her to tell me the next steps. But later I took the advice. So I started planning my work, assigning tasks to myself, and taking the initiative to solve the problems. But obviously, I kept my mentor in the loop. This takes me to the next point.
+
+## 2\. Keep your mentor (host and co-host) in the loop
+
+Remember, your host and co-host will be evaluating you at the end of your internship. Also, they have their deadline and they will be busy with their work. So, you must keep them in the loop. You should be able to communicate with them and tell them what you are working on and what problems you are facing. This will help them to guide you better.
+
+We had a weekly meeting with our host and co-host but even then I would update them on my progress every alternate day so that they are aware of what I am working on. I would also disclose the problems I faced and the solutions I found.
+
+There is a really good article on [Writing a brag document](https://jvns.ca/blog/brag-documents/?utm_source=pocket_mylist) that I would recommend you read.
+
+## 3\. Be open to feedback
+
+No matter how big a company you are interning at, you should remember that you are still very new to this field and there is a lot to improve. Feedback from your host/co-host or other team members can help you identify areas of their work that needs improvement. It might be difficult to accept the feedback at first but you should be open to it. You should be able to take the feedback positively and work on improving yourself.
+
+Not always your mentor will reach out to you to give you feedback. If required you might have to reach out to them and ask for feedback. You can ask them to give you feedback on your code, your communication skills, your problem-solving skills, etc. This also shows that you are proactive and you are willing to make improvements.
+
+A good place to get feedback from your host/co-host is through 1:1 meetings. Here is a good video on [The Art Of The 1:1 Meeting](https://youtu.be/ADWkkJtZna4).
+
+[https://youtu.be/ADWkkJtZna4](https://youtu.be/ADWkkJtZna4)
+
+## 4\. Time management
+
+Plan out the tasks that you will have to do, assign priority to them and then start working on them. This will help you to manage your time better. You should also be able to estimate the time that you will need to complete a task. Initially, you may end up overestimating or underestimating the time but as you gain more experience, you will be able to estimate the time better.
+
+## 5\. Ask questions
+
+An internship usually lasts 10-12 weeks, which is not a lot of time. So if you are stuck at something, you can't afford to lose time. You should be able to ask questions to your mentor and other team members. But before that make sure you have done a fair amount of research on your end as well.
+
+You have to ask the right questions to get quick answers. If you came across an error message, explain properly how to reproduce the error, and what the error message is. Share the code snippet that might be causing the error, or share the files you are working on. Further, the approaches you have already taken to solve the problem. This will help the person you are asking the question to understand the problem better. Also, make sure you are asking the question in the right channel. For example, if you are stuck on a coding problem, you should ask your mentor or other team members. But if you are stuck in a process, you should ask your host/co-host.
+
+Here is a great article on [How to ask questions the smart way](https://jvns.ca/blog/good-questions/?utm_source=pocket_mylist).
+
+# Podcast w/ Aniket
+
+I was recently on a podcast where we went through some of these points in more depth. Watch the video here:
+
+[https://youtu.be/0EB-np28BZU](https://youtu.be/0EB-np28BZU)
+
+# Conclusion
+
+These are some of the things that I followed during my internship. I hope this article will help you to prepare for your internship. One thing you should also keep in mind is to enjoy the internship. It is a great opportunity to learn and grow, network with people and build your resume. Don't burnout yourself before or during the internship. Take breaks, go out with your friends, play games, watch movies, etc. This will help you to stay motivated and perform better.
+
+If you have any questions, feel free to ask in the comments. I will try my best to answer them. Also, if you have any other advice that you would like to share, feel free to do so in the comments.

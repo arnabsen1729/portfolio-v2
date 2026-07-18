@@ -1,0 +1,191 @@
+---
+title: 'The Evolution of a Tech Enthusiast: My Tech Journey'
+dek: 'A personal look back at how a love for LOGO turtles and QBASIC grew into a career at Google, open source, and beyond.'
+date: 2023-04-23
+tags: ['personal', 'software-development']
+---
+
+I've been working in this domain for a while now and intend to continue. One thing that has always fascinated me, is how other people got into this magical world of Tech. And here's my story.
+
+**Why did I use the term "magical"?** ✨
+
+To me, coding is like casting a magical spell, through every line of code that brings a digital creation to life.
+
+Believe it or not, a few lines of code propelled humanity to the moon, an unimaginable feat. The Apollo 11 mission that landed humans on the moon in 1969 was powered by a computer with a processor speed of just 1.024 MHz, which is slower than most modern calculators. The computer had only **4** KB of memory, which is less than what we use to store a single photo today. But the code that powered this computer was nothing short of miraculous.
+
+![Her Code Got Humans on the Moon—And Invented Software Itself | WIRED](/images/blog/my-tech-journey/001-3-featured.jpg)
+
+> Let me know in the comments if you know who this lady in the picture above is? Hint: she played a very crucial role in the Apollo 11 mission.
+
+## 👋 Let's introduce ourselves first
+
+![](/images/blog/my-tech-journey/25443f28-56ce-4c13-874b-69585c23e156.png)
+
+I am Arnab Sen, a Software Developer from India. Currently while writing this, I have just 1 more month left for my college. In these 4 years, I have learned a lot and grown as a software developer. There are some achievements of mine that I am really proud of:
+
+* Was one of the **24** people selected for the **Coronasafe Fellowship by AICTE** out of **50,000+** applicants and built an open-source healthcare platform.
+    
+* Selected for the **Summer of Bitcoin** project and spend the summer of 2021 contributing to Bitcoin-Core.
+    
+* Selected for **SWE Internship at GOOGLE**, and on top of that ended up with a PPO opportunity.
+    
+* Was selected for the **XROS Fellowship** which is powered by FICCI and supported by Meta.
+    
+* Interned at multiple remote startups: **Dynopii, Cypherock, GMetriXR**.
+    
+
+## 🏗️ Where it all started
+
+![Hem Sheela Model School | Elementary | Secondary School](/images/blog/my-tech-journey/hemsheela.jpg)
+
+The first time I did something close to programming was **LOGO** in class 4. For those who aren't aware, LOGO is an educational programming language designed to teach the basic concepts of programming. There is a turtle and we can give directions to the Turtle with keywords like **"FORWARD"**, **"RIGHT"**, etc and it will draw the path.
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/IBM_LCSI_Logo_Circles.png/640px-IBM_LCSI_Logo_Circles.png)
+
+As a kid, I always loved creating different kinds of patterns in LOGO. Then in class 5, we had QBASIC in our syllabus. That's it, that kind of sparked a little fire in me, that maybe I should pursue Software Development in the future, cause I uncovered the magic beneath.
+
+![QBasic - Wikipedia](/images/blog/my-tech-journey/qbasic-opening-screen.png)
+
+Luckily, I had internet access (the max speed was 500 kbps, but that was still a lot during those days). So I started learning a few other programming languages. My dad's colleague used to give computer science tuition to 11-12th standard students. He asked me if I was interested in joining his classes and I started doing so in class 6.
+
+By the time I was in class 8, I already had the fundamentals of C and C++ strong. But after class 8 I joined an IITJEE coaching center, and just like everyone, I too had to leave behind my creative knacks to run in this rat race. With the JEE preparation pressure, I lost all interest in programming 🥺. That should have been the end, but...
+
+In 11 standard I had computer science again in my course, and that rekindled the fire in me. During that time I also watched movies like, **The Social Network**, **Jobs**, **Snowden**, and many more, and I became passionate about coding more than ever.
+
+![](/images/blog/my-tech-journey/7ec729de-202e-4a98-8f36-38f51955cc05.png)
+
+I came across an olympiad competition called **IOI (Internation Olympiad In Informatics)**, it's like **IMO (International Mathematical Olympiad)** but for Programming.
+
+![International Olympiad in Informatics (IOI)](/images/blog/my-tech-journey/ioi-logo-2020.png)
+
+To be eligible for IOI, one has to qualify for **INOI (Indian Olympiad of Informatics)**, and to get into that one has to qualify for either **ZOI (Zonal Olympiad of Informatics)** or **ZCO (Zonal Computing Olympiad)**. But when I was in class 11, I already missed the **ZCO** or **ZOI registration** date. So I prepared for class 12th ZIO and ZCO. Qualified them and then went to INOI, but failed miserably. I left the exam center 1 hour before because I was unable to solve any questions. But that didn't stop me, cause I knew it was just the beginning.
+
+So, far I did programming as a hobby or whenever I had a break. But after JEE I opted for CS in IIEST Shibpur, and now I was able to give my full attention to programming.
+
+## 🎓 College Life
+
+In the initial few days, I was really interested in building small games. Here are some of them.
+
+Built a small TicTacToe game built with Python3 with one of my hostel mates.
+
+> Here is a fun fact: the logic behind Computer Moves is just a bunch of if-else statements 🤣🤣🤣🤣
+
+![](/images/blog/my-tech-journey/5d64cb77-b2a3-4701-8728-fe41e9c1100f.gif)
+
+Here is another beautiful yet very simple project that I built with simple HTML, CSS, and JS. It's based on Chaos Theory, it shows how pure randomness generates such beautiful patterns.
+
+![](/images/blog/my-tech-journey/a1177d85-4f2d-4c3d-9be6-9db0587965c2.gif)
+
+But as time passed, I started to focus on building stuff that could be useful to some extent. Like, a Discord bot for IPL Scores, a simple website to pdf converter, markdown to pdf generator.
+
+![](/images/blog/my-tech-journey/10fde85a-0738-406b-998d-de4bab36cac0.png)
+
+For learning, I never really paid for any courses. There are so many great folks online who share their knowledge and are such amazing teachers. For learning web development especially I followed these channels and I feel they helped me strengthen my fundamentals:
+
+* [https://www.youtube.com/@freecodecamp](https://www.youtube.com/@freecodecamp)
+    
+* [https://www.youtube.com/@TraversyMedia](https://www.youtube.com/@TraversyMedia)
+    
+* [https://www.youtube.com/@akshaymarch7](https://www.youtube.com/@akshaymarch7)
+    
+* [https://www.youtube.com/@WesBos](https://www.youtube.com/@WesBos)
+    
+* [https://www.youtube.com/@academind](https://www.youtube.com/@academind)
+    
+
+![](/images/blog/my-tech-journey/87906cb7-430b-41e1-a77d-3a1e52ea7c20.png)
+
+For theoretical topics related to computer science like Data Structures and Algorithms, Operating Systems, and Database Management Systems, I always preferred the MIT Open Courseware Courses. I think they are just goldmines for anyone looking to dive deep into these topics.
+
+![MIT OpenCourseWare (@MITOCW) | Twitter | Free courses, Learning and  development, Science and nature](/images/blog/my-tech-journey/6cb351d785d6786158ec59ec63c0988f.png)
+
+## 🤍 Met Open Source
+
+When I was in my 2nd year of college, I came across open-source software and realized that through OSS I could make more impact with my knowledge. I was a part of the Coronasafe Fellowship where I got to work on multiple open-source healthcare projects.
+
+One of the projects is [Arike](https://github.com/coronasafe/arike) which is a software system for palliative care. The other project is called [Life](https://github.com/coronasafe/life) which acted as verified crowd-sourced emergency services during the peak of covid second wave. I am grateful to be a part of such a great cause and take my development skills to help people.
+
+![](/images/blog/my-tech-journey/e3157fdc-694d-4d93-a55c-4038a4cb8b7d.png)
+
+My other contributions can be found on my [GitHub](https://github.com/arnabsen1729) profile. Through contributing to open source, I have been able to gain valuable experience in real-world software development problems, collaborate with other talented developers, and learn new programming languages, tools, and frameworks. Contributing to open source has also allowed me to receive feedback from other developers and improve my ability to communicate my ideas effectively.
+
+![](/images/blog/my-tech-journey/00630606-b825-4521-85be-d3994537374b.png)
+
+Open Source went on to change my career and brought me even better opportunities in the future.
+
+Even though everything seems smooth, like every other thing in life there are always ups and downs.
+
+![Maysix_failure success path | Failure success paths | Flickr](/images/blog/my-tech-journey/30524599555-bc86ec20e0-b.jpg)
+
+If you are also interested to pursue a career in this domain of Software Development. Here are a few things to keep in mind, that I learned from my personal experience:
+
+### 📚 Start with the basics
+
+Before you jump into coding and building cool stuff, it's important to have a solid foundation of the basics. So, what are the basics? Well, at a minimum, you should have a solid understanding of at least one programming language. There are many languages to choose from, but some of the most popular ones include Python, Java, C++, and JavaScript. Each language has its own strengths and weaknesses, and choosing the right one for you will depend on your personal preferences and the type of projects you want to work on.
+
+![](/images/blog/my-tech-journey/4f0823dc-fa7d-49c4-bb2e-1a24a6d3d94c.png)
+
+Also, it's worth noting that learning the basics isn't a one-and-done task. As you progress in your career, you'll continue to build on your knowledge of programming languages, data structures, and algorithms. The key is to start with a strong foundation and continue to learn and grow from there.
+
+### 🧠 Keep Learning
+
+The field is constantly evolving, and there are always new technologies and tools being developed. As a result, it's crucial to stay up-to-date with the latest trends and developments to remain competitive and relevant.
+
+Reading industry blogs and publications is a great way to stay informed about the latest trends and developments. Many tech publications offer daily or weekly newsletters that summarize the latest news and events in the industry. Following these publications can help you stay informed about the latest advancements in the field, and help you identify emerging trends that may be relevant to your work. If you prefer learning from videos more then my suggestion would be to start watching conference talks.
+
+![](/images/blog/my-tech-journey/bf3e3ff0-4298-44c7-9f04-fc5baf1195a4.png)
+
+I also love to watch documentaries like the ones by [Honeypot.io](https://www.youtube.com/playlist?list=PLtEPUaeDclku1ECmuN3IsUimHApukWIOf). The amount of insights that are shared in these 30 mins Netflix-styled documentaries is just crazy, and trust me you will never get bored.
+
+![Image](/images/blog/my-tech-journey/fgsoltjveaaoh2.jpg)
+
+### 🏔️ Embrace Challenges
+
+Challenges are a natural part of any career, but in the tech industry, they can be particularly prevalent due to the constantly evolving nature of technology. However, it's important to embrace these challenges as opportunities for growth and development.
+
+![](/images/blog/my-tech-journey/2ea39282-06fb-4438-a962-04948add3802.png)
+
+One way to embrace challenges is to take on projects that push you outside of your comfort zone. By taking on projects that are unfamiliar or challenging, you'll be forced to learn new skills and adapt to new situations, which can help you grow both personally and professionally.
+
+### 🎭 Dealing w/ Imposter Syndrome
+
+This is a very very prevalent topic, especially in the software development domain.
+
+![Finding the Benefits of Imposter Syndrome - Software Engineering Daily](/images/blog/my-tech-journey/what-is-imposter-syndrome-1024x506.jpg)
+
+Imposter syndrome is a nasty little bugger that can creep up on anyone in the tech industry. It's that feeling that you're not qualified or good enough for your job, even when all evidence points to the contrary. But here's the thing: you're not alone. Lots of successful people in the tech industry have felt imposter syndrome at some point in their careers. It's a pretty common experience.
+
+So, the next time you start feeling like a fraud, remember that you're not alone, and remind yourself of all the awesome things you've accomplished. Seek out a mentor or coach for guidance, and connect with others who have gone through the same experience. With these strategies, you can kick imposter syndrome to the curb and achieve success in the exciting and dynamic world of tech!
+
+Here is a great video by Ted-Ed on Imposter Syndrome:
+
+[https://youtu.be/ZQUxL4Jm1Lo](https://youtu.be/ZQUxL4Jm1Lo)
+
+### 🤝 Share your learnings
+
+Sharing knowledge as a software developer is one of the most rewarding things you can do! Not only does it help you solidify your own understanding of a topic, but it also benefits the wider community and can even lead to new career opportunities.
+
+Blogging is a great way to share your knowledge and experiences with others. By writing about your insights, tips, tricks, or lessons learned on a particular topic, you can help others who are facing similar challenges or looking to learn new skills.  
+One of my blogs where I shared my resources and how I prepared to land a job at Google got featured on Hashnode and has around 1k views (even Hashnode's cofounder commented on the blog).
+
+![](/images/blog/my-tech-journey/faaca0ee-2288-429e-b040-f3a40bd2b479.png)
+
+Link to the blog 👇
+
+[https://arnabsen.hashnode.dev/landing-a-google-swe-internship](https://arnabsen.hashnode.dev/landing-a-google-swe-internship)
+
+Plus, blogging can help you establish yourself as an authority in your field and even lead to opportunities for speaking engagements or consulting gigs. My blogs on Bitcoin helped me get a web3-based internship.
+
+Speaking at conferences or community events is another fantastic way to share your knowledge and connect with others in the industry. Not only do you get the chance to present your ideas and insights to a live audience, but you also get to network with other professionals and learn from their experiences as well. Plus, speaking engagements can be a great addition to your resume and help you stand out when you're looking for new job opportunities.
+
+![How to tackle public speaking as a software developer? | by Jakub Kapuscik  | Level Up Coding](/images/blog/my-tech-journey/1-s05hqavggxh4vfna9vwjnq.jpeg)
+
+## 🎬 The End
+
+As I reflect on my tech journey, I realize that it's been a rollercoaster ride with its fair share of ups and downs. But it's also been a journey filled with wonder, innovation, and creativity. I've learned that being a software developer isn't just about writing code. It's about problem-solving, collaboration, and being passionate about making a difference in the world.
+
+If you're just starting your own tech journey, remember that it's never too late to start. Whether you're fresh out of school or a seasoned professional, there's always something new to learn. Be open-minded, stay curious, and never stop exploring. And always remember to keep your eye on the end goal: creating something that can change the world.
+
+And always remember "YOU GOT THIS !!"
+
+![Success Kid - Wikipedia](/images/blog/my-tech-journey/successkid.jpg)
