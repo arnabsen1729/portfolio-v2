@@ -45,6 +45,19 @@ build time (see "Non-obvious constraints" below).
   paths at build time regardless of `/* @vite-ignore */`, and
   `/pagefind/pagefind-ui.js` doesn't exist until *after* `astro build` runs
   (pagefind is a separate post-build CLI step). See `SearchModal.astro`.
+- **Search does not work under `pnpm dev`, by design — this is not a bug to
+  "fix" by making it work in dev.** `pnpm dev` serves straight from source
+  and never runs the `pagefind` CLI, so `dist/pagefind/` (and therefore
+  `/pagefind/pagefind-ui.js` / `pagefind-ui.css`) simply doesn't exist yet.
+  To test search, always run `pnpm build && pnpm preview` (which serves the
+  real `dist/`), not `pnpm dev`. If asked to debug "search doesn't work,"
+  check which command the user ran before touching `SearchModal.astro`.
+  Known gap: this failure is currently **silent** — `loadPagefind()`'s
+  promise rejects on the 404 but `openDialog()` doesn't `.catch()` it, so
+  the dialog just opens empty with no message. A pending fix (blocked on
+  Bash/write access at the time this was written) is to show a fallback
+  message like "Search isn't available in dev — run a production build" in
+  that catch branch instead of swallowing the rejection.
 - **OG image route file must be named `[...slug].ts`, not
   `[...slug].png.ts`.** `astro-og-canvas`'s default `getSlug` already
   appends `.png` to the pages-object key; combining that with a `.png` in
