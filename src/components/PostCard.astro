@@ -32,23 +32,33 @@ const dateLabel = date.toLocaleDateString('en-US', {
 });
 ---
 
-<article class="post-card">
+<article class:list={['post-card', { 'post-card-compact': variant === 'compact' }]}>
   <h2 class="post-card-title">
     <a href={`${import.meta.env.BASE_URL}blog/${slug}`}>{title}</a>
   </h2>
-  {dek && <p class="post-card-dek">{dek}</p>}
   {
-    variant === 'full' && (
-      <div class="post-card-meta">
+    variant === 'full' ? (
+      <>
+        {dek && <p class="post-card-dek">{dek}</p>}
+        <div class="post-card-meta">
+          <span class="meta post-card-meta-item">
+            <Icon name="calendar" size={13} />
+            {dateLabel}
+          </span>
+          <span class="meta post-card-meta-item">
+            <Icon name="clock" size={13} />
+            {minutes} min read
+          </span>
+          {tags.map((tag) => <TagPill tag={tag} />)}
+        </div>
+      </>
+    ) : (
+      <div class="post-card-reveal-content">
         <span class="meta post-card-meta-item">
           <Icon name="calendar" size={13} />
           {dateLabel}
         </span>
-        <span class="meta post-card-meta-item">
-          <Icon name="clock" size={13} />
-          {minutes} min read
-        </span>
-        {tags.map((tag) => <TagPill tag={tag} />)}
+        {dek && <p class="post-card-dek">{dek}</p>}
       </div>
     )
   }
@@ -60,5 +70,41 @@ const dateLabel = date.toLocaleDateString('en-US', {
     align-items: center;
     gap: 0.35em;
     color: var(--ink-soft);
+  }
+
+  /* ---------- Compact variant (homepage) ---------- */
+  /* Title-only by default; date + dek reveal on hover/focus to keep the
+     homepage list scannable while still surfacing detail on demand. */
+  .post-card-compact .post-card-title {
+    font-size: 1.05rem;
+    margin-bottom: 0;
+  }
+  .post-card-reveal-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition:
+      max-height 300ms ease,
+      opacity 200ms ease,
+      margin-top 300ms ease;
+  }
+  .post-card-reveal-content .post-card-dek {
+    margin: 0.35em 0 0;
+  }
+  .post-card-compact:hover .post-card-reveal-content,
+  .post-card-compact:focus-within .post-card-reveal-content {
+    max-height: 6rem;
+    opacity: 1;
+    margin-top: 0.5em;
+  }
+  /* Touch devices have no hover — show the detail statically instead of
+     hiding it behind an interaction that doesn't exist there. */
+  @media (hover: none) {
+    .post-card-reveal-content {
+      max-height: none;
+      opacity: 1;
+      margin-top: 0.4em;
+    }
   }
 </style>

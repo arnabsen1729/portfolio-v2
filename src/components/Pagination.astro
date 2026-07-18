@@ -36,17 +36,31 @@ const { prevUrl, nextUrl, currentPage, lastPage } = Astro.props;
 <style>
   .pagination {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    gap: 0.5rem 1rem;
     margin-top: 2.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--hairline);
+  }
+  .pagination-count {
+    order: 1;
+    flex-basis: 100%;
+    text-align: center;
+  }
+  @media (min-width: 480px) {
+    .pagination-count {
+      order: 0;
+      flex-basis: auto;
+    }
   }
   .pagination-link {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     color: var(--oxblood);
     text-decoration: none;
+    transition: opacity 150ms ease;
   }
   .pagination-link:hover {
     text-decoration: underline;

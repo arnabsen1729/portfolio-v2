@@ -4,6 +4,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
 import Pagination from '@/components/Pagination.astro';
+import Icon from '@/components/icons/Icon.astro';
 import { introCopy } from '@/content/site';
 
 export const getStaticPaths = (async ({ paginate }) => {
@@ -31,14 +32,30 @@ const base = import.meta.env.BASE_URL;
     <section class="intro">
       {introCopy.map((paragraph) => <p>{paragraph}</p>)}
       <div class="key-links">
-        <a href="https://github.com/arnabsen" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href={`${base}resume`}>Résumé</a>
-        <a href="mailto:hello@arnabsen.dev">Email</a>
-        <a href={`${base}rss.xml`}>RSS</a>
+        <a href="https://github.com/arnabsen" target="_blank" rel="noopener noreferrer">
+          <Icon name="github" size={15} /> GitHub
+        </a>
+        <a href="https://x.com/arnabsen" target="_blank" rel="noopener noreferrer">
+          <Icon name="x" size={15} /> X
+        </a>
+        <a href={`${base}resume`}>
+          <Icon name="file-text" size={15} /> Résumé
+        </a>
+        <a href="mailto:hello@arnabsen.dev">
+          <Icon name="mail" size={15} /> Email
+        </a>
+        <a href={`${base}rss.xml`}>
+          <Icon name="rss" size={15} /> RSS
+        </a>
       </div>
     </section>
 
     <hr class="section-divider" />
+
+    <div class="section-heading">
+      <h2>Writings</h2>
+      <a href={`${base}writing`} class="section-heading-link">See all →</a>
+    </div>
 
     <div class="post-list">
       {
@@ -91,8 +108,8 @@ const base = import.meta.env.BASE_URL;
   .homepage-gradient .blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.1;
+    filter: blur(90px);
+    opacity: 0.28;
   }
   .blob-1 {
     top: -4rem;
@@ -116,7 +133,7 @@ const base = import.meta.env.BASE_URL;
     background: var(--slate);
   }
   html.dark .homepage-gradient .blob {
-    opacity: 0.16;
+    opacity: 0.34;
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -172,10 +189,15 @@ const base = import.meta.env.BASE_URL;
     margin-top: 1.25rem;
   }
   .key-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
     color: var(--oxblood);
     text-decoration: none;
+    transition: opacity 150ms ease;
   }
   .key-links a:hover {
+    opacity: 0.75;
     text-decoration: underline;
   }
 
@@ -200,6 +222,31 @@ const base = import.meta.env.BASE_URL;
     border: none;
     border-top: 1px solid var(--hairline);
     margin: 0 0 2rem;
+  }
+
+  /* ---------- "Writings" section heading ---------- */
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .section-heading h2 {
+    font-size: 1.05rem;
+    margin: 0;
+  }
+  .section-heading-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--oxblood);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 150ms ease;
+  }
+  .section-heading-link:hover {
+    opacity: 0.75;
+    text-decoration: underline;
   }
 
   /* ---------- Post card staggered reveal ---------- */

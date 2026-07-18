@@ -8,7 +8,17 @@ const base = import.meta.env.BASE_URL;
 <header class="site-header">
   <div class="site-header-inner">
     <a class="site-title" href={base}>Arnab Sen</a>
-    <nav class="site-nav">
+    <button
+      class="nav-toggle"
+      id="nav-toggle"
+      type="button"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="site-nav"
+    >
+      <span class="nav-toggle-bars" aria-hidden="true"></span>
+    </button>
+    <nav class="site-nav" id="site-nav">
       <a href={`${base}writing`}>Writing</a>
       <a href={`${base}papershelf`}>Papershelf</a>
       <a href={`${base}resume`}>Résumé</a>
@@ -18,3 +28,31 @@ const base = import.meta.env.BASE_URL;
     </nav>
   </div>
 </header>
+
+<script>
+  function initNavToggle() {
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('site-nav');
+    if (!toggle || !nav) return;
+
+    const close = () => {
+      nav.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+    const open = () => {
+      nav.classList.add('nav-open');
+      toggle.setAttribute('aria-expanded', 'true');
+    };
+
+    toggle.addEventListener('click', () => {
+      nav.classList.contains('nav-open') ? close() : open();
+    });
+    nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+  }
+
+  initNavToggle();
+  document.addEventListener('astro:after-swap', initNavToggle);
+</script>
