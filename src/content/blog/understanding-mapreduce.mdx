@@ -11,7 +11,7 @@ import Sidenote from '@/components/Sidenote.astro';
 
 **DISCLAIMER:** In this blog, I will take a very simple overview of this topic. If this blog actually spikes your interest and you want to delve into the technical nitty-gritty then I would urge you to read the original paper: [**"MapReduce: Simplified Data Processing on Large Clusters"**](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf) (It was written by the Top-Gs in the programming world: [Jeff Dean](https://www.informatika.bg/jeffdean) and Sanjay)<Sidenote>The paper was published at OSDI 2004 and is one of the most-cited systems papers of the decade — it's also the reason "map" and "reduce" became household words for backend engineers who'd never touched a Lisp REPL.</Sidenote>.
 
-# Background
+## Background
 
 Let's start with a little bit of background.
 
@@ -36,7 +36,7 @@ This is why Google came up with the MapReduce paradigm. There is also an open-so
 
 Link: [https://github.com/apache/hadoop](https://github.com/apache/hadoop)
 
-# What's MapReduce?
+## What's MapReduce?
 
 You must have already noticed that the name **MapReduce** is made up of two parts: **Map** and **Reduce**.
 
@@ -44,11 +44,11 @@ You might have often used these functions in Python, JavaScript, etc. Something 
 
 ![Map and Reduce function in JS over an array](/images/blog/understanding-mapreduce/76197584-24c1-45bc-a9fd-f84545c9ed39.png)
 
-## Map Function
+### Map Function
 
 The **Map** function applies a given function to each element in a collection (such as a list or array) and produces a new collection of transformed values. It is often used to perform element-wise operations on data.
 
-## Reduce Function
+### Reduce Function
 
 The **Reduce** function takes a collection and combines its elements into a single result by repeatedly applying a binary operation. It reduces a collection to a single value.
 
@@ -138,11 +138,11 @@ The **Reduce** function then accepts the intermediate key `I` and a set of value
 
 ![](/images/blog/understanding-mapreduce/da6f97fa-8bb0-43a4-9a0e-6ffb57e2e849.png)
 
-# Stages of MapReduce
+## Stages of MapReduce
 
 Now let's dive into the actual working of MapReduce.
 
-## Splitting the Input
+### Splitting the Input
 
 ![](/images/blog/understanding-mapreduce/59d6634a-c930-420e-aa06-bbaa478a853b.png)
 
@@ -152,7 +152,7 @@ The input data is actually partitioned into smaller chunks, typically 16 MB or 6
 
 The Reduce invocations are also distributed by partitioning the intermediate key space into `R` pieces using a partitioning function (we will discuss this later in this blog). The number `R` is also set by the user.
 
-## Building the army
+### Building the army
 
 When we start the MapReduce function, it first starts a special process called **"master"**. The master as you might have already guessed does a lot of management-related work like assigning Map and Reduce operations, handling exceptions, etc<Sidenote>The master is also a single point of failure in the original design — later systems like Hadoop's YARN added standby masters specifically to close this gap.</Sidenote>.
 
@@ -160,7 +160,7 @@ The program also starts up many copies of the program on the other machines. The
 
 ![](/images/blog/understanding-mapreduce/4229a66d-b7cd-4641-901b-f82a398a39ff.png)
 
-## Map Stage
+### Map Stage
 
 ![](/images/blog/understanding-mapreduce/3d64be6a-e0d9-4f51-b2a3-8bf9dd5b34ff.png)
 
@@ -168,7 +168,7 @@ A worker who is assigned a map task reads the contents of the corresponding inpu
 
 Before the workers with Reduce task assigned can work, these buffered pairs are written to the local disk which is partitioned into R partitions by the partitioning function. Once the partitioning is completed, the master is informed, who then signals the location to the Reduce workers to get the rest of the job done.
 
-## Reduce Phase
+### Reduce Phase
 
 ![](/images/blog/understanding-mapreduce/44877af8-7aaa-4346-9f4d-af1cb1f77023.png)
 
@@ -184,17 +184,17 @@ In the reduce step it also performs a merge of all the values corresponding to a
 
 Finally, the reduce worker goes through the sorted intermediate data and for each unique intermediate key, it passes the key and the set of intermediate values to the user's Reduce function. The output is then appended to the final output file.
 
-## Last stage
+### Last stage
 
 When all the Reduce workers have completed execution, the master passes control back to the user program. The output of MapReduce is stored in the `R` output files that the `R` reduce workers created.
 
-# Partitioning Function
+## Partitioning Function
 
 Let's understand what the partitioning function is all about. As a user, you can define the number of output files you want your data to split between. That number is denoted as `R` and MapReduce will assign the same number of Reduce workers. So if `R = 10`, it means that MapReduce will partition the data from the map workers into 10 splits. Each split will be assigned to one Reduce worker which means that there will be 10 Reduce workers. And then each Reduce worker will write the output to a file so the user will have their processed data split into 10 files.
 
 By default, the partitioning algorithm that is used is `hash(key) mod R`. This usually gives a fairly balanced partition. In some situations, you might want to use a custom function as well. Taking the example from the paper, if your keys are a bunch of URLs and you want them to be partitioned based on the hostname, then you can use a function that extracts the hostname and then applies the hash and mod. So something like: `hash(getHostName(key)) mod R`.
 
-# Example
+## Example
 
 Let's take the example of the Character Count. We have an input text file with a bunch of words and we have to calculate the frequency of all the characters appearing in the input.
 

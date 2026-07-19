@@ -7,7 +7,7 @@ tags: ['computer-science', 'cs-theory']
 
 import Sidenote from '@/components/Sidenote.astro';
 
-# Background
+## Background
 
 As software developers, our daily routine revolves around crafting programs in familiar languages such as JavaScript, C++, Python, Rust, Java, and more. We immerse ourselves in mastering the syntax of these languages and then put the keywords such that it achieves our business logic. But the question is: **How does the computer comprehend this diverse array of languages?**
 
@@ -70,7 +70,7 @@ Although, understanding the instruction set is essential for low-level programmi
 
 In this blog, I will talk about one specific kind of Instruction Set which I found really fascinating.
 
-# OISC
+## OISC
 
 OISC stands for One Instruction Set Compiler (OISC)<Sidenote>The name is a bit of a misnomer since OISC designs are instruction *set architectures*, not compilers — the "C" stuck around for historical reasons even after the term was more commonly used to describe the architecture itself.</Sidenote>. It is also called Single Instruction Programming Language or Ultimate Reduced Instruction Set Computer (URISC).
 
@@ -139,7 +139,7 @@ Here we basically drop the `c` which means we aren't branching anywhere but rath
 
 Let's look at some programs using this instruction:
 
-## Example 1
+### Example 1
 
 ```c
 ; initially *z = 0
@@ -176,7 +176,7 @@ What we see is `*b = *b + *a` i.e. this 3-line instruction performs addition.
 
 Not just addition other instructions can also be implemented with `subleq` instruction as well.
 
-## Example 2
+### Example 2
 
 ```c
 ; initially *z=0
@@ -190,7 +190,7 @@ You can work these out and you will come to the conclusion that it ends up assig
 
 Or you can apply *200IQ* and notice that this is exactly the same as the previous one, only a new instruction `subleq b, b` was added to the beginning, we know the other 3 lines implement this `*b = *b + *a` and the first line is basically `*b=0` , hence what we finally get is `*b= 0+*a` i.e. `*b=*a`.
 
-## Example 3
+### Example 3
 
 ```c
 subleq z, z, c
@@ -202,7 +202,7 @@ The interesting thing is this programming language with this one instruction is 
 
 It may not be very efficient and easy to write but in the end, all of these come under the class of Turing Complete. Yet there are some interesting benefits to employing a one-instruction computer. For example, hardware-level functionality is simplified when implemented around a single instruction. This greatly simplifies the underlying implementation, as the same functional element is repeatedly used to form the processor core. Another advantage is that since all the instructions are the same, the instruction decoder circuitry and complexity can be eliminated.
 
-# Why bother about **OISC?**
+## Why bother about **OISC?**
 
 OISC architectures provide an excellent paradigm for implementing traditional von Neumann computers using non-traditional materials. Simply put, a practical computer can be built by massive scaling of simple, single instruction elements. Embracing OISC challenges us to strip away the layers of abstraction, inviting a deeper exploration of the foundational principles that govern all programming.
 

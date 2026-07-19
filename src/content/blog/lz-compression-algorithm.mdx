@@ -17,7 +17,7 @@ Here was my previous blog which builds the intuition behind compression:
 
 In the previous blog, we dove into the world of compression algorithms! We explored the fascinating idea that compressing data can, in some cases, actually make the file size bigger. We talked about how every compressed data set has a counterpart that expands when compressed. This is because compression relies on finding patterns within the data.
 
-# Idea behind a practical Compression Scheme
+## Idea behind a practical Compression Scheme
 
 One way to deterministically achieve compression would be to have symbols for repeated chars or bits. Let’s take the example of the phrase `to be or not to be`. If we use a particular symbol `X` as a replacement for the `to be` part it will be encoded as: `X or not X`. This has reduced the number of symbols, hence we can say compression is achieved.
 
@@ -60,7 +60,7 @@ To draw some conclusion, to make a good compression algorithm, it needs to be ab
 
 *But is there any way we can make this even better? What if we can save the extra over-head to send the metadata to the decompressor?*
 
-# Idea
+## Idea
 
 One approach might be to traverse the input stream and build a dictionary simultaneously with all the information that we have so far. In other words, if the table/mapping can be built deterministically we don’t have to send that information to the decompressor and that will save us some extra overhead. The decompressor can use the same logic to build the table itself.
 
@@ -70,9 +70,9 @@ This article will focus on the **<mark>LZW scheme</mark>**. **Terry Welch** publ
 
 It’s a little hard to explain the algorithm in a blog but I have given my best:
 
-# Getting hands dirty
+## Getting hands dirty
 
-## Setup
+### Setup
 
 The compressor and decompressor maintain a symbol table. The symbol table is initially populated with the first 256 ASCII characters. As we process the input string we will create new symbols and they will take the index 256 onwards. So, we can say symbol 256 is for `to be` and so on.
 
@@ -82,7 +82,7 @@ We also have to maintain something called the **Working String**<Sidenote>Some r
 
 And, How do we build the working string? We use the **Current Character** while iterating the string. Once we add the current working string to the symbol table we reset the working string to just include the current character. So, effectively the working string is never empty except at the beginning of the compression.
 
-## Compression
+### Compression
 
 Let’s consider an example string `banana`.
 
@@ -209,7 +209,7 @@ Now we are done with the input character, but we still have some data left in th
 
 As you can see we were building the symbol table as we were traversing the input. Another good observation is that we solved the problem of what a symbol represents. In the compressed string where we used `257` as a replacement for `an`; the substring `an` already exists in the string before the symbol has been used.
 
-## Decompression
+### Decompression
 
 For decompression the important objective is to build the symbol table by the time it reaches the symbol, so that it can use the substitution.
 
@@ -337,13 +337,13 @@ Finally we will have our decompressed result: `banana`.
 
 Also notice how we arrived at the same symbol table that we saw during the compression process. This is the beauty of the LZW compression algorithm.
 
-### Edge Case :)
+#### Edge Case :)
 
 But there is a small caveat !! Try to follow this same algorithm to compress the string `another_banana` and then decompress it. While compression you won’t find any issue and if you do it correctly you should get `another b<256><265>` as the compressed data. But there will be a small edge case when you perform the decompression. 
 
 But it can be resolved with a little trick.
 
-## Conclusion
+### Conclusion
 
 "The art of compression is the art of finding patterns." 
 

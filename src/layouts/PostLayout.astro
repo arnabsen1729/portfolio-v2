@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import TagPill from '@/components/TagPill.astro';
+import JsonLd from '@/components/JsonLd.astro';
 import { readingTime } from '@/utils/readingTime';
 
 interface Heading {
@@ -50,9 +51,28 @@ const dateLabel = date.toLocaleDateString('en-US', {
   month: 'long',
   day: 'numeric',
 });
+
+const postURL = new URL(Astro.url.pathname, Astro.site).toString();
+const postImageURL = new URL(ogImage ?? `${base}og/home.png`, Astro.site).toString();
+const postSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description: dek,
+  image: postImageURL,
+  datePublished: date.toISOString(),
+  keywords: tags.join(', '),
+  mainEntityOfPage: { '@type': 'WebPage', '@id': postURL },
+  author: {
+    '@type': 'Person',
+    name: 'Arnab Sen',
+    url: new URL(base, Astro.site).toString(),
+  },
+};
 ---
 
 <BaseLayout title={title} description={dek} ogImage={ogImage}>
+  <JsonLd data={postSchema} />
   <div id="reading-progress"></div>
   <div class="page-grid post-page">
     <article class="content">

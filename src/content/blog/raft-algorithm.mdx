@@ -7,7 +7,7 @@ tags: ['distributed-systems', 'consensus', 'system-design']
 
 import Sidenote from '@/components/Sidenote.astro';
 
-# Introduction
+## Introduction
 
 I have been recently diving into the world of Distributed systems and I came across a rather interesting paper: [*"In Search of an Understandable Consensus Algorithm"*](https://raft.github.io/raft.pdf)*.* What caught my attention was the paper's primary objective of creating a consensus algorithm that is **easy to understand**. Typically, in the realm of new research, we tend to emphasize factors like efficiency, correctness, and conciseness while overlooking how accessible a concept is for others to grasp and apply in practical scenarios.
 
@@ -15,7 +15,7 @@ We often neglect how easy it for someone is to grasp the concept and use it to b
 
 With many major corporations transitioning to distributed systems, having an algorithm that is both easy to understand and intuitive can empower developers to create systems more seamlessly and devise more efficient implementations."
 
-# So, what is Consensus
+## So, what is Consensus
 
 Let's start with a simple analogy:
 
@@ -39,7 +39,7 @@ There is a pattern in most of the fault-tolerant systems. For example, in MapRed
 
 [https://arnabsen.dev/understanding-mapreduce](https://arnabsen.dev/understanding-mapreduce)
 
-# History of Consensus Protocols
+## History of Consensus Protocols
 
 Well, now that I think "history" is an overstatement cause there is just one very popular protocol called "Paxos" which has been the gold standard for a long long time. First submitted in 1989 by **the Leslie Lamport**, the Paxos protocol is named after a fictional legislative consensus system on the island of Paxos in Greece<Sidenote>Lamport's original paper, "The Part-Time Parliament," was written as a whimsical archaeology narrative about a lost Greek civilization, which is widely blamed for why the paper took years to be taken seriously.</Sidenote>.
 
@@ -51,7 +51,7 @@ Well, now that I think "history" is an overstatement cause there is just one ver
 
 The problem with Paxos was it was really hard to wrap our minds around. It only solved a portion of the problem and hence made it difficult to build systems around Paxos.
 
-# Raft Algorithm
+## Raft Algorithm
 
 As mentioned before the authors' primary design goal when building Raft was "understandability".
 
@@ -59,7 +59,7 @@ As mentioned before the authors' primary design goal when building Raft was "und
 
 Now this doesn't mean that Raft is very very easy to understand, there are still a lot of intricacies and edge cases to cover, but I will try my best to give a brief overview of the entire thing. So let's start.
 
-## What are we dealing with?
+### What are we dealing with?
 
 We have a client, which can be a user or a service etc. And it tries to fetch some data from the server we have which is nothing but a cluster of nodes.
 
@@ -86,13 +86,13 @@ So, when a new command gets proposed, it first gets logged on all the nodes (at 
 
 The idea behind this is if the logs get replicated properly the cluster can continue functioning as long as the majority of the nodes are up (Yes, it's more like democracy, the majority wins).
 
-## Who will instruct the nodes on what to do?
+### Who will instruct the nodes on what to do?
 
 Again similar to democracy, here also we have a leader node elected by other nodes. The leader node is responsible for talking to the client, giving commands to the other nodes, etc.
 
 Before diving deep into the functioning of the leader let's see how the nodes become a leader.
 
-### Server States
+#### Server States
 
 The nodes/server have 3 states:
 
@@ -111,7 +111,7 @@ The Leader handles all the client requests. It also sends regular heartbeats (em
 
 If a Follower receives no communication over a time period (called **election timeout**) it assumes that no Leader is available and starts the process of **Leader Election**<Sidenote>Typical production Raft implementations set this timeout in the 150–300ms range, deliberately kept an order of magnitude above expected network round-trip time to avoid spurious elections.</Sidenote>.
 
-### Leader Election
+#### Leader Election
 
 Let's talk about **term** before diving into Leader Election. To have consensus we need to have a mechanism to detect obsolete information. Like if a particular server was a leader and then it stopped responding, and a new leader was appointed. We need to ensure that the other servers don't take instructions from the old leader anymore. Raft achieves this by dividing the time into terms or arbitrary lengths called **term.**
 
@@ -139,7 +139,7 @@ Raft solves this by using randomized election timeouts, which means election tim
 
 ![](/images/blog/raft-algorithm/26dbcb95-8cd0-4355-8644-cae2ed4a7ace.png)
 
-## How does the normal operation happen?
+### How does the normal operation happen?
 
 Let's go through how a normal operation will take place with consensus in Raft.
 

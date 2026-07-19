@@ -4,14 +4,39 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
 import HashRing from '@/components/HashRing.astro';
 import Icon from '@/components/icons/Icon.astro';
+import JsonLd from '@/components/JsonLd.astro';
 import { introCopy } from '@/content/site';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 5);
 const base = import.meta.env.BASE_URL;
+const siteURL = new URL(base, Astro.site).toString();
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Arnab Sen',
+  url: siteURL,
+  jobTitle: 'Software Engineer',
+  worksFor: { '@type': 'Organization', name: 'Google' },
+  sameAs: [
+    'https://github.com/arnabsen1729',
+    'https://x.com/arnabsen1729',
+    'https://linkedin.com/in/arnabsen1729',
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Arnab Sen',
+  url: siteURL,
+};
 ---
 
 <BaseLayout title="Arnab Sen">
+  <JsonLd data={personSchema} />
+  <JsonLd data={websiteSchema} />
   <div class="simple-page homepage">
     <section class="intro">
       <div class="intro-text">
