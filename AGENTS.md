@@ -97,6 +97,60 @@ build time (see "Non-obvious constraints" below).
 - Résumé is both an HTML page (`src/pages/resume.astro`) and a PDF link
   (`public/resume.pdf`) — keep both in sync if editing one.
 
+## SEO & performance conventions for new posts/pages
+
+Most of this is automatic — don't hand-roll what the layouts already do.
+Read this before adding a post or page, not after something looks wrong in
+search results.
+
+- **Never write `# Heading` (h1) inside a post's markdown body.** The page's
+  only `<h1>` is the post title, rendered once by `PostLayout.astro`. Start
+  post sections at `##` (h2) and nest from there. Every page in the built
+  site is expected to have exactly one `<h1>` — verify with
+  `grep -o '<h1' dist/**/index.html | wc -l` per page after `pnpm build` if
+  you're touching heading structure. (This bit six existing posts before it
+  was caught — see git history around "SEO fixes: single h1 per post".)
+- **Watch for `#`-prefixed lines inside fenced code blocks** when scanning
+  markdown for heading issues — shell/Python comments (`# like this`) match
+  a naive `^# ` heading regex but aren't real headings. Track fence state
+  (toggle on ` ``` `) before treating a `#` line as a heading to fix.
+- **Always write a real `dek` in frontmatter** (used as the meta
+  description, OG/Twitter description, and `BlogPosting` JSON-LD
+  description). One generic sentence ("About Arnab Sen.") is a known SEO
+  smell — aim for a genuine 1–2 sentence summary of the post, roughly
+  120–160 characters.
+- **Don't hand-add OG images, JSON-LD, canonical URLs, or robots/sitemap
+  entries for new posts** — they're generated automatically:
+  - OG card: `src/pages/og/[...slug].png.ts` renders one per post id from
+    title/dek/tags/date via `src/utils/ogCard.ts` (satori + resvg). The ids
+    `home`, `about`, `resume` are reserved for page-level cards — don't slug
+    a post with one of those names.
+  - `BlogPosting` JSON-LD is emitted by `PostLayout.astro` via
+    `JsonLd.astro`, using the same title/dek/date/tags — no per-post setup.
+  - `sitemap-index.xml` (via `@astrojs/sitemap`) and `robots.txt` (via
+    `src/pages/robots.txt.ts`) pick up new routes automatically at build
+    time.
+  - If you add a new top-level *page* (not a post) that should be
+    discoverable/shareable, give it an explicit `ogImage` prop on
+    `BaseLayout` (see `about.astro`/`resume.astro` for the pattern) rather
+    than letting it fall through to the generic `/og/home.png` fallback.
+- **Post-body images get `loading`/`decoding`/`width`/`height` injected
+  automatically** by the `rehypeOptimizeImages` plugin in
+  `astro.config.mjs` — don't add these attributes by hand in markdown (you
+  can't anyway; markdown image syntax has no attribute slots). This only
+  computes `width`/`height` for images already downloaded into
+  `public/images/blog/...` via `scripts/download-blog-images.mjs` — a
+  hotlinked image never localized only gets the loading/decoding hints, no
+  dimensions. If a post's `<img>` is missing width/height in the built
+  output, localize the image rather than adding a manual fix.
+- **Write meaningful alt text on every image** — the migration/download
+  pipeline doesn't infer it, so several legacy posts have empty `alt`
+  attributes. New content should never ship an image without one.
+- **Don't add `astro-og-canvas`/`canvaskit-wasm` back** or a Google
+  Fonts `<link>` — OG images and fonts are both self-hosted by design (see
+  "Non-obvious constraints" above); reintroducing either regresses a
+  previously-fixed performance/dependency issue.
+
 ## Deferred work (don't build unless asked)
 
 - **Hashnode migration**: export, frontmatter mapping, image re-hosting,
