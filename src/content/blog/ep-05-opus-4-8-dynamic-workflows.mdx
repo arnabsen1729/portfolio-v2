@@ -1,9 +1,11 @@
 ---
-title: 'This Week in AI & Tech - Ep 05'
+title: 'This Week in AI & Tech Ep 05: Opus 4.8, Dynamic Workflows & Constitutional AI'
 dek: 'Breaking down Opus 4.8, Dynamic Workflows, and Constitutional AI.'
 date: 2026-05-31
 tags: ['ai', 'llm']
 ---
+
+import Sidenote from '@/components/Sidenote.astro';
 
 Another week and another model from one of the frontier labs: Anthropic releases Opus 4.8
 
@@ -19,7 +21,7 @@ While reading the blog on Opus 4.8 I came across two very interesting bits and t
 
 These are the kind of features that I feel makes the most difference when it comes to practical usage of these tools. A normal user won’t probably feel much difference between a model that has 64% on Agentic Coding v/s a model that has 69%. But features like Dynamic Workflows significantly make a difference.
 
-So far, if we had to spawn multiple agents we had to use Sub-Agents.
+So far, if we had to spawn multiple agents we had to use Sub-Agents<Sidenote>Sub-agents were themselves a fairly recent addition to the harness — before that, spawning parallel work meant juggling separate conversation threads by hand.</Sidenote>.
 
 > They would let you delegate tasks to isolated assistants that do their work separately and return just the information you need — keeping your main context window clean and your conversations focused.
 
@@ -38,11 +40,11 @@ This is how it works:
 5. Orchestrator synthesizes everything into a final, coordinated result delivered back to you.
 6. All the progress is checkpointed, so long-running workflows (hours to days) can resume if interrupted.
 
-One of the biggest achievements that the Anthropic highlighted was their migration of JS runtime Bun (which they acquired around the end of last year), from Zig to Rust, with 99.8% of the existing test suite passing, roughly 750,000 lines of Rust, and 11 days from first commit to merge.
+One of the biggest achievements that the Anthropic highlighted was their migration of JS runtime Bun (which they acquired around the end of last year), from Zig to Rust<Sidenote>Bun was originally written in Zig specifically for its manual memory control and C interop, so a full rewrite to Rust is a bigger bet than it sounds — it's trading one systems language's tradeoffs for another's.</Sidenote>, with 99.8% of the existing test suite passing, roughly 750,000 lines of Rust, and 11 days from first commit to merge.
 
 ![](/images/blog/ep-05-opus-4-8-dynamic-workflows/1c5d95cf-e44b-4082-8e0a-5ef88e972e0a-2138x1494.png)
 
-This approach of using orchestration as a first-class structured artifact rather than ad hoc prompting was something that always existed with technologies like LangGraph which existed since 2024.
+This approach of using orchestration as a first-class structured artifact rather than ad hoc prompting was something that always existed with technologies like LangGraph which existed since 2024<Sidenote>LangGraph was built on top of LangChain and modeled its execution as a graph of nodes and edges rather than a linear chain — a deliberate nod to the same graph-based thinking this post ends on.</Sidenote>.
 
 What’s changing is that now the orchestration is dynamic and is handled by the harness itself. Both also handle statefulness explicitly. LangGraph has a shared state object passed between nodes whereas, Dynamic Workflow stores intermediates in script variables. Neither of them dumps everything into one monolithic context.
 
@@ -61,7 +63,7 @@ For developers building complex agentic harnesses, these traits are a nightmare.
 
 And the way the Claude team achieved that was using **Constitutional AI**.
 
-It was introduced in Anthropic’s 2022 paper, and is the most distinctive part of how Claude is trained. Today most of the frontier models are further fine-tuned using RLHF (Reinforcement Learning using Human Feedback) where they depend on human raters to define “good behaviour”. Whereas with CAI, Anthropic has explicit set of principles, “a constitution” and use AI to apply them.
+It was introduced in Anthropic’s 2022 paper<Sidenote>"Constitutional AI: Harmlessness from AI Feedback" (Bai et al., 2022) — the core trick is having the model critique and revise its own outputs against the constitution, then training a preference model on those AI-generated comparisons instead of human ones.</Sidenote>, and is the most distinctive part of how Claude is trained. Today most of the frontier models are further fine-tuned using RLHF (Reinforcement Learning using Human Feedback) where they depend on human raters to define “good behaviour”<Sidenote>Human-rater feedback is expensive and slow to scale, and raters can disagree with each other on the same output — one of the practical motivations for replacing them with AI feedback in the loop.</Sidenote>. Whereas with CAI, Anthropic has explicit set of principles, “a constitution” and use AI to apply them.
 
 This is a very interesting subject and I would like to cover it in depth in a follow-up blog.
 
@@ -71,11 +73,11 @@ This is a very interesting subject and I would like to cover it in depth in a fo
 
 We all know the story of the 18th Century Prussian City which sat on both banks of a great river with 2 islands in the middle and all connected by exactly seven bridges.
 
-A Swiss mathematician named Euler kept pondering: *“Could you cross every bridge exactly once, without retracing a single one?” *and that led to a stream of study, which was later named the Graph Theory.
+A Swiss mathematician named Euler kept pondering: *“Could you cross every bridge exactly once, without retracing a single one?” *and that led to a stream of study, which was later named the Graph Theory<Sidenote>Euler's 1736 paper on this exact problem is generally credited as the founding result of graph theory — he proved the answer was no by reducing the city to a graph of nodes and edges, which was itself the novel idea.</Sidenote>.
 
 Over the next two and a half centuries, graph theory quietly became one of the most powerful tools in all of mathematics.
 
-When Google decided to consolidate the entire web using their PageRank, they realized the at the end they are solving a Graph Theory Problem. They had a tool for distributed computation called MapReduce, but they needed a fundamentally different model, so they built Pregel.
+When Google decided to consolidate the entire web using their PageRank, they realized the at the end they are solving a Graph Theory Problem. They had a tool for distributed computation called MapReduce, but they needed a fundamentally different model, so they built Pregel<Sidenote>Pregel's key departure from MapReduce is the "think like a vertex" model — each node processes its own state and messages from neighbors in parallel "supersteps," which maps far more naturally onto graph algorithms like PageRank than MapReduce's batch-oriented map/shuffle/reduce phases.</Sidenote>.
 
 Fast forward to the age of LLMs. As AI researchers began orchestrating multiple AI agents to collaborate, one agent researching, one writing, one reviewing, they faced a strangely familiar problem: how to coordinate a distributed system?
 
