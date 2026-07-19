@@ -1,0 +1,73 @@
+---
+// Renders a tweet inline in blog posts. The oEmbed HTML is fetched once at
+// build time (see tweetEmbed.ts), so the tweet's text is present in the
+// static markup even before JS runs. Twitter's widgets.js — which upgrades
+// the blockquote into the fully-styled card — is only loaded lazily, once a
+// .tweet-embed scrolls near the viewport, so tweet-free pages pay nothing
+// and pages with tweets don't block on it.
+import { getTweetEmbedHtml } from '@/utils/tweetEmbed';
+
+interface Props {
+  url: string;
+}
+
+const { url } = Astro.props;
+const html = await getTweetEmbedHtml(url);
+---
+
+<div class="tweet-embed">
+  {html ? (
+    <Fragment set:html={html} />
+  ) : (
+    <p class="tweet-embed-fallback">
+      <a href={url} target="_blank" rel="noopener noreferrer">View tweet</a>
+    </p>
+  )}
+</div>
+
+<script>
+  function loadTwitterWidgets() {
+    if (document.getElementById('twitter-wjs')) return;
+    const script = document.createElement('script');
+    script.id = 'twitter-wjs';
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }
+
+  const targets = document.querySelectorAll('.tweet-embed');
+  if ('IntersectionObserver' in window && targets.length) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        loadTwitterWidgets();
+        obs.disconnect();
+      }
+    }, { rootMargin: '200px' });
+    targets.forEach((target) => observer.observe(target));
+  } else if (targets.length) {
+    loadTwitterWidgets();
+  }
+</script>
+
+<style>
+  .tweet-embed {
+    margin: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .tweet-embed :global(blockquote.twitter-tweet) {
+    margin: 0;
+  }
+
+  .tweet-embed-fallback {
+    width: 100%;
+    max-width: 550px;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--hairline);
+    background: var(--code-bg);
+    border-radius: 6px;
+    text-align: center;
+  }
+</style>
