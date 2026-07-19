@@ -11,7 +11,7 @@ import sharp from 'sharp';
 // Set to the custom domain (e.g. 'arnabsen.dev') once DNS + the GitHub Pages
 // custom domain are configured. Leave as `null` to deploy at
 // https://arnabsen1729.github.io/portfolio-v2 for prototyping.
-const CUSTOM_DOMAIN = null;
+const CUSTOM_DOMAIN = 'arnabsen.dev';
 
 const site = CUSTOM_DOMAIN
   ? `https://${CUSTOM_DOMAIN}`
