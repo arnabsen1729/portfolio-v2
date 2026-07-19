@@ -5,6 +5,8 @@ date: 2022-01-11
 tags: ['bitcoin', 'open-source', 'personal']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 On June 26, I received an email saying that I was one of the 50 students selected for the **Summer of Bitcoin 2021** program. I was really happy and felt proud of myself because to be very honest I didn't have high hopes at that point. In this blog, I will cover the selection process, and my experience at Summer of Bitcoin and will also share some tips for those who are interested in this program.
 
 ## About the Summer of Bitcoin
@@ -46,7 +48,7 @@ Yayy !! My solution was in the **top 1%** among thousands of applicants. At this
 
 ### **3️⃣** Round 3: "Navigating Ambiguity"
 
-We were asked to find an issue in the official [Bitcoin](https://github.com/bitcoin/bitcoin) repo and explain what approach we would take to solve it. So I went to the issues tab and I didn't understand a single word since I was an absolute beginner. But I spent around 2 days trying to figure out the issues, even while doing this I learned a lot about stuff like fuzzing, AFL, and many other concepts. I picked one particular issue, tried to understand it end to end, researched a little bit, and came across an approach that I then explained.
+We were asked to find an issue in the official [Bitcoin](https://github.com/bitcoin/bitcoin) repo and explain what approach we would take to solve it. So I went to the issues tab and I didn't understand a single word since I was an absolute beginner. But I spent around 2 days trying to figure out the issues, even while doing this I learned a lot about stuff like fuzzing, AFL<Sidenote>AFL (American Fuzzy Lop) is a coverage-guided fuzzer that mutates input bytes and watches which code paths get exercised, making it a common tool for surfacing edge cases in security-critical C++ codebases like Bitcoin Core.</Sidenote>, and many other concepts. I picked one particular issue, tried to understand it end to end, researched a little bit, and came across an approach that I then explained.
 
 ### **4️⃣** Round 4: Telephonic Interview
 
@@ -90,11 +92,11 @@ Then we had some lectures which were given by [Kalle Rosenbaum](https://twitter.
 
 In between the lectures we used to have Breakout rooms that would give us a chance to discuss with peers and solve questions and resolve each other's doubts.
 
-By the end of the first week, I went from having very little knowledge about Bitcoin to having a good grasp on fundamentals like consensus (proof-of-work), the P2P network, how bitcoin protocol upgrades take place, and innovations taking place in Bitcoin like the SegWit, Taproot, etc.
+By the end of the first week, I went from having very little knowledge about Bitcoin to having a good grasp on fundamentals like consensus (proof-of-work), the P2P network, how bitcoin protocol upgrades take place, and innovations taking place in Bitcoin like the SegWit, Taproot, etc<Sidenote>Taproot was Bitcoin's first major protocol upgrade in years, activated in 2021, and it made multi-signature and complex smart-contract transactions look identical to ordinary payments on-chain, improving both privacy and efficiency.</Sidenote>.
 
 ## **📦** Project Matching
 
-Everyone was matched with a mentor and was assigned a Project. I was assigned the amazing [0xB10C](https://b10c.me/) and my project was to improve the "User-Space, Statically Defined Tracing" (USDT) support for Bitcoin Core. For the next few weeks, we collaborated with our mentors and made contributions to the various projects at the same time reviewing each other's work. I worked on adding some `utxocache` tracepoints for events like `flush`, `addCoin`, `spendCoin` etc. I learned a lot about the eBPF (extended Berkeley Packet Filter) technology, tracepoints, Linux Observability, navigating through large codebases like Bitcoin, and about open source in general.
+Everyone was matched with a mentor and was assigned a Project. I was assigned the amazing [0xB10C](https://b10c.me/) and my project was to improve the "User-Space, Statically Defined Tracing" (USDT) support for Bitcoin Core. For the next few weeks, we collaborated with our mentors and made contributions to the various projects at the same time reviewing each other's work. I worked on adding some `utxocache` tracepoints for events like `flush`, `addCoin`, `spendCoin` etc. I learned a lot about the eBPF (extended Berkeley Packet Filter) technology<Sidenote>eBPF lets you run sandboxed programs inside the Linux kernel without changing kernel source or loading a module, which is why it's become the go-to mechanism for low-overhead tracing and observability tooling.</Sidenote>, tracepoints, Linux Observability, navigating through large codebases like Bitcoin, and about open source in general.
 
 ## 🗓️ Weekly Seminars
 

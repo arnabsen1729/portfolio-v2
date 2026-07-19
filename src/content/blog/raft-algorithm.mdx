@@ -5,6 +5,8 @@ date: 2023-10-22
 tags: ['distributed-systems', 'consensus', 'system-design']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 # Introduction
 
 I have been recently diving into the world of Distributed systems and I came across a rather interesting paper: [*"In Search of an Understandable Consensus Algorithm"*](https://raft.github.io/raft.pdf)*.* What caught my attention was the paper's primary objective of creating a consensus algorithm that is **easy to understand**. Typically, in the realm of new research, we tend to emphasize factors like efficiency, correctness, and conciseness while overlooking how accessible a concept is for others to grasp and apply in practical scenarios.
@@ -39,7 +41,7 @@ There is a pattern in most of the fault-tolerant systems. For example, in MapRed
 
 # History of Consensus Protocols
 
-Well, now that I think "history" is an overstatement cause there is just one very popular protocol called "Paxos" which has been the gold standard for a long long time. First submitted in 1989 by **the Leslie Lamport**, the Paxos protocol is named after a fictional legislative consensus system on the island of Paxos in Greece.
+Well, now that I think "history" is an overstatement cause there is just one very popular protocol called "Paxos" which has been the gold standard for a long long time. First submitted in 1989 by **the Leslie Lamport**, the Paxos protocol is named after a fictional legislative consensus system on the island of Paxos in Greece<Sidenote>Lamport's original paper, "The Part-Time Parliament," was written as a whimsical archaeology narrative about a lost Greek civilization, which is widely blamed for why the paper took years to be taken seriously.</Sidenote>.
 
 ![System Design Interview: Scaling Single Server](/images/blog/raft-algorithm/cover.jpg)
 
@@ -67,7 +69,7 @@ Now, to ensure consensus we need the nodes to agree on a particular value and th
 
 **How do we ensure that all the nodes have the same value?** Raft achieves that through something called a **"Replicated Log".**
 
-It ensures that all the commands (or operations) that need to be performed are replicated across the nodes in the same order. So, let's say you have a variable `X` initially, the value is `0` and then you perform some operations like:
+It ensures that all the commands (or operations) that need to be performed are replicated across the nodes in the same order<Sidenote>This "replicated log" idea is also the backbone of event sourcing in application design — the log is the source of truth, and current state is just a fold over it.</Sidenote>. So, let's say you have a variable `X` initially, the value is `0` and then you perform some operations like:
 
 * `add 5`
     
@@ -107,7 +109,7 @@ Followers are passive, they issue no requests and can only respond to requests f
 
 The Leader handles all the client requests. It also sends regular heartbeats (empty requests) to the Followers to maintain authority. *More like it's saying "Don't get too excited, I am still your leader".*
 
-If a Follower receives no communication over a time period (called **election timeout**) it assumes that no Leader is available and starts the process of **Leader Election**.
+If a Follower receives no communication over a time period (called **election timeout**) it assumes that no Leader is available and starts the process of **Leader Election**<Sidenote>Typical production Raft implementations set this timeout in the 150–300ms range, deliberately kept an order of magnitude above expected network round-trip time to avoid spurious elections.</Sidenote>.
 
 ### Leader Election
 

@@ -5,6 +5,8 @@ date: 2024-06-02
 tags: ['databases', 'backend', 'system-design']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 Traditional databases often struggle to model and query complex interconnected data. This is where graph databases come in, offering a powerful way to represent and navigate relationships. In this blog series, we will dive into a high level idea of what's all the fuss about graph databases.
 
 A quick disclaimer: Don't worry if you're not a graph theory expert. You can still follow and discover the potential of this technology.
@@ -50,7 +52,7 @@ But if we visualize this data as a graph: The answer becomes immediately clear.
 
 We can also see that Charlie is the most followed person in this dataset. Graphs provide a powerful way to visualize and analyze relationships, making them a natural fit for representing interconnected data.
 
-While graph theory has existed since the 18th century (with contributions from mathematicians like Euler), it wasn't until the early 2000s that graph databases started gaining traction in the commercial world. Companies like **Neo4j** were among the first to offer graph database solutions, paving the way for wider adoption. Today, many popular graph databases are available, including **Amazon Neptune** and **ArangoDB**. Beyond social networks, graph databases are used in various applications like fraud detection, recommendation engines, and knowledge graphs.
+While graph theory has existed since the 18th century (with contributions from mathematicians like Euler)<Sidenote>Euler's 1736 solution to the Seven Bridges of Königsberg problem is generally credited as the founding result of graph theory — he proved no walking route could cross all seven bridges exactly once.</Sidenote>, it wasn't until the early 2000s that graph databases started gaining traction in the commercial world. Companies like **Neo4j** were among the first to offer graph database solutions, paving the way for wider adoption. Today, many popular graph databases are available, including **Amazon Neptune** and **ArangoDB**. Beyond social networks, graph databases are used in various applications like fraud detection, recommendation engines, and knowledge graphs.
 
 ![](/images/blog/graph-databases-101/image3-de75a57877.png)
 
@@ -80,7 +82,7 @@ Nodes can also have one or more labels, which categorize them based on their cha
 
 ### **Relationships**
 
-Relationships define how nodes are connected. They are inherently directional, meaning that "Alice follows Bob" is not the same as "Bob follows Alice." Relationships can also have optional properties. In our Twitter example, a "follows" relationship might have a property like `{ created_at: 2024-05-01 }` signifying that the person started following from 1st May 2024.
+Relationships define how nodes are connected. They are inherently directional, meaning that "Alice follows Bob" is not the same as "Bob follows Alice."<Sidenote>Some graph databases also support undirected relationships, but even then the underlying storage often keeps a direction internally and just exposes it as bidirectional at query time.</Sidenote> Relationships can also have optional properties. In our Twitter example, a "follows" relationship might have a property like `{ created_at: 2024-05-01 }` signifying that the person started following from 1st May 2024.
 
 ## **Where Graph Databases Shine**
 
@@ -96,7 +98,7 @@ In essence, graph databases are the tool of choice when relationships between da
 
 ## **Native Graph Processing**
 
-This way of modeling data is consistent across various graph database implementations, but there are different ways to encode and represent graphs in a database engine's main memory. A graph database can have native processing capabilities if it exhibits a property called <mark>index-free adjacency</mark>.
+This way of modeling data is consistent across various graph database implementations, but there are different ways to encode and represent graphs in a database engine's main memory. A graph database can have native processing capabilities if it exhibits a property called <mark>index-free adjacency</mark><Sidenote>The term was popularized by Neo4j's documentation and the "Graph Databases" O'Reilly book, though the underlying idea of storing direct pointers between records predates the modern graph database category by decades.</Sidenote>.
 
 How do we represent which nodes are adjacent to each other? In a graph, two nodes are adjacent if they are directly connected by a relationship. In non-native graph processing, an index might be used to look up adjacent nodes, similar to how a relational database uses indexes for faster query performance. However, this introduces overhead and can limit the speed of graph traversals.
 

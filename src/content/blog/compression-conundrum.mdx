@@ -5,6 +5,8 @@ date: 2024-03-24
 tags: ['algorithms', 'compression', 'computer-science']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 Couple of days back I was reading about compression and how different compression algorithms work and realized that I had a flawed understanding of the fundamentals of compression algorithms. So here I am noting down what I learnt.
 
 I will not cover any compression algorithm in this blog, will keep that for future blogs. But what I will do cover is if you want to create your own compression algorithm what should the starting point be like.
@@ -15,7 +17,7 @@ Let's step back a little
 
 ![Morse Code: What Hath God Wrought! – By Daniel Sheridan – Sheridan Voice](/images/blog/compression-conundrum/morse-what-hath-god-wrought-2000x559.jpg)
 
-So our protagonist is **Samuel F Morse**, a successful portrait artist. But he got hooked on the idea of an electric telegraph way back in 1832. The problem at the time was that other telegraph systems needed multiple wires – a mess to manage over long distances. So Morse came up with the idea of sending electrical pulses through wire with an electromagnet attached at the end of it. A springy metal bar (the armature) is attached to the electromagnet. When the magnet pulls, the armature makes a satisfying "click" as it hits a contact.
+So our protagonist is **Samuel F Morse**, a successful portrait artist. But he got hooked on the idea of an electric telegraph way back in 1832. The problem at the time was that other telegraph systems needed multiple wires – a mess to manage over long distances. So Morse came up with the idea of sending electrical pulses through wire with an electromagnet attached at the end of it<Sidenote>Morse wasn't working alone on this — Joseph Henry's earlier experiments with electromagnets over long wire runs directly informed the design, though Morse rarely gets asked to share the credit.</Sidenote>. A springy metal bar (the armature) is attached to the electromagnet. When the magnet pulls, the armature makes a satisfying "click" as it hits a contact.
 
 ![Morse Code original telegraph key](/images/blog/compression-conundrum/telegraph-transmitter-morse-code.jpg)
 
@@ -27,7 +29,7 @@ Morse's real genius wasn't just the tech; it was the code itself. Instead of a w
 
 ![English alphabet frequency distribution](/images/blog/compression-conundrum/frequency.jpg)
 
-The most frequently occurring letter in the English alphabet is the letter "e," and its corresponding Morse code representation is a single dot. Similarly, the second most common letter, "t," is represented by a single dash in Morse code.
+The most frequently occurring letter in the English alphabet is the letter "e," and its corresponding Morse code representation is a single dot. Similarly, the second most common letter, "t," is represented by a single dash in Morse code<Sidenote>This is essentially the same intuition behind Huffman coding a century later — assign shorter codes to more frequent symbols — except Huffman's version is provably optimal for a given frequency distribution, where Morse's assignment was closer to an educated guess.</Sidenote>.
 
 But letter’s like "z" are represented by two dashes followed by two dots. So if you had to say something like "Jazz" in Morse it would become
 
@@ -49,7 +51,7 @@ Hence, there should also exist an inverse of `C(s)`, let’s call it `D(s)` such
 
 One small thing to note here is that after decompression if we get the exact uncompressed data it’s called **loss-less compression**.
 
-There is another kind of compression where we expect that some information can be selectively discarded that is of less importance or less noticeable to the human eye or ear to achieve much smaller file sizes. They are called **lossy compression** (e.g. JPEG). Let’s just focus on loss-less compression for now.
+There is another kind of compression where we expect that some information can be selectively discarded that is of less importance or less noticeable to the human eye or ear to achieve much smaller file sizes. They are called **lossy compression** (e.g. JPEG)<Sidenote>Lossy schemes get to sidestep the pigeonhole argument below entirely, since `D(C(s)) = s` is never actually required to hold — that's the whole trade they're making for smaller files.</Sidenote>. Let’s just focus on loss-less compression for now.
 
 ## What makes a compression algorithm good?
 
@@ -93,7 +95,7 @@ Let’s take an example to understand this deeper. Let’s say we want to compre
 
 So, one possible input is `10` and we want to compress it to `1` and let’s say we want to compress `01`to `0`. But? What about `11`or `00`? We cannot compress it to `1` cause we are using `10` for that, nor can we use `0` cause we are using `01` for that.
 
-We can actually prove this with a theorem which is one of my personal favorites: **Pigeonhole Theorem**.
+We can actually prove this with a theorem which is one of my personal favorites: **Pigeonhole Theorem**<Sidenote>The pigeonhole principle just says that if you stuff more items into containers than there are containers, at least one container ends up with more than one item — here the "containers" are all the shorter bit-strings a compressor could possibly output.</Sidenote>.
 
 So, for some integer `n >= 1` and consider the set `S` of `2^n` strings of length exactly `n`. Let's define
 

@@ -5,13 +5,15 @@ date: 2022-01-31
 tags: ['gdb', 'debugging', 'tutorial']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 ## Introduction
 
 No matter how big or small the codebase is, errors and bugs are inevitable. So as a developer we should know how to fix them. But, even before fixing an error, we have a more daunting task. Can you guess it? Yes, finding where the error is in the first place.
 
 **Debugging** is the process of detecting and removing existing and potential errors (also called 'bugs') in a software code.
 
-In our day-to-day programming scenarios, we often use the print statements (like `console.log()`) to debug. But imagine this scenario. You are working on a large codebase and compiling the entire code takes like 3-4 mins. Now if you are stuck somewhere and you add a print statement you have to recompile the code. And if you keep doing that repeatedly, you will have to recompile the code every single time you make a change. This is too inefficient and a huge waste of time.
+In our day-to-day programming scenarios, we often use the print statements (like `console.log()`) to debug. But imagine this scenario. You are working on a large codebase and compiling the entire code takes like 3-4 mins. Now if you are stuck somewhere and you add a print statement you have to recompile the code. And if you keep doing that repeatedly, you will have to recompile the code every single time you make a change. This is too inefficient and a huge waste of time<Sidenote>This cost scales with codebase size — teams working on large C++ monorepos have reported multi-hour full rebuilds, which is part of why incremental and distributed build systems exist at all.</Sidenote>.
 
 ![image.png](/images/blog/exploring-gdb/5u8sv4rce.png)
 
@@ -19,7 +21,7 @@ This is where **Debuggers** come to the rescue. In this article, we will look at
 
 ## What is GDB?
 
-**GDB (GNU Debugger)** is a debugger for C and C++.
+**GDB (GNU Debugger)** is a debugger for C and C++<Sidenote>GDB was first released in 1986 by Richard Stallman as part of the GNU Project, making it older than most of the languages and toolchains it's commonly used to debug today.</Sidenote>.
 
 > GDB allows you to do things like run the program up to a certain point then stop and print out the values of certain variables at that point, or step through the program one line at a time and print out the values of each variable after executing each line.
 
@@ -120,7 +122,7 @@ Now, we don't see the error `(No debugging symbols found in factorial)` anymore.
 
 ## Breakpoint
 
-A `breakpoint` is a spot in your program where you would like to temporarily stop execution in order to check the values of variables, or to try to find out where the program is crashing, etc. To set a breakpoint you use the `break` command.
+A `breakpoint` is a spot in your program where you would like to temporarily stop execution in order to check the values of variables, or to try to find out where the program is crashing, etc<Sidenote>Under the hood, GDB typically implements breakpoints by temporarily overwriting the instruction at that address with a trap instruction, then restoring the original instruction once it's hit.</Sidenote>. To set a breakpoint you use the `break` command.
 
 > **Remember: ** Almost all the commonly used gdb commands have a shorter version and we should use them heavily to improve speed. 
 
@@ -262,7 +264,7 @@ No breakpoints or watchpoints.
 ## Symbol Table
 
 Have you ever wondered how a compiler remembers which data structure is of which type and so on?
-Well, the answer is **Symbol Table**. It is a data structure used by a compiler to keep track of semantics of variable names like:
+Well, the answer is **Symbol Table**<Sidenote>Symbol tables aren't unique to compiled languages — interpreters and linkers maintain their own versions too, which is part of why symbol-related errors ("undefined reference", "symbol not found") show up across such different toolchains.</Sidenote>. It is a data structure used by a compiler to keep track of semantics of variable names like:
 
 - **Data type** of the variable.
 - When is used: **scope** (The effective context where a name is valid).

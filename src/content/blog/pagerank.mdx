@@ -5,6 +5,8 @@ date: 2024-06-29
 tags: ['algorithms', 'google', 'search']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 Hi, glad you landed on this blog. I am Arnab Sen, a Software Engineer at Google. In our previous blog, we delved into the intriguing world of Graph Databases and their inner workings. Today, we'll take a detour from the technical details to explore a practical application of Graphs – PageRank, the algorithm that powers Google Search!
 
 ## Introduction
@@ -21,7 +23,7 @@ Searching for information was a tedious and often frustrating process. It was cl
 
 ![Larry Page and Sergey Brin Hand Over Alphabet's Reins | WIRED](/images/blog/pagerank/biz-google-524309146.jpg)
 
-Enter Larry Page and Sergey Brin, two Stanford PhD students with a radical idea. They envisioned a search engine that would rank websites not just by keywords, but by their importance and relevance within the vast network of the web. This was the birth of PageRank, a trillion dollar algorithm that would propel Google to become the dominant force it is today.
+Enter Larry Page and Sergey Brin, two Stanford PhD students with a radical idea. They envisioned a search engine that would rank websites not just by keywords, but by their importance and relevance within the vast network of the web<Sidenote>The project was internally called BackRub before being renamed, and was initially funded out of Stanford's Digital Library research project rather than any commercial venture.</Sidenote>. This was the birth of PageRank, a trillion dollar algorithm that would propel Google to become the dominant force it is today.
 
 ![Chart: Google's Search Dominance | Statista](/images/blog/pagerank/29267.jpeg)
 
@@ -41,7 +43,7 @@ Here A and B are called backlinks of C.
 
 Another observation the authors pointed out is that any <mark>outgoing links from these relatively important pages should also be given higher importance</mark>. PageRank tries to determine how well the importance of a page can be estimated from its link structure.
 
-PageRank's brilliance lies in its smart use of a mathematical concept called the Markov Chain.
+PageRank's brilliance lies in its smart use of a mathematical concept called the Markov Chain<Sidenote>Markov chains are named after Andrey Markov, who introduced them in 1906 to model letter sequences in Pushkin's poem "Eugene Onegin" — a long way from ranking web pages.</Sidenote>.
 
 Mathematically, a **Markov Chain** is a model that describes a sequence of possible events where the probability of each event depends only on the state attained in the previous event. It's like a random walk where your next step is determined by a set of probabilities associated with your current location.
 
@@ -96,7 +98,7 @@ But we have another problem. Consider this case, `b.com` points to `a.com`. But 
 
 ![](/images/blog/pagerank/83234534-7de0-42c3-8f2f-e3a7864bce1c.png)
 
-What will eventually happen is all the rank from the entire chain will get trapped in this cycle b/w `a.com` and `b.com`. The loop forms a trap which is called the **rank sink**.
+What will eventually happen is all the rank from the entire chain will get trapped in this cycle b/w `a.com` and `b.com`. The loop forms a trap which is called the **rank sink**<Sidenote>This is essentially an absorbing state in the underlying Markov chain — once probability mass wanders in, it never leaves, which is exactly what breaks the "unique stationary distribution" guarantee.</Sidenote>.
 
 The authors tackled these ingeniously by a method called...
 
@@ -151,7 +153,7 @@ PageRank returns the home page of Stanford as the top result (since the initial 
 
 ![Before Facebook became Meta, Google was BackRub, Amazon was Cadabra...](/images/blog/pagerank/images.jpg)
 
-**BackRub** was the initial name given to the search engine that would later become Google. The name "BackRub" actually reflects the core mechanism behind the search engine's algorithm, can you guess?
+**BackRub** was the initial name given to the search engine that would later become Google<Sidenote>The original BackRub crawler ran on Stanford's own campus network hardware, and by some accounts consumed enough bandwidth that it drew complaints from the university's IT staff.</Sidenote>. The name "BackRub" actually reflects the core mechanism behind the search engine's algorithm, can you guess?
 
 Yes, "backlinks".
 

@@ -5,9 +5,11 @@ date: 2023-09-30
 tags: ['mapreduce', 'distributed-systems', 'system-design']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 > MapReduce is a programming paradigm that helps us perform large-scale computation across computing clusters.
 
-**DISCLAIMER:** In this blog, I will take a very simple overview of this topic. If this blog actually spikes your interest and you want to delve into the technical nitty-gritty then I would urge you to read the original paper: [**"MapReduce: Simplified Data Processing on Large Clusters"**](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf) (It was written by the Top-Gs in the programming world: [Jeff Dean](https://www.informatika.bg/jeffdean) and Sanjay).
+**DISCLAIMER:** In this blog, I will take a very simple overview of this topic. If this blog actually spikes your interest and you want to delve into the technical nitty-gritty then I would urge you to read the original paper: [**"MapReduce: Simplified Data Processing on Large Clusters"**](https://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf) (It was written by the Top-Gs in the programming world: [Jeff Dean](https://www.informatika.bg/jeffdean) and Sanjay)<Sidenote>The paper was published at OSDI 2004 and is one of the most-cited systems papers of the decade — it's also the reason "map" and "reduce" became household words for backend engineers who'd never touched a Lisp REPL.</Sidenote>.
 
 # Background
 
@@ -120,7 +122,7 @@ print(frequency_count)
 
 Both of these functions are deterministic. Also, the map operation on one element doesn't depend on the result of another operation. In other words, they are independent of each other as well.
 
-So we can **parallelize the operations** of Map and Reduce. We can further extend the same thought process by breaking the input data into several chunks of data and having one map function for each chunk of data. This can also solve our **Fault Tolerance issue**, if something breaks on operation, it won't affect the others cause now they are all running independently in a parallel fashion. We can just re-run the broken process with the small chunk of data. You can see the big picture now as to why the Map and Reduce functions were considered specifically to solve this kind of problem.
+So we can **parallelize the operations** of Map and Reduce. We can further extend the same thought process by breaking the input data into several chunks of data and having one map function for each chunk of data. This can also solve our **Fault Tolerance issue**, if something breaks on operation, it won't affect the others cause now they are all running independently in a parallel fashion<Sidenote>This only holds because Map and Reduce are meant to be pure functions with no shared mutable state — the moment a map task depends on another task's side effects, re-running it in isolation stops being safe.</Sidenote>. We can just re-run the broken process with the small chunk of data. You can see the big picture now as to why the Map and Reduce functions were considered specifically to solve this kind of problem.
 
 ![](/images/blog/understanding-mapreduce/694494d8-be8b-4775-ad30-b29d93468d57.png)
 
@@ -146,13 +148,13 @@ Now let's dive into the actual working of MapReduce.
 
 The input data is actually partitioned into smaller chunks, typically 16 MB or 64 MB. Let's say the number of chunks/splits is `M`. Then there will be `M` map operations in total.
 
-***Why 64MB?*** That can be a whole separate topic of discussion but you can think of it like these large amounts of data are usually stored on local disks of the machine that make up the cluster. **Google File System (GFS)** divides each file into 64MB blocks, so having the input data of the same size will ensure that the map function just has to read data from one block thus reducing I/O latency.
+***Why 64MB?*** That can be a whole separate topic of discussion but you can think of it like these large amounts of data are usually stored on local disks of the machine that make up the cluster. **Google File System (GFS)** divides each file into 64MB blocks, so having the input data of the same size will ensure that the map function just has to read data from one block thus reducing I/O latency<Sidenote>GFS itself was published a year earlier, in 2003 — MapReduce was explicitly designed to sit on top of it, which is part of why the split size lines up with the block size instead of being an arbitrary tuning knob.</Sidenote>.
 
 The Reduce invocations are also distributed by partitioning the intermediate key space into `R` pieces using a partitioning function (we will discuss this later in this blog). The number `R` is also set by the user.
 
 ## Building the army
 
-When we start the MapReduce function, it first starts a special process called **"master"**. The master as you might have already guessed does a lot of management-related work like assigning Map and Reduce operations, handling exceptions, etc.
+When we start the MapReduce function, it first starts a special process called **"master"**. The master as you might have already guessed does a lot of management-related work like assigning Map and Reduce operations, handling exceptions, etc<Sidenote>The master is also a single point of failure in the original design — later systems like Hadoop's YARN added standby masters specifically to close this gap.</Sidenote>.
 
 The program also starts up many copies of the program on the other machines. These are done by the `fork` system call. All the other programs except the master are called "worker nodes" or simply "workers". Each of the workers will be assigned a task from the `M` map tasks and `R` reduce tasks which is determined by the master.
 

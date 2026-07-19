@@ -5,6 +5,8 @@ date: 2023-04-04
 tags: ['internships', 'software-development', 'tips', 'google']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 Even though, there is a plethora of articles on Google SWE Internship interview experience online, I am still frequently asked the following questions:
 
 * How did you crack Google SWE Internship?
@@ -102,7 +104,7 @@ If you are interested to know what my resume looks like, check out: [arnabsen.de
 
 ### Elevate your referral game
 
-Companies like Google actually let their own employees refer potential candidates. Although a referral doesn't **necessarily guarantee you a job** offer, it does mean your **application will stand out** from the rest of the applicants, which can only mean one thing - your chances of getting hired just got a whole lot higher. In some cases, a **Good Resume + Referral** can fast forward in the application rounds. In my case, I was directly skipped to the Technical Interview rounds.
+Companies like Google actually let their own employees refer potential candidates<Sidenote>At Google specifically, referrals go through an internal portal rather than just a forwarded resume — the referrer has to actively vouch for you in writing.</Sidenote>. Although a referral doesn't **necessarily guarantee you a job** offer, it does mean your **application will stand out** from the rest of the applicants, which can only mean one thing - your chances of getting hired just got a whole lot higher. In some cases, a **Good Resume + Referral** can fast forward in the application rounds. In my case, I was directly skipped to the Technical Interview rounds.
 
 Now few things to keep in mind:
 
@@ -171,7 +173,7 @@ You can find similar collections of questions for other companies as well.
     
 * Trie *(good to know)*
     
-* Segment trees/Fenwick trees *(good to know)*
+* Segment trees/Fenwick trees *(good to know)*<Sidenote>Fenwick trees (a.k.a. Binary Indexed Trees) are the more "OA-friendly" of the two — they're shorter to implement correctly under time pressure than a full segment tree.</Sidenote>
     
 * Bitmasks *(good to know)*
     
@@ -257,7 +259,7 @@ I gave a bunch of mock interviews (around 5-6) by taking the help of my seniors 
 
 The initial question that will be given to you, will be intentionally very vague. They will expect you to ask some clarifying questions to identify the fine details of the question. Let's take a very simple example, you are given an array of n numbers, and you have to find the subarray with the maximum sum.
 
-Now, your first thought might be using Kandane's Algorithm. But wait, what if all the numbers are positive? In that case, the answer is simply the entire array. As you can see one small change in the constraints, had a big effect on the final solution. So always practice asking clarifying questions.
+Now, your first thought might be using Kandane's Algorithm<Sidenote>Kadane's algorithm finds the maximum-sum contiguous subarray in a single linear pass by tracking a running "best sum ending here."</Sidenote>. But wait, what if all the numbers are positive? In that case, the answer is simply the entire array. As you can see one small change in the constraints, had a big effect on the final solution. So always practice asking clarifying questions.
 
 ### Interview tips to keep in mind
 
@@ -305,7 +307,7 @@ Both my interviews went well from my end, I didn't take any hints, wrote high co
 
 ## Round 5: Hiring Committee
 
-After I finished my interviews, I had a long wait. According to what I've heard, there is a hiring committee that comprises four to five persons that have prior interview experience and are familiar with the hiring standards. They would review your resume, your code during interviews, and the feedback from the interviewers before making a final decision.
+After I finished my interviews, I had a long wait. According to what I've heard, there is a hiring committee that comprises four to five persons that have prior interview experience and are familiar with the hiring standards<Sidenote>This is deliberately decoupled from the interviewers themselves — the committee reviews packets, not people, which is meant to reduce the influence of any single interviewer's personal impression.</Sidenote>. They would review your resume, your code during interviews, and the feedback from the interviewers before making a final decision.
 
 For me, it was a long long wait. I very clearly remember the day. It was Maha Shasthi (the onset of Durga Puja), I woke up to a mail saying:
 

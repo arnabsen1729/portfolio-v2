@@ -5,6 +5,8 @@ date: 2023-08-21
 tags: ['personal', 'university']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 ## Intro
 
 > **Heads up:** I initially wrote this blog at the end of my 3rd year, now that I have successfully graduated I figured why not take a stroll down memory lane and spill the beans on my last year too. Unlike my usual techy blogs, this one's more like the adventure of a super curious nerd trying to do it all! 😅
@@ -68,7 +70,7 @@ By the end of the 1st year, I became pretty good at CP and even reached **Expert
 
 This is when COVID happened, I had a lot of free time to explore. With my interest in CP declining, I wanted to know more about computer internals and its fundamental workings. So I started solving CTF Challenges.
 
-Since not many people may know about this, let me explain CTFs. CTF stands for **Capture The Flag**. You will be given a security challenge, it can be an encrypted text or a vulnerable website. You have to bypass the security or decrypt the ciphertext to get a token which is called the **flag**. Finding the flag wins some points and finally, the team/individual with the most points wins. This category of CTF is called **Jeopardy style**.
+Since not many people may know about this, let me explain CTFs. CTF stands for **Capture The Flag**<Sidenote>The name is a nod to the outdoor team game — here the "flag" is just a specific string, usually formatted like `flag{...}`, that proves you actually exploited the challenge.</Sidenote>. You will be given a security challenge, it can be an encrypted text or a vulnerable website. You have to bypass the security or decrypt the ciphertext to get a token which is called the **flag**. Finding the flag wins some points and finally, the team/individual with the most points wins. This category of CTF is called **Jeopardy style**.
 
 There is another style of CTF called **Attack-N-Defense**. Here we have two teams one *Red team* and another *Blue team*. The Red team's job is to break into a machine/system by finding loopholes and security flaws, while the Blue team's job is to fix those loopholes and patch those vulnerabilities before the Red team is able to enter the system.
 
@@ -129,7 +131,7 @@ By the end of 2nd year, I got into a fellowship program called [Pupilfirst Coron
 
 This is when my internship prep started. I got rejected by Microsoft for both Engage program and the on-campus drive. It was a bit disheartening.
 
-But then I came across [Summer of Bitcoin](https://www.summerofbitcoin.org/). It was an open-source opportunity and since I knew open-source won't dishearten me I applied. And guess what? I got selected. I was among the **51 mentees** for the first ever batch of Summer of Bitcoin. My project was to improve support for **User Statically Defined Tracing** (USDT) in [Bitcoin core](https://github.com/bitcoin/bitcoin) by adding new tracepoints and scripts, leveraging **eBPF (extended Berkeley Packet Filter)** technology. But what's more interesting is that during this mentorship, I had to work with:
+But then I came across [Summer of Bitcoin](https://www.summerofbitcoin.org/). It was an open-source opportunity and since I knew open-source won't dishearten me I applied. And guess what? I got selected. I was among the **51 mentees** for the first ever batch of Summer of Bitcoin. My project was to improve support for **User Statically Defined Tracing** (USDT) in [Bitcoin core](https://github.com/bitcoin/bitcoin) by adding new tracepoints and scripts, leveraging **eBPF (extended Berkeley Packet Filter)** technology<Sidenote>eBPF lets you run sandboxed programs inside the Linux kernel without changing kernel source or loading modules — it's the same underlying tech that powers a lot of modern observability and networking tools.</Sidenote>. But what's more interesting is that during this mentorship, I had to work with:
 
 * C++ (which I did in my *1st year for CP*)
     
@@ -140,7 +142,7 @@ But then I came across [Summer of Bitcoin](https://www.summerofbitcoin.org/). It
 
 My point is you might not see a direct advantage of what you are learning right now, but knowledge never goes to waste.
 
-There is this very popular story of **Steve Jobs**. Jobs took a calligraphy class at Reed College based on campus posters he saw after dropping out. He knew the class would earn him no credit towards a degree but he still did it anyway. This knowledge of calligraphy, later on, inspired Jobs during his Apple days to include multiple typefaces in Macintosh.
+There is this very popular story of **Steve Jobs**<Sidenote>Jobs recounted this story himself in his 2005 Stanford commencement address, which is where most people have actually heard it from.</Sidenote>. Jobs took a calligraphy class at Reed College based on campus posters he saw after dropping out. He knew the class would earn him no credit towards a degree but he still did it anyway. This knowledge of calligraphy, later on, inspired Jobs during his Apple days to include multiple typefaces in Macintosh.
 
 > "If I had never dropped in on that single course in college, the Mac would have never had multiple typefaces or proportionally spaced fonts. And since Windows just copied the Mac, it's likely that no personal computer would have them." ~ Steve Jobs
 

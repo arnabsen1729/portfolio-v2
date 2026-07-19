@@ -5,6 +5,8 @@ date: 2023-11-13
 tags: ['computer-science', 'cs-theory']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 # Background
 
 As software developers, our daily routine revolves around crafting programs in familiar languages such as JavaScript, C++, Python, Rust, Java, and more. We immerse ourselves in mastering the syntax of these languages and then put the keywords such that it achieves our business logic. But the question is: **How does the computer comprehend this diverse array of languages?**
@@ -70,19 +72,19 @@ In this blog, I will talk about one specific kind of Instruction Set which I fou
 
 # OISC
 
-OISC stands for One Instruction Set Compiler (OISC). It is also called Single Instruction Programming Language or Ultimate Reduced Instruction Set Computer (URISC).
+OISC stands for One Instruction Set Compiler (OISC)<Sidenote>The name is a bit of a misnomer since OISC designs are instruction *set architectures*, not compilers — the "C" stuck around for historical reasons even after the term was more commonly used to describe the architecture itself.</Sidenote>. It is also called Single Instruction Programming Language or Ultimate Reduced Instruction Set Computer (URISC).
 
 As the name suggests, this instruction set has just one instruction.
 
 *Okay, but you might think, what's so special about that? Anyone can create an instruction set that has just one instruction and call it an OISC.*
 
-Well, not really. Most mainstream programming languages are able to solve such a wide variety of problems and computations because they are all **Turing Complete.** If a programming language is Turing complete, it means that it can theoretically compute anything that is computable, given enough time and resources. (I'll do a separate blog on Turing Completeness, but for the time being, you can understand it like a test for programming languages)
+Well, not really. Most mainstream programming languages are able to solve such a wide variety of problems and computations because they are all **Turing Complete.**<Sidenote>Turing completeness is named after Alan Turing's 1936 formalization of computation via the Turing machine — a deceptively simple model of an infinite tape and a read/write head that turned out to capture the full power of computation.</Sidenote> If a programming language is Turing complete, it means that it can theoretically compute anything that is computable, given enough time and resources. (I'll do a separate blog on Turing Completeness, but for the time being, you can understand it like a test for programming languages)
 
 > Here is a movie recommendation: "The Imitation Game" based on the life of Alan Turing.
 
 ![Review: If you haven't watched 'The Imitation Game' Watch now](/images/blog/exploring-oisc/the-imitation-game.jpg)
 
-The OISC that I am going to talk about is also Turing complete, but the best part is unlike the Turing machine it doesn't need to have an infinite memory model. Hence, it is equivalent to a real computer than a Turing machine. And the instruction is `subleq` (**Subtract and branch if less than or equal to zero**).
+The OISC that I am going to talk about is also Turing complete, but the best part is unlike the Turing machine it doesn't need to have an infinite memory model. Hence, it is equivalent to a real computer than a Turing machine. And the instruction is `subleq` (**Subtract and branch if less than or equal to zero**)<Sidenote>Other OISC variants exist too, like `mov`-only machines or ones built around a single "reverse subtract and skip if borrow" (RSSB) instruction — subleq is just the most commonly taught one.</Sidenote>.
 
 For any instruction to be Turing Complete (or in simple words be able to compute most complex computations) it needs to have some sort of conditional branching. You can imagine this to be something like
 

@@ -5,6 +5,8 @@ date: 2023-01-28
 tags: ['redis', 'databases', 'tutorial']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 In this blog, we will take a look at what Redis is, how it works, and how to use it.
 
 ## Introduction
@@ -15,7 +17,7 @@ Redis stands for **RE**mote **DI**ctionary **S**erver.
 
 In simple words, Redis is an in-memory data structure store and is mainly popular for its very low-level latency. The fact that it is in-memory means that the time taken to access the data is very low compared to in-disk databases. This can be useful for applications that require fast data access and manipulation, such as real-time bidding systems or gaming servers.
 
-Redis was created by **Salvatore Sanfilippo**, also known as `"antirez"`, in order to provide a fast, in-memory database that could be used for a variety of purposes. It has since become widely popular for its performance, reliability, and flexibility.
+Redis was created by **Salvatore Sanfilippo**, also known as `"antirez"`, in order to provide a fast, in-memory database that could be used for a variety of purposes<Sidenote>Sanfilippo originally built Redis in 2009 to help scale the backend of his own startup, a real-time web analytics tool, before it grew into a standalone project.</Sidenote>. It has since become widely popular for its performance, reliability, and flexibility.
 
 ![](/images/blog/step-by-step-learning-redis/6bde5f21-f4e5-44f0-9e0f-7ef8592f6794.webp)
 
@@ -36,7 +38,7 @@ It is because of its low latency and high performance that Redis is used by a lo
 
 ## How does Redis work?
 
-Redis is a key-value store, which means that it stores data in the form of key-value pairs. The key is used to access the value, and the value can be of any type, such as a `string`, a `list`, a `set`, a `sorted set`, a `hash`. These data types are supported natively by Redis and provide a rich set of commands for manipulating and querying the data.
+Redis is a key-value store, which means that it stores data in the form of key-value pairs. The key is used to access the value, and the value can be of any type, such as a `string`, a `list`, a `set`, a `sorted set`, a `hash`. These data types are supported natively by Redis and provide a rich set of commands for manipulating and querying the data<Sidenote>Because these structures are native rather than bolted on, operations like "pop the last element" or "increment a hash field" run as single atomic commands — you don't need a separate read-modify-write transaction.</Sidenote>.
 
 In addition to these data types, Redis can be extended with Redis Modules. Some of these modules are provided by Redis Labs, and some are provided by the community. Some of the modules provided by Redis Labs are:
 
@@ -188,7 +190,7 @@ It will return `3` in this case.
 
 ## Setting Expiration Time
 
-The expiration time of a key refers to the amount of time that the key will remain in the database before it is automatically deleted. We can set the expiration time of a key using the `EXPIRE` command. For example, to set the expiration time of the key `name` to 10 seconds, you can use the following command:
+The expiration time of a key refers to the amount of time that the key will remain in the database before it is automatically deleted<Sidenote>Redis doesn't necessarily delete expired keys the instant their TTL hits zero — it uses a mix of lazy expiration on access and a background sweep that periodically samples keys, to avoid wasting CPU scanning the whole keyspace.</Sidenote>. We can set the expiration time of a key using the `EXPIRE` command. For example, to set the expiration time of the key `name` to 10 seconds, you can use the following command:
 
 ```bash
 EXPIRE name 10

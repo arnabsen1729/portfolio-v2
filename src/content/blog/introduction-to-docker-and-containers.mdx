@@ -5,6 +5,8 @@ date: 2023-05-27
 tags: ['docker', 'devops', 'tutorial']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 ## What is a Container?
 
 ![img](https://arnabsen.dev/images/docker-and-containers/cover.jpg)
@@ -19,7 +21,7 @@ And that package can be portable easily, which makes the process of development 
 
 **What happens in these containers?** Nothing much, just a couple of processes run in isolation on a shared kernel.
 
-**How is it isolated?** The isolation of containers is provided by a Linux feature called *namespaces*. Namespaces partitions kernel resources such that one set of processes sees one set of resources while another set of processes sees a different set of resources. They give the group of running processes an isolated view of the kernel. For example,
+**How is it isolated?** The isolation of containers is provided by a Linux feature called *namespaces*<Sidenote>Linux namespaces were introduced incrementally starting around 2002 (mount namespaces) through 2013 (user namespaces) — containers as a concept only became practical once enough of these namespace types existed to isolate a full process tree.</Sidenote>. Namespaces partitions kernel resources such that one set of processes sees one set of resources while another set of processes sees a different set of resources. They give the group of running processes an isolated view of the kernel. For example,
 
 | Namespaces | Description |
 | --- | --- |
@@ -41,7 +43,7 @@ $ lsns
 4026532928 net         1  7164 seth /usr/lib64/firefox/firefox [...]
 ```
 
-Another feature of the **kernel** is *control groups* (a.k.a `cgroups`) which monitors, limits, accounts for, and isolates the resource usage of a collection of processes (also known as containers)
+Another feature of the **kernel** is *control groups* (a.k.a `cgroups`) which monitors, limits, accounts for, and isolates the resource usage of a collection of processes (also known as containers)<Sidenote>cgroups were originally developed at Google (under the name "process containers") and merged into the Linux kernel in 2007, years before Docker made the combination of cgroups and namespaces mainstream.</Sidenote>
 
 ## Virtual Machine VS Containers
 
@@ -68,7 +70,7 @@ But remember:
 
 ## What is Docker?
 
-An early implementation of container technology was added to **FreeBSD** in **2001**. Whereas Docker debuted to the public in **Santa Clara at PyCon in 2013** and was made open source in **March 2013**. The tooling for using Linux Containers was really lacking and that's where docker comes into play. Basically, **docker is tooling to manage containers.**
+An early implementation of container technology was added to **FreeBSD** in **2001**<Sidenote>That feature was FreeBSD Jails, which let administrators partition a system into several independent environments — conceptually similar to containers, though built on a very different kernel from Linux's namespaces and cgroups.</Sidenote>. Whereas Docker debuted to the public in **Santa Clara at PyCon in 2013** and was made open source in **March 2013**. The tooling for using Linux Containers was really lacking and that's where docker comes into play. Basically, **docker is tooling to manage containers.**
 
 **Docker allows developers to package their applications into containers and directly use them in their CI/CD pipeline.**
 

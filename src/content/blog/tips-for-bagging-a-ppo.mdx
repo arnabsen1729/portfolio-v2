@@ -5,6 +5,8 @@ date: 2023-01-29
 tags: ['internships', 'career', 'tips']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 If you are here after you have got an internship, then a big congratulations to you for getting an internship. I hope you are enjoying it and learning a lot. I am sure you are. But now you want to make sure that you get a PPO at the end of it. So, let's get started.
 
 I have been wanting to write this blog for a long time, I will try to include all the important points that I followed and have learned during my internship which helped me bag a PPO. I will break them down into 2 parts mainly, **Technical** and **Non-Technical**. Before that let me give you a little background.
@@ -42,7 +44,7 @@ No matter which company you are working at, you will be using a version control 
 
 [https://youtu.be/RGOj5yH7evk](https://youtu.be/RGOj5yH7evk)
 
-At Google, we didn't use `git`, instead, we used Mercurial. But the fundamental concepts are the same. If you know how `git` works, learning a new version control system will just require you to learn the commands specific to that version control system.
+At Google, we didn't use `git`, instead, we used Mercurial<Sidenote>Google's internal repository is actually a single, enormous monorepo shared across nearly the whole company, which is part of why they built custom tooling like Piper and a heavily patched Mercurial client rather than relying on stock `git`.</Sidenote>. But the fundamental concepts are the same. If you know how `git` works, learning a new version control system will just require you to learn the commands specific to that version control system.
 
 ![git logo](/images/blog/tips-for-bagging-a-ppo/1da0047e-f988-49ba-8471-75bf637bf95c.jpeg)
 
@@ -68,7 +70,7 @@ Sometimes you can ask the recruiter about the tech stack that you will be using.
 
 ## 3\. Learn Design Patterns
 
-Design patterns are important for developers to understand because they provide proven solutions to common software design problems. By using design patterns, developers can improve the quality, reusability, and maintainability of their code.
+Design patterns are important for developers to understand because they provide proven solutions to common software design problems<Sidenote>The term itself traces back to the 1994 "Gang of Four" book, which cataloged 23 patterns observed in object-oriented systems — many predate the book by years and were simply given names for the first time.</Sidenote>. By using design patterns, developers can improve the quality, reusability, and maintainability of their code.
 
 While you don't need to know every design pattern in existence, it's helpful to have a good understanding of the most common design patterns and when to use them. This knowledge can save a lot of time and effort by allowing you to reuse tried-and-true solutions to common problems, rather than having to reinvent the wheel every time you encounter a new challenge.
 
@@ -97,7 +99,7 @@ Here is a free course on [Test Driven Development](https://thoughtbot.com/upcase
 
 ## 6\. Know how to write a Design Doc
 
-At Google, we heavily focus on the Design Doc. Even before we write a piece of code for a particular implementation we have to make sure we have analyzed every possible edge case, and technical and non-technical requirements. Design documents also help with communication among team members and can serve as a reference for future maintenance and updates to the software.
+At Google, we heavily focus on the Design Doc<Sidenote>This practice is one reason large tech companies can move fast despite scale — catching a bad architectural decision on paper is far cheaper than catching it after months of implementation and code review.</Sidenote>. Even before we write a piece of code for a particular implementation we have to make sure we have analyzed every possible edge case, and technical and non-technical requirements. Design documents also help with communication among team members and can serve as a reference for future maintenance and updates to the software.
 
 Certain key points need to be covered in a Design Doc like Architecture, Requirements, Design, User Interface, Testing .etc.
 

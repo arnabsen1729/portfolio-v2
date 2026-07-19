@@ -5,6 +5,8 @@ date: 2022-01-17
 tags: ['computer-science', 'bitcoin', 'cryptocurrency', 'web3']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 ## Centralised Web
 
 *How does the web in general work?*
@@ -18,7 +20,7 @@ Usually, we have a server where we upload files, and then we can access those fi
 
 ## Content Addressing
 
-But we can avoid this if we use a **peer-2-peer system**, with the help of content addressing. Before diving into how the p2p system avoids decentralization let's first understand **content addressing**. So, depending on the value of the content we can generate an address. We can use a cryptographic hash function. One of the popular functions is the `SHA-256`. In your terminal, you can write this command.
+But we can avoid this if we use a **peer-2-peer system**, with the help of content addressing. Before diving into how the p2p system avoids decentralization let's first understand **content addressing**. So, depending on the value of the content we can generate an address. We can use a cryptographic hash function<Sidenote>A cryptographic hash function is one-way and collision-resistant by design — you can't feasibly reverse it to recover the input, and finding two inputs with the same output should be computationally infeasible.</Sidenote>. One of the popular functions is the `SHA-256`. In your terminal, you can write this command.
 
 ```bash
 $ sha256sum file # will generate the SHA-256 hash of the file.
@@ -48,7 +50,7 @@ But there are some cons as well. Participants in a peer to peer cannot be truste
 
 **Merkle trees are a data structure that allows us to do efficient data verification across networks. It is a binary tree where the nodes store hashes instead of chunks of data.**
 
-> Merkle trees are named after **Ralph Merkle**, who proposed them in a 1987 paper titled *"A Digital Signature Based on a Conventional Encryption Function."* Merkle also invented cryptographic hashing.
+> Merkle trees are named after **Ralph Merkle**, who proposed them in a 1987 paper titled *"A Digital Signature Based on a Conventional Encryption Function."* Merkle also invented cryptographic hashing<Sidenote>Merkle was also one-third of the trio behind the Diffie–Hellman–Merkle key exchange, though his contribution was published later than Diffie and Hellman's.</Sidenote>.
 
 The leaf nodes store the hashes of the chunks of the data. And their parent nodes store the hash of concatenating the hashes of left child and right child.
 
@@ -91,7 +93,7 @@ That's it. For a bigger tree, we will just need one data and a couple of hashes.
 
 ## Use cases
 
-Merkle Trees are extensively used in Git, Bitcoin, and many other places. In Bitcoin specifically, it is used to validate transactions in a block. You can read more about it in the book [Grokking Bitcoin by Kalle Rosenbaum Section 6.5](http://rosenbaum.se/book/grokking-bitcoin.html#merkle-trees), the partial verification of Merkle Trees is used to check if a Transaction exists in a block.
+Merkle Trees are extensively used in Git, Bitcoin, and many other places<Sidenote>Git's commit objects form a hash chain too, but the file-tree structure within a single commit is exactly a Merkle tree — that's why changing one file changes every parent tree hash up to the commit hash.</Sidenote>. In Bitcoin specifically, it is used to validate transactions in a block. You can read more about it in the book [Grokking Bitcoin by Kalle Rosenbaum Section 6.5](http://rosenbaum.se/book/grokking-bitcoin.html#merkle-trees), the partial verification of Merkle Trees is used to check if a Transaction exists in a block.
 
 Gaurav Sen has also explained the same concept by taking the case of Git. You can watch the video  [here](https://www.youtube.com/watch?v=qHMLy5JjbjQ).
 

@@ -5,6 +5,8 @@ date: 2024-04-14
 tags: ['algorithms', 'compression', 'computer-science']
 ---
 
+import Sidenote from '@/components/Sidenote.astro';
+
 Hey everyone! In this blog, we're going to continue our discussion on data compression, but this time, we're diving into some real-world algorithms that make it all happen.
 
 Here was my previous blog which builds the intuition behind compression:
@@ -62,9 +64,9 @@ To draw some conclusion, to make a good compression algorithm, it needs to be ab
 
 One approach might be to traverse the input stream and build a dictionary simultaneously with all the information that we have so far. In other words, if the table/mapping can be built deterministically we don’t have to send that information to the decompressor and that will save us some extra overhead. The decompressor can use the same logic to build the table itself.
 
-This is actually the hallmark of the **LZ Scheme of Compression Algorithms**. The LZ family of data compression algorithms trace back to the work of **Abraham Lempel** and **Jacob Ziv**, who published two influential papers in 1977 and 1978. These algorithms, LZ77 and LZ78, laid the groundwork for many variations that are still used today, including LZW, LZSS, and LZMA.
+This is actually the hallmark of the **LZ Scheme of Compression Algorithms**. The LZ family of data compression algorithms trace back to the work of **Abraham Lempel** and **Jacob Ziv**, who published two influential papers in 1977 and 1978<Sidenote>These are commonly cited as "LZ77" and "LZ78" — the numbers refer to the publication year, not a version sequence.</Sidenote>. These algorithms, LZ77 and LZ78, laid the groundwork for many variations that are still used today, including LZW, LZSS, and LZMA.
 
-This article will focus on the **<mark>LZW scheme</mark>**. **Terry Welch** published it in 1984 (the W in the LZW) as a significant improvement to LZ78. The LZW algorithm quickly gained widespread use due to its efficiency and adaptability. It became the compression method of choice in the popular GIF image format. In 1985, Sperry Corporation (which had acquired Lempel and Ziv's employer) obtained a patent on LZW. Later, Unisys acquired Sperry and began enforcing licensing fees on the use of LZW in software. But developers weren’t happy with this but that hatred fueled the creation and adoption of other compression algorithms like DEFLATE (which is used in the gzip tool). But, the classic Unix command `compress` utilizes a modified version of the LZW algorithm.
+This article will focus on the **<mark>LZW scheme</mark>**. **Terry Welch** published it in 1984 (the W in the LZW) as a significant improvement to LZ78. The LZW algorithm quickly gained widespread use due to its efficiency and adaptability. It became the compression method of choice in the popular GIF image format. In 1985, Sperry Corporation (which had acquired Lempel and Ziv's employer) obtained a patent on LZW. Later, Unisys acquired Sperry and began enforcing licensing fees on the use of LZW in software<Sidenote>The LZW patent expired in most countries by 2003–2004, which is part of why formats built on it (like GIF) eventually became uncontroversial to use again.</Sidenote>. But developers weren’t happy with this but that hatred fueled the creation and adoption of other compression algorithms like DEFLATE (which is used in the gzip tool). But, the classic Unix command `compress` utilizes a modified version of the LZW algorithm.
 
 It’s a little hard to explain the algorithm in a blog but I have given my best:
 
@@ -76,7 +78,7 @@ The compressor and decompressor maintain a symbol table. The symbol table is ini
 
 In the LZW compression algorithm, whenever we add something to the compressed data result, there must exist corresponding symbol in the symbol table.
 
-We also have to maintain something called the **Working String** which stores a new symbol. At every step we either try to make the working string longer or add the current working string to the symbol table.
+We also have to maintain something called the **Working String**<Sidenote>Some references call this the "prefix" instead — it's the longest run seen so far that's already guaranteed to have an entry in the table.</Sidenote> which stores a new symbol. At every step we either try to make the working string longer or add the current working string to the symbol table.
 
 And, How do we build the working string? We use the **Current Character** while iterating the string. Once we add the current working string to the symbol table we reset the working string to just include the current character. So, effectively the working string is never empty except at the beginning of the compression.
 

@@ -5,7 +5,9 @@ date: 2022-01-17
 tags: ['bitcoin', 'cryptography', 'tutorial']
 ---
 
-We know the bitcoin ledger is nothing but a **Blockchain**. And a single entity of the blockchain is called **Block**.  A block is a container data structure that aggregates transactions for inclusion in the public ledger, the blockchain.
+import Sidenote from '@/components/Sidenote.astro';
+
+We know the bitcoin ledger is nothing but a **Blockchain**. And a single entity of the blockchain is called **Block**.  A block is a container data structure that aggregates transactions for inclusion in the public ledger, the blockchain<Sidenote>The word "blockchain" doesn't actually appear in Satoshi Nakamoto's original 2008 whitepaper — it just describes "a chain of blocks," and the single-word term emerged later from the community.</Sidenote>.
 
 
 ![mempool-space.png](/images/blog/introduction-to-bitcoin-script/7xwqkp2lq.png)
@@ -63,7 +65,7 @@ An actual transaction looks very different from a transaction provided by a typi
 }
 ```
 
-Every transaction has some **inputs** and then some **outputs**. These transaction outputs are the fundamental building blocks of a bitcoin. So for instance, if you make a new transaction the inputs will be nothing but point to the outputs of some previous transactions which is in the blockchain. And the new outputs will now become available and spendable. These transaction outputs are actually known as **UTXO (Unspent Transaction Output)**. And the collection of all the UTXO is called the **UTXO set**.
+Every transaction has some **inputs** and then some **outputs**. These transaction outputs are the fundamental building blocks of a bitcoin. So for instance, if you make a new transaction the inputs will be nothing but point to the outputs of some previous transactions which is in the blockchain. And the new outputs will now become available and spendable. These transaction outputs are actually known as **UTXO (Unspent Transaction Output)**. And the collection of all the UTXO is called the **UTXO set**<Sidenote>This is the key architectural difference from account-based ledgers like Ethereum's: there's no persistent "balance" stored anywhere, just a set of discrete spendable outputs that wallets sum up on the fly.</Sidenote>.
 
 **Transaction outputs consist of two parts:**
 
@@ -81,7 +83,7 @@ We will mainly be focussing on the _cryptographic puzzle_ in the transaction out
 
 ## Script
 
-In Bitcoin, the verification is done by executing a script. The scripting language is called **Script**.  It is very similar to Froth. Some of the properties of this language are:
+In Bitcoin, the verification is done by executing a script. The scripting language is called **Script**.  It is very similar to Froth<Sidenote>Froth itself is a variant of Forth, a stack-based language from the 1970s originally designed for controlling telescopes — its minimalist, postfix style turned out to be a natural fit for a constrained, deterministic validation language.</Sidenote>. Some of the properties of this language are:
 
 ### Stack Based Execution
 
@@ -128,7 +130,7 @@ But even after these restrictions Script provides a lot of flexibility, and ther
 
 Let's imagine a briefcase that is locked, now who do you think the briefcase belongs to? Obviously to the person who has the key to that lock. Similarly, if Alice sends Bob some coins, the output of that transaction will have a locking script. If Bob decides to spend those coins then Bob has to provide the appropriate unlocking script which only he has access to. Indirectly we can say that those coins are now locked to Bob's BTC address i.e belong to Bob.
 
-Historically, the locking script was called a `scriptPubKey`, because it usually contained a public key or bitcoin address (public key hash).
+Historically, the locking script was called a `scriptPubKey`, because it usually contained a public key or bitcoin address (public key hash)<Sidenote>Modern Bitcoin has moved toward newer output types like P2WPKH and P2TR (Taproot), which still function as locking scripts but encode the spending conditions more compactly and with better privacy properties.</Sidenote>.
 
 ### Unlocking Script
 
