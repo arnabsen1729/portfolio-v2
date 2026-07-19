@@ -2,8 +2,4 @@
 const id = `sn-${Math.random().toString(36).slice(2, 9)}`;
 ---
 
-<span class="sidenote-wrapper">
-  <label for={id} class="sidenote-ref" aria-label="Note"></label>
-  <input type="checkbox" id={id} class="sidenote-toggle" />
-  <span class="sidenote"><slot /></span>
-</span>
+<span class="sidenote-wrapper"><label for={id} class="sidenote-ref" aria-label="Note"></label><input type="checkbox" id={id} class="sidenote-toggle" /><span class="sidenote"><slot /></span></span>

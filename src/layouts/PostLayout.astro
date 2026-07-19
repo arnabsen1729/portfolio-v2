@@ -69,24 +69,27 @@ const dateLabel = date.toLocaleDateString('en-US', {
       </div>
       {
         (newerPost || olderPost) && (
-          <nav class="post-adjacent-nav" aria-label="Adjacent posts">
-            {newerPost ? (
-              <a href={`${base}blog/${newerPost.slug}`} data-nav="newer">
-                <span class="meta">← Newer</span>
-                <span>{newerPost.title}</span>
-              </a>
-            ) : (
-              <span />
-            )}
-            {olderPost ? (
-              <a href={`${base}blog/${olderPost.slug}`} data-nav="older" class="align-right">
-                <span class="meta">Older →</span>
-                <span>{olderPost.title}</span>
-              </a>
-            ) : (
-              <span />
-            )}
-          </nav>
+          <>
+            <p class="meta post-nav-hint">j/k: older/newer</p>
+            <nav class="post-adjacent-nav" aria-label="Adjacent posts">
+              {newerPost ? (
+                <a href={`${base}blog/${newerPost.slug}`} data-nav="newer">
+                  <span class="meta">← Newer</span>
+                  <span>{newerPost.title}</span>
+                </a>
+              ) : (
+                <span />
+              )}
+              {olderPost ? (
+                <a href={`${base}blog/${olderPost.slug}`} data-nav="older" class="align-right">
+                  <span class="meta">Older →</span>
+                  <span>{olderPost.title}</span>
+                </a>
+              ) : (
+                <span />
+              )}
+            </nav>
+          </>
         )
       }
     </article>
@@ -138,21 +141,33 @@ const dateLabel = date.toLocaleDateString('en-US', {
     font-size: 1.15rem;
     color: var(--ink-soft);
     margin: 0.25em 0 1em;
+    font-family: var(--font-serif);
   }
   .post-header {
     margin-bottom: 2.5rem;
     border-bottom: 1px solid var(--hairline);
     padding-bottom: 1.5rem;
   }
+  /* Zero the h1's UA default top margin so it starts flush with the top of
+     .content — this is what lets the sticky TOC in .rail (which has no
+     equivalent top margin) line up with the h1 baseline instead of sitting
+     visibly higher. */
+  .post-header h1 {
+    margin-top: 0;
+  }
   .post-content :global(p) {
     margin: 1.25em 0;
   }
 
+  .post-nav-hint {
+    text-align: center;
+    margin: 3rem 0 0;
+  }
   .post-adjacent-nav {
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
-    margin-top: 3rem;
+    margin-top: 0.75rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--hairline);
   }

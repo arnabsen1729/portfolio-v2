@@ -1,65 +1,53 @@
 ---
-import type { GetStaticPaths, Page } from 'astro';
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import PostCard from '@/components/PostCard.astro';
-import Pagination from '@/components/Pagination.astro';
+import HashRing from '@/components/HashRing.astro';
 import Icon from '@/components/icons/Icon.astro';
 import { introCopy } from '@/content/site';
 
-export const getStaticPaths = (async ({ paginate }) => {
-  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-  const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-  return paginate(posts, { pageSize: 5 });
-}) satisfies GetStaticPaths;
-
-interface Props {
-  page: Page<CollectionEntry<'blog'>>;
-}
-
-const { page } = Astro.props as Props;
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 5);
 const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="Arnab Sen">
   <div class="simple-page homepage">
-    <div class="homepage-gradient" aria-hidden="true">
-      <span class="blob blob-1"></span>
-      <span class="blob blob-2"></span>
-      <span class="blob blob-3"></span>
-    </div>
-
     <section class="intro">
-      {introCopy.map((paragraph) => <p>{paragraph}</p>)}
-      <div class="key-links">
-        <a href="https://github.com/arnabsen" target="_blank" rel="noopener noreferrer">
-          <Icon name="github" size={15} /> GitHub
-        </a>
-        <a href="https://x.com/arnabsen" target="_blank" rel="noopener noreferrer">
-          <Icon name="x" size={15} /> X
-        </a>
-        <a href={`${base}resume`}>
-          <Icon name="file-text" size={15} /> Résumé
-        </a>
-        <a href="mailto:hello@arnabsen.dev">
-          <Icon name="mail" size={15} /> Email
-        </a>
-        <a href={`${base}rss.xml`}>
-          <Icon name="rss" size={15} /> RSS
-        </a>
+      <div class="intro-text">
+        <h1 class="visually-hidden">Arnab Sen</h1>
+        {introCopy.map((paragraph, i) => <p class:list={{ 'intro-lede': i === 0 }}>{paragraph}</p>)}
+        <div class="key-links">
+          <a href="https://github.com/arnabsen1729" target="_blank" rel="noopener noreferrer">
+            <Icon name="github" size={15} /> GitHub
+          </a>
+          <a href="https://x.com/arnabsen1729" target="_blank" rel="noopener noreferrer">
+            <Icon name="x" size={15} /> X
+          </a>
+          <a href={`${base}resume`}>
+            <Icon name="file-text" size={15} /> Résumé
+          </a>
+          <a href="mailto:hello@arnabsen.dev">
+            <Icon name="mail" size={15} /> Email
+          </a>
+          <a href={`${base}rss.xml`}>
+            <Icon name="rss" size={15} /> RSS
+          </a>
+        </div>
       </div>
+      <HashRing class="intro-ring" size={96} />
     </section>
 
     <hr class="section-divider" />
 
     <div class="section-heading">
-      <h2>Writings</h2>
+      <h2 class="eyebrow">Writing</h2>
       <a href={`${base}writing`} class="section-heading-link">See all →</a>
     </div>
 
     <div class="post-list">
       {
-        page.data.map((post, index) => (
+        posts.map((post, index) => (
           <div class="post-card-reveal" style={`transition-delay: ${Math.min(index, 6) * 60}ms`}>
             <PostCard
               slug={post.id}
@@ -75,13 +63,6 @@ const base = import.meta.env.BASE_URL;
         ))
       }
     </div>
-
-    <Pagination
-      prevUrl={page.url.prev}
-      nextUrl={page.url.next}
-      currentPage={page.currentPage}
-      lastPage={page.lastPage}
-    />
   </div>
 </BaseLayout>
 
@@ -90,95 +71,37 @@ const base = import.meta.env.BASE_URL;
     position: relative;
   }
 
-  /* ---------- Gradient background (homepage only) ---------- */
-  /* Breaks out of .simple-page's narrow centered column so the blobs span
-     the same full viewport width as the sticky navbar above, instead of
-     being confined (and off-center) within the reading column. */
-  .homepage-gradient {
-    position: absolute;
-    top: -2rem;
-    left: 50%;
-    width: 100vw;
-    transform: translateX(-50%);
-    height: 26rem;
-    overflow: hidden;
-    z-index: -1;
-    pointer-events: none;
-  }
-  .homepage-gradient .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.28;
-  }
-  .blob-1 {
-    top: -4rem;
-    left: 5%;
-    width: 22rem;
-    height: 22rem;
-    background: var(--oxblood);
-  }
-  .blob-2 {
-    top: -2rem;
-    right: 8%;
-    width: 18rem;
-    height: 18rem;
-    background: var(--slate);
-  }
-  .blob-3 {
-    top: 6rem;
-    left: 38%;
-    width: 16rem;
-    height: 16rem;
-    background: var(--slate);
-  }
-  html.dark .homepage-gradient .blob {
-    opacity: 0.34;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .blob-1 {
-      animation: drift-1 26s ease-in-out infinite alternate;
-    }
-    .blob-2 {
-      animation: drift-2 22s ease-in-out infinite alternate;
-    }
-    .blob-3 {
-      animation: drift-3 30s ease-in-out infinite alternate;
-    }
-  }
-  @keyframes drift-1 {
-    from {
-      transform: translate(0, 0);
-    }
-    to {
-      transform: translate(1.5rem, 1rem);
-    }
-  }
-  @keyframes drift-2 {
-    from {
-      transform: translate(0, 0);
-    }
-    to {
-      transform: translate(-1.25rem, 1.5rem);
-    }
-  }
-  @keyframes drift-3 {
-    from {
-      transform: translate(0, 0);
-    }
-    to {
-      transform: translate(1rem, -1rem);
-    }
-  }
-
   /* ---------- Intro entrance ---------- */
   .intro {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 1.5rem;
     margin-bottom: 2.5rem;
   }
-  .intro p {
+  .intro-text h1 {
+    margin: 0 0 0.75rem;
+  }
+  .intro-text p {
     color: var(--ink-soft);
     font-size: 1.1rem;
+  }
+  .intro-text p.intro-lede {
+    color: var(--ink);
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+  .intro-ring {
+    justify-self: start;
+    opacity: 0.9;
+  }
+  @media (min-width: 640px) {
+    .intro {
+      grid-template-columns: 1fr auto;
+    }
+    .intro-ring {
+      justify-self: end;
+    }
   }
   .key-links {
     display: flex;
@@ -224,7 +147,7 @@ const base = import.meta.env.BASE_URL;
     margin: 0 0 2rem;
   }
 
-  /* ---------- "Writings" section heading ---------- */
+  /* ---------- "Writing" section heading ---------- */
   .section-heading {
     display: flex;
     align-items: baseline;
@@ -233,7 +156,6 @@ const base = import.meta.env.BASE_URL;
     margin-bottom: 1.25rem;
   }
   .section-heading h2 {
-    font-size: 1.05rem;
     margin: 0;
   }
   .section-heading-link {

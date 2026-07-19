@@ -8,24 +8,27 @@ const base = import.meta.env.BASE_URL;
 <header class="site-header">
   <div class="site-header-inner">
     <a class="site-title" href={base}>Arnab Sen</a>
-    <button
-      class="nav-toggle"
-      id="nav-toggle"
-      type="button"
-      aria-label="Toggle navigation menu"
-      aria-expanded="false"
-      aria-controls="site-nav"
-    >
-      <span class="nav-toggle-bars" aria-hidden="true"></span>
-    </button>
-    <nav class="site-nav" id="site-nav">
-      <a href={`${base}writing`}>Writing</a>
-      <a href={`${base}papershelf`}>Papershelf</a>
-      <a href={`${base}resume`}>Résumé</a>
-      <a href={`${base}about`}>About</a>
-      <SearchModal />
-      <ThemeToggle />
-    </nav>
+    <div class="site-header-right">
+      <nav class="site-nav" id="site-nav">
+        <a href={`${base}writing`}>Writing</a>
+        <a href={`${base}papershelf`}>Papershelf</a>
+        <a href={`${base}about`}>About</a>
+      </nav>
+      <div class="header-controls">
+        <SearchModal />
+        <ThemeToggle />
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          aria-controls="site-nav"
+        >
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
   </div>
 </header>
 

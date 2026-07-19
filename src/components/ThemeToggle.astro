@@ -1,24 +1,28 @@
 ---
+import Icon from './icons/Icon.astro';
 ---
 
-<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" type="button">
-  <span id="theme-toggle-label">···</span>
+<button class="theme-toggle" id="theme-toggle" aria-label="Switch to dark theme" type="button">
+  <span id="theme-toggle-icon" class="theme-toggle-icon-sun"><Icon name="sun" size={15} /></span>
+  <span id="theme-toggle-icon-moon" class="theme-toggle-icon-moon"><Icon name="moon" size={15} /></span>
 </button>
 
 <script>
-  function updateLabel() {
-    const label = document.getElementById('theme-toggle-label');
-    if (!label) return;
-    label.textContent = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+  function updateIcon() {
+    const button = document.getElementById('theme-toggle');
+    if (!button) return;
+    const isDark = document.documentElement.classList.contains('dark');
+    button.classList.toggle('is-dark', isDark);
+    button.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
   }
 
   function initThemeToggle() {
-    updateLabel();
+    updateIcon();
     const button = document.getElementById('theme-toggle');
     button?.addEventListener('click', () => {
       const isDark = document.documentElement.classList.toggle('dark');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      updateLabel();
+      updateIcon();
     });
   }
 

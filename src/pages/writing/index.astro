@@ -6,7 +6,12 @@ import TagPill from '@/components/TagPill.astro';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-const tags = Array.from(new Set(posts.flatMap((post) => post.data.tags))).sort();
+
+const tagCounts = new Map<string, number>();
+posts.forEach((post) => post.data.tags.forEach((tag) => tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1)));
+const frequentTags = Array.from(tagCounts.entries())
+  .filter(([, count]) => count >= 2)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 ---
 
 <BaseLayout title="Writing">
@@ -17,10 +22,10 @@ const tags = Array.from(new Set(posts.flatMap((post) => post.data.tags))).sort()
       week.
     </p>
     {
-      tags.length > 0 && (
-        <div class="tag-filter">
-          {tags.map((tag) => (
-            <TagPill tag={tag} />
+      frequentTags.length > 0 && (
+        <div class="tag-summary">
+          {frequentTags.map(([tag, count]) => (
+            <TagPill tag={tag} count={count} />
           ))}
         </div>
       )
@@ -49,7 +54,7 @@ const tags = Array.from(new Set(posts.flatMap((post) => post.data.tags))).sort()
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
   }
-  .tag-filter {
+  .tag-summary {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;

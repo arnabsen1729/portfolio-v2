@@ -3,39 +3,56 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TagPill from '@/components/TagPill.astro';
 
+const base = import.meta.env.BASE_URL;
 const papers = (await getCollection('papershelf')).sort((a, b) => b.data.year - a.data.year);
+
+const byYear = new Map<number, typeof papers>();
+papers.forEach((paper) => {
+  const group = byYear.get(paper.data.year) ?? [];
+  group.push(paper);
+  byYear.set(paper.data.year, group);
+});
+const years = Array.from(byYear.keys()).sort((a, b) => b - a);
 ---
 
 <BaseLayout title="Papershelf" description="Papers I've read and notes on them.">
   <div class="simple-page">
     <h1>Papershelf</h1>
     <p class="intro-dek">Papers I've read, with a tl;dr and my own notes.</p>
-    <div class="paper-grid">
-      {
-        papers.map((paper) => (
-          <article class="paper-card">
-            <h2 class="paper-title">
-              {paper.data.link ? (
-                <a href={paper.data.link} target="_blank" rel="noopener noreferrer">
-                  {paper.data.title}
-                </a>
-              ) : (
-                paper.data.title
-              )}
-            </h2>
-            <p class="meta">
-              {paper.data.authors.join(', ')} · {paper.data.year}
-            </p>
-            <p class="paper-tldr">{paper.data.tldr}</p>
-            <div class="post-card-meta">
-              {paper.data.tags.map((tag) => (
-                <TagPill tag={tag} />
-              ))}
-            </div>
-          </article>
-        ))
-      }
-    </div>
+    {
+      years.map((year) => (
+        <section class="paper-year-group">
+          <h3 class="paper-year eyebrow">{year}</h3>
+          <div class="paper-grid">
+            {byYear.get(year)!.map((paper) => (
+              <article class="paper-card">
+                <h2 class="paper-title">
+                  {paper.data.link ? (
+                    <a href={paper.data.link} target="_blank" rel="noopener noreferrer">
+                      {paper.data.title}
+                    </a>
+                  ) : (
+                    paper.data.title
+                  )}
+                </h2>
+                <p class="meta">{paper.data.authors.join(', ')}</p>
+                <p class="paper-tldr">{paper.data.tldr}</p>
+                <div class="paper-footer">
+                  <div class="post-card-meta">
+                    {paper.data.tags.map((tag) => (
+                      <TagPill tag={tag} />
+                    ))}
+                  </div>
+                  <a href={`${base}papershelf/${paper.id}`} class="paper-notes-link">
+                    notes →
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))
+    }
   </div>
 </BaseLayout>
 
@@ -44,6 +61,12 @@ const papers = (await getCollection('papershelf')).sort((a, b) => b.data.year - 
     color: var(--ink-soft);
     font-size: 1.1rem;
     margin-bottom: 2.5rem;
+  }
+  .paper-year-group + .paper-year-group {
+    margin-top: 2rem;
+  }
+  .paper-year {
+    margin: 0 0 1rem;
   }
   .paper-grid {
     display: grid;
@@ -66,5 +89,22 @@ const papers = (await getCollection('papershelf')).sort((a, b) => b.data.year - 
   }
   .paper-tldr {
     margin: 0.6em 0;
+  }
+  .paper-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .paper-notes-link {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--oxblood);
+    text-decoration: none;
+  }
+  .paper-notes-link:hover {
+    text-decoration: underline;
   }
 </style>

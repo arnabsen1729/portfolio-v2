@@ -7,11 +7,13 @@
   --slate: #3e5468;
   --hairline: #dedad2;
   --code-bg: #f1efe9;
+  --ring-stroke: #b9b4a8;
 
   --font-body: 'IBM Plex Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-serif: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
 
-  --measure: 62ch;
+  --measure: 40rem;
   --content-width: 700px;
   --rail-width: 260px;
 }
@@ -24,6 +26,29 @@ html.dark {
   --slate: #7fa0bc;
   --hairline: #2c2f36;
   --code-bg: #1d2027;
+  --ring-stroke: #4a4e58;
+}
+
+/* ---------- Utilities ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Shared "eyebrow" label treatment — mono, uppercase, letterspaced, muted.
+   Used for structural labels (section headings, grouping markers) rather
+   than as decoration. */
+.eyebrow {
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 400;
 }
 
 /* ---------- Reset ---------- */
@@ -35,9 +60,6 @@ html.dark {
 
 html {
   color-scheme: light;
-  /* Full-bleed elements (e.g. the homepage gradient) size against 100vw,
-     which can exceed the visible viewport when a scrollbar is present. */
-  overflow-x: hidden;
 }
 html.dark {
   color-scheme: dark;
@@ -92,7 +114,9 @@ a:hover {
 /* ---------- Layout: 3-column grid ---------- */
 .page-grid {
   display: grid;
-  grid-template-columns: 1fr var(--content-width) var(--rail-width);
+  /* Equal-fr outer gutters so the article sits centered instead of leaning
+     toward the fixed-width rail. */
+  grid-template-columns: minmax(2rem, 1fr) var(--content-width) var(--rail-width) minmax(2rem, 1fr);
   column-gap: 2.5rem;
   max-width: 1400px;
   margin-inline: auto;
@@ -105,8 +129,8 @@ a:hover {
   /* Intentionally NOT capped at --measure here: this box's width doubles as
      the containing block that floated .sidenote elements measure their
      negative margin against to land in the .rail column. Constraining it
-     to 62ch would misalign the float. 700px is close enough to 62ch at
-     19px/serif that the reading measure is still comfortable. */
+     to --measure (40rem/640px) would misalign the float. 700px is close
+     enough that the reading measure is still comfortable. */
 }
 
 .page-grid > .content.prose-only {
@@ -131,7 +155,7 @@ a:hover {
   }
   .page-grid > .content {
     grid-column: 1;
-    max-width: var(--measure);
+    max-width: min(var(--measure), 100%);
     margin-inline: auto;
   }
   .page-grid > .rail {
@@ -204,6 +228,10 @@ h1 {
 .tag-pill:hover {
   border-color: var(--slate);
 }
+.tag-pill-count {
+  color: var(--ink-soft);
+  margin-left: 0.35em;
+}
 
 /* ---------- Metadata / mono utility ---------- */
 .meta {
@@ -228,7 +256,7 @@ code {
 }
 :not(pre) > code {
   background: var(--code-bg);
-  padding: 0.15em 0.4em;
+  padding: 0.1em 0.3em;
   border-radius: 4px;
   font-size: 0.88em;
 }
@@ -299,11 +327,22 @@ html.dark .astro-code span {
   padding: 0.5em 0;
 }
 
-/* ---------- Sidenotes ---------- */
-/* Counter scope: reset once per post so numbering restarts each article */
+/* ---------- Article body typography ---------- */
+/* Serif for prose reading; headings stay Plex Sans to match UI chrome.
+   Counter scope also resets here once per post so sidenote numbering
+   restarts each article. */
 .post-content {
+  font-family: var(--font-serif);
   counter-reset: sidenote;
 }
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  font-family: var(--font-body);
+}
+
+/* ---------- Sidenotes ---------- */
 
 .sidenote-wrapper {
   counter-increment: sidenote;
@@ -337,8 +376,8 @@ html.dark .astro-code span {
   margin-right: calc(-1 * (var(--rail-width) + 2.5rem));
   margin-top: 0;
   margin-bottom: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
   line-height: 1.5;
   color: var(--ink-soft);
   border-left: 2px solid var(--oxblood);
@@ -346,6 +385,7 @@ html.dark .astro-code span {
 }
 .sidenote::before {
   content: counter(sidenote) '. ';
+  font-family: var(--font-mono);
   color: var(--oxblood);
 }
 
@@ -360,6 +400,15 @@ html.dark .astro-code span {
   }
   .sidenote-toggle:checked ~ .sidenote {
     display: block;
+  }
+  /* Enlarge the tappable area beyond the tiny superscript glyph, without
+     disrupting inline text flow (negative margin offsets the padding). */
+  .sidenote-ref {
+    display: inline-block;
+    min-width: 1.75em;
+    min-height: 1.75em;
+    padding: 0.5em 0.35em;
+    margin: -0.5em -0.35em;
   }
 }
 
@@ -407,7 +456,6 @@ html.dark .astro-code span {
   background: var(--oxblood);
   width: 0%;
   z-index: 100;
-  transition: width 0.1s linear;
 }
 
 /* ---------- Header / footer ---------- */
@@ -442,12 +490,25 @@ html.dark .astro-code span {
   color: var(--ink);
   font-size: 1.1rem;
 }
+.site-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
 .site-nav {
   display: flex;
   gap: 1.5rem;
   align-items: center;
   font-family: var(--font-mono);
   font-size: 0.85rem;
+}
+/* Utility controls (search, theme) — kept outside .site-nav so they stay
+   visible at all viewport widths instead of collapsing behind the hamburger
+   alongside actual nav destinations. */
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 .site-nav a {
   color: var(--ink-soft);
@@ -533,14 +594,17 @@ html.dark .astro-code span {
 
 /* ---------- Theme toggle ---------- */
 .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: 1px solid var(--hairline);
   border-radius: 6px;
   color: var(--ink-soft);
   cursor: pointer;
-  padding: 0.3em 0.6em;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
   transition:
     border-color 150ms ease,
     color 150ms ease;
@@ -548,6 +612,15 @@ html.dark .astro-code span {
 .theme-toggle:hover {
   border-color: var(--slate);
   color: var(--ink);
+}
+.theme-toggle-icon-moon {
+  display: none;
+}
+.theme-toggle.is-dark .theme-toggle-icon-sun {
+  display: none;
+}
+.theme-toggle.is-dark .theme-toggle-icon-moon {
+  display: inline-flex;
 }
 
 /* ---------- Post cards ---------- */

@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TagPill from '@/components/TagPill.astro';
+
+export async function getStaticPaths() {
+  const papers = await getCollection('papershelf');
+  return papers.map((paper) => ({
+    params: { slug: paper.id },
+    props: { paper },
+  }));
+}
+
+const { paper } = Astro.props;
+const { Content } = await render(paper);
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={paper.data.title} description={paper.data.tldr}>
+  <div class="simple-page">
+    <p class="meta"><a href={`${base}papershelf`}>← Papershelf</a></p>
+    <h1>{paper.data.title}</h1>
+    <p class="meta paper-byline">{paper.data.authors.join(', ')} · {paper.data.year}</p>
+    <div class="post-card-meta">
+      {paper.data.tags.map((tag) => <TagPill tag={tag} />)}
+    </div>
+    {
+      paper.data.link && (
+        <p class="paper-external-link">
+          <a href={paper.data.link} target="_blank" rel="noopener noreferrer">
+            Original paper ↗
+          </a>
+        </p>
+      )
+    }
+    <p class="paper-tldr">{paper.data.tldr}</p>
+    <div class="post-content">
+      <Content />
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .paper-byline {
+    margin: 0.25em 0 1em;
+  }
+  .paper-external-link {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+  }
+  .paper-tldr {
+    color: var(--ink-soft);
+    font-size: 1.1rem;
+    margin: 1.5rem 0 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+</style>
