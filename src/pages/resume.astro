@@ -1,28 +1,100 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
-// Edit this to reflect your actual background. Also drop a matching PDF at
-// public/resume.pdf so the download link below works.
 const experience = [
   {
-    role: 'Software Engineer',
-    org: 'Your Company',
-    dates: '2023 — Present',
+    role: 'Software Engineer (L4)',
+    org: 'Google',
+    dates: 'Jun 2023 — Present',
+    location: 'Bangalore, India',
     bullets: [
-      'One line describing a concrete, quantified accomplishment.',
-      'Another line — systems you built, scale you operated at.',
+      'TL, Capping AdBrain Model Predictions: improved the capping framework to constrain over-prediction using Prediction Interval in a Poisson Log Loss DNN predicting pCVR, bringing Revenue Wt. Bias from +11 to -3.',
+      'Lead, Attributed Branded Search (ABS) Modeling: leading ML strategy and measurement within the Glitter project to recover conversion losses from signed-out traffic.',
+      'Project Lead, View-Through Conversion (VTC) Modeling: engineered and launched an end-to-end ML system to recover privacy-impacted VTCs for YouTube Demand Gen ads.',
+      'Led a team (including an L3 engineer) to build a TFX-based pCVR model with iterative calibration.',
+      "Optimized a high-throughput Flume pipeline processing ~20 billion daily ad impressions for YouTube's bidding systems.",
+      'Promoted to L4 in 2024 with an "Outstanding Impact" rating; served as a C++ Readability Mentor, mentored 5 Nooglers, hosted 2 STEP interns, and conducted ~40 technical interviews.',
+    ],
+  },
+  {
+    role: 'AR/VR Intern',
+    org: 'GMetri',
+    dates: 'Apr 2023 — Jul 2023',
+    bullets: [
+      "Built a toolkit to generate dynamic metaverses from user input using OpenAI's GPT model.",
+      'Designed a UI for creating AI Brains and personalizing metaverses.',
+      'Integrated APIs to connect components across the product.',
+    ],
+  },
+  {
+    role: 'SDE Intern',
+    org: 'Cypherock',
+    dates: 'Oct 2022 — Mar 2023',
+    bullets: [
+      'Integrated new protocol and server APIs for cryptocurrency exchange.',
+      'Built swap functionality for Bitcoin, Ethereum, Polygon, Solana, and ERC20 tokens in device firmware.',
+      'Designed swap-flow screens for the desktop application.',
+    ],
+  },
+  {
+    role: 'Software Engineer Intern',
+    org: 'Google',
+    dates: 'May 2022 — Aug 2022',
+    location: 'Bangalore, India',
+    bullets: [
+      'Designed and built an email-based notification system for the Ads Resource Engineering team, from design doc to implementation.',
+      'Implemented features, fixed bugs, and wrote unit tests for an internal Ads Planning tool (Java, Angular JS).',
+    ],
+  },
+  {
+    role: 'Student Intern',
+    org: 'Summer of Bitcoin',
+    dates: 'Jul 2021 — Sep 2021',
+    bullets: [
+      'Improved User Statically Defined Tracing (USDT) support in Bitcoin Core by adding new tracepoints and eBPF-based scripts.',
+      'Gave a talk on "Bitcoin Script" to an audience of 150.',
     ],
   },
 ];
 
-const education = [{ school: 'Your University', degree: 'B.S. Computer Science', dates: '2019 — 2023' }];
+const education = [
+  {
+    school: 'Indian Institute of Engineering Science and Technology, Shibpur',
+    degree: 'B.Tech, Computer Science and Technology (CGPA 9.62)',
+    dates: '2019 — 2023',
+  },
+];
+
+const skills = [
+  { label: 'Languages', items: 'C/C++, Python3, JavaScript, Golang, Java, TypeScript' },
+  { label: 'Frameworks', items: 'React, Vue3, Tailwind, Flask, Ruby on Rails, Express.js' },
+  { label: 'Others', items: 'Firebase, MongoDB, PostgreSQL, Linux, Docker, Git' },
+];
+
+const publications = [
+  {
+    title: 'Detection of Cipher Types Using Machine Learning Techniques',
+    venue: 'Computational Intelligence in Pattern Recognition',
+    dates: 'Aug 2023',
+    desc: 'A sequence-to-sequence framework using CNNs and Transformers to automate classical cryptosystem identification, achieving 96.72% accuracy on a 130k ciphertext dataset.',
+  },
+];
+
+const awards = [
+  { title: 'Cyber-Security Hackathon, RISE', desc: '2nd position among 22k participants', dates: 'Sep 2022' },
+  { title: 'Codevita 2022, TCS', desc: 'Ranked 98 globally among 136,054 students', dates: 'Apr 2022' },
+  { title: 'Hashcode 2022, Google', desc: 'All India Rank 25, global rank 311', dates: 'Feb 2022' },
+  { title: 'ICPC Asia Kanpur-Mathura Regionalist, ACM-ICPC', desc: 'Ranked 72 among 200+ teams', dates: 'Aug 2021' },
+  { title: 'Summer of Bitcoin', desc: 'Selected among 50 students out of 5000+ applicants', dates: 'Jun 2021' },
+  { title: 'Best Hardware Hack, Major League Hacking', desc: 'Won the 48-hour hackathon hardware category', dates: 'Jan 2021' },
+];
 ---
 
 <BaseLayout title="Résumé" description="Arnab Sen's résumé.">
   <div class="simple-page">
     <div class="resume-header">
       <h1>Résumé</h1>
-      <a class="download-link" href={`${import.meta.env.BASE_URL}resume.pdf`} download>Download PDF ↓</a>
+      <a class="download-link" href={`${import.meta.env.BASE_URL}resume/resume.pdf`} download>Download PDF ↓</a>
     </div>
 
     <section>
@@ -32,7 +104,10 @@ const education = [{ school: 'Your University', degree: 'B.S. Computer Science',
           <div class="resume-entry">
             <div class="resume-entry-head">
               <strong>{job.role}</strong> · {job.org}
-              <span class="meta resume-dates">{job.dates}</span>
+              <span class="meta resume-dates">
+                {job.dates}
+                {job.location && ` · ${job.location}`}
+              </span>
             </div>
             <ul>
               {job.bullets.map((b) => (
@@ -40,8 +115,7 @@ const education = [{ school: 'Your University', degree: 'B.S. Computer Science',
               ))}
             </ul>
           </div>
-        )
-        )
+        ))
       }
     </section>
 
@@ -54,6 +128,53 @@ const education = [{ school: 'Your University', degree: 'B.S. Computer Science',
               <strong>{ed.school}</strong> · {ed.degree}
               <span class="meta resume-dates">{ed.dates}</span>
             </div>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      {
+        skills.map((group) => (
+          <div class="resume-entry">
+            <div class="resume-entry-head">
+              <strong>{group.label}</strong> — {group.items}
+            </div>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>Publications</h2>
+      {
+        publications.map((pub) => (
+          <div class="resume-entry">
+            <div class="resume-entry-head">
+              <strong>{pub.title}</strong> · {pub.venue}
+              <span class="meta resume-dates">{pub.dates}</span>
+            </div>
+            <ul>
+              <li>{pub.desc}</li>
+            </ul>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>Awards</h2>
+      {
+        awards.map((award) => (
+          <div class="resume-entry">
+            <div class="resume-entry-head">
+              <strong>{award.title}</strong>
+              <span class="meta resume-dates">{award.dates}</span>
+            </div>
+            <ul>
+              <li>{award.desc}</li>
+            </ul>
           </div>
         ))
       }
