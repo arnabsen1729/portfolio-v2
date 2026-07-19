@@ -1,9 +1,11 @@
 ---
-title: 'This Week in AI & Tech - Ep 02'
+title: 'This Week in AI & Tech Ep 02: The Quest for Continual Learning'
 dek: 'Quest for Continual Learning and one elephant'
 date: 2026-05-03
 tags: ['ai', 'llm']
 ---
+
+import Sidenote from '@/components/Sidenote.astro';
 
 This week was all about how the big techs are performing with AI coming more in the picture. With around $700 billion in Capex from the tech firms like Google, Amazon, Meta and Microsoft it is clear that we should be more bullish on AI than ever.
 
@@ -13,7 +15,7 @@ Newer [SOTA models coming up](https://substack.com/home/post/p-195413722), break
 
 ## Continual Learning
 
-Before getting into the crux of **Continual Learning**, we have to understand the current state, which is that **Context Learning **is actually really powerful. Particularly when it comes to the Transformers which are essentially just **next token predictor**. Given the right amount of context, we can get really good output.
+Before getting into the crux of **Continual Learning**, we have to understand the current state, which is that **Context Learning **is actually really powerful. Particularly when it comes to the Transformers which are essentially just **next token predictor**<Sidenote>At each step the model outputs a probability distribution over its entire vocabulary for "what comes next," samples one token from it, appends that token to the input, and repeats — there's no separate planning or memory step, just this loop.</Sidenote>. Given the right amount of context, we can get really good output.
 
 Context Learning has also enabled us to decouple domain specific knowledge from the LLMs, meaning the same LLM can be used to vibe code your favorite app and also give you free therapy depending on how you prompt it.
 
@@ -21,7 +23,7 @@ But there can be limitation to the Context. For tasks that needs **long running*
 
 The question still remains, is **In Context Learning (ICL)** going to be the path forward to achieve AGI?  How does the human brain “learns” or “acquires intelligence”?
 
-Demis (who btw has a Phd in Cognitive Neuroscience) in his interview, talks about **Dreaming Cycles** and **Episodic Memory**. Humans have a very beautiful way of remembering key details about the day, events that occurred, emotions and senses that got activated, and all these changes the neural connections in our brain enabling us to record these days. During Dreaming Cycles (specifically REM sleep), the brain performs a “replay” of these episodes.
+Demis (who btw has a Phd in Cognitive Neuroscience<Sidenote>Demis Hassabis co-founded DeepMind in 2010 after a PhD at UCL studying the hippocampus and memory — the neuroscience background shows up directly in how he frames AGI research around memory and learning, not just raw scale.</Sidenote>) in his interview, talks about **Dreaming Cycles** and **Episodic Memory**. Humans have a very beautiful way of remembering key details about the day, events that occurred, emotions and senses that got activated, and all these changes the neural connections in our brain enabling us to record these days. During Dreaming Cycles (specifically REM sleep), the brain performs a “replay” of these episodes.
 
 So every time some one says “based on my past experience”, they are referring to the learning that happened when an experience changed their brain’s neural connection.
 
@@ -55,7 +57,7 @@ This was one of the most famous “burns” in history of science and computatio
 
 In the 1950s, Enrico Fermi and his team at the University of Chicago were working on a model to describe pion-proton scattering. Fermi had developed a theory that matched the experimental data quite well. But it relied on several parameters that can be adjusted to fit to the output of the mathematical function.
 
-He was excited by the result. He sent his colleague Freeman Dyson to Princeton to show the work to the polymath John Von Neumann, one the greatest mathematician of the era and the pioneer of the Von Neumann Architecture.
+He was excited by the result. He sent his colleague Freeman Dyson to Princeton to show the work to the polymath John Von Neumann, one the greatest mathematician of the era and the pioneer of the Von Neumann Architecture<Sidenote>The stored-program design where a computer keeps both its instructions and its data in the same memory — the basic blueprint nearly every computer since, including the one running these LLMs, is still built on.</Sidenote>.
 
 He took one look at the model and was unimpressed and he told Dyson:
 

@@ -1,9 +1,11 @@
 ---
-title: 'This Week in AI & Tech - Ep 04'
+title: 'This Week in AI & Tech Ep 04: One Step Closer to AGI'
 dek: 'One step to AGI'
 date: 2026-05-24
 tags: ['ai', 'llm']
 ---
+
+import Sidenote from '@/components/Sidenote.astro';
 
 Google I/O made headlines with Gemini Updates, Agentic Features,  models like Gemini 3.5 Flash, Gemini Omni and other gemini integrated features. They also released two new variants of Chips: TPU 8t (specialized for training) and TPU 8i (specialized for inference).
 
@@ -15,7 +17,7 @@ Now, this is revolutionary because of two things:
 
 ## First: Early Signs of AGI?
 
-Paul Erdős posed the unit distance problem in 1946 and for 80 years, no one could fully prove it. It is a classic challenge in **combinatorial geometry**. At its core, the problem asks for the **maximum number of pairs of points** (unit distances) that can be separated by exactly 1 unit within a collection of n points in a 2D plane. And the model just solved it !!
+Paul Erdős<Sidenote>One of the most prolific mathematicians in history, with roughly 1,500 papers and over 500 collaborators — the "Erdős number" (your collaboration distance from him) became a running joke/badge of honor in the math community.</Sidenote> posed the unit distance problem in 1946 and for 80 years, no one could fully prove it. It is a classic challenge in **combinatorial geometry**. At its core, the problem asks for the **maximum number of pairs of points** (unit distances) that can be separated by exactly 1 unit within a collection of n points in a 2D plane. And the model just solved it !!
 
 What’s more impressive is the fact that this was an internal-**general purpose reasoning** model (source: *trust me bro* i.e [OpenAI blog](https://openai.com/index/model-disproves-discrete-geometry-conjecture/)) and not any model fine-tuned on math problems.
 
@@ -35,7 +37,7 @@ The fact that the model was able to hold such a long thought process and reasoni
 
 This paper is not really that recent, it was published back in **2022 (**yep 4 years ago), and it talked about how adding just 4 words: **“Let’s think step-by-step”** at the end of your prompt, magically improved the accuracy of the LLMs (not so magical, if you follow along).
 
-Prior to this the most prominent prompting technique was **Few-Shot Prompting**.
+Prior to this the most prominent prompting technique was **Few-Shot Prompting**<Sidenote>Introduced by GPT-3's "Language Models are Few-Shot Learners" (2020) — the finding that a large enough model could pick up a new task from just a handful of examples in the prompt, with no gradient updates or fine-tuning at all.</Sidenote>.
 
 ![](/images/blog/ep-04-one-step-to-agi/5a4726d9-d6b2-4afa-89fb-e4b84cf6cb13-590x620.png)
 
@@ -97,7 +99,7 @@ I have always wondered if a next-token predictor would be our path to AGI, and I
 
 > *Language is not just a result of intelligence, it’s one of the instruments, and if these models can conquer language, they will have one piece of the puzzle solved.*
 
-But the way these LLMs are trained reminds me of the Plato’s allegory of the cave:
+But the way these LLMs are trained reminds me of the Plato’s allegory of the cave<Sidenote>Prisoners chained in a cave since birth can only see shadows cast on a wall by objects passing behind them, and mistake the shadows for reality itself, never having seen the objects — or the sun — directly.</Sidenote>:
 
 ![](/images/blog/ep-04-one-step-to-agi/ccd0e889-981c-47b1-a1cc-7f690f763792-2400x1011.jpeg)
 

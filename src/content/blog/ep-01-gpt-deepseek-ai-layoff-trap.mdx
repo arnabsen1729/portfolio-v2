@@ -1,9 +1,11 @@
 ---
-title: 'This Week in AI & Tech - Ep 01'
+title: 'This Week in AI & Tech Ep 01: GPT 5.5, DeepSeek V4 & the AI Layoff Trap'
 dek: 'GPT, DeepSeek and AI Layoff Trap'
 date: 2026-04-25
 tags: ['ai', 'llm']
 ---
+
+import Sidenote from '@/components/Sidenote.astro';
 
 ## In this issue:
 
@@ -21,7 +23,7 @@ This has been the one of the most anticipated and hyped release.
 
 So what’s new in the GPT 5.5?
 
-- The focus this time seems to be more towards **Agentic Coding**, **Tools** and **Computer usage**, and knowledge work. GPT 5.5 is doing really good on Terminal-Bench 2.0 scoring 82.7%, ahead of Claude Opus 4.7 which is at 69.4% and Gemini 3.1 Pro at 68.5%, as mentioned in their release post. ![www.tbench.ai/leaderboard](/images/blog/ep-01-gpt-deepseek-ai-layoff-trap/d197d2e2-b575-46fb-8dae-33a335d39293-2548x938.png)
+- The focus this time seems to be more towards **Agentic Coding**, **Tools** and **Computer usage**, and knowledge work. GPT 5.5 is doing really good on Terminal-Bench 2.0<Sidenote>Terminal-Bench evaluates models on real, multi-step command-line tasks (compiling code, debugging a broken build, chaining shell tools) rather than isolated Q&A — closer to how an agent is actually used day to day.</Sidenote> scoring 82.7%, ahead of Claude Opus 4.7 which is at 69.4% and Gemini 3.1 Pro at 68.5%, as mentioned in their release post. ![www.tbench.ai/leaderboard](/images/blog/ep-01-gpt-deepseek-ai-layoff-trap/d197d2e2-b575-46fb-8dae-33a335d39293-2548x938.png)
 - Apparently it is also really good at **holding context** across large systems, **reasoning through failures**, **checking assumptions** through tools and validating results, all the stuffs that are critical for an engineering work, and they used an internal benchmark called **Expert-SWE** for that.
 - But let’s look at some of the standard evals that are public and used by other labs like Anthropic and Google DeepMind. [View interactive chart](https://datawrapper.dwcdn.net/OlN6G/1/)
   - Humanity’s Last Exam
@@ -47,7 +49,7 @@ OpenAI’s GPT 5.5 couldn’t be in the limelight for a long time because soon a
 
 > deepseek v4 is now the cheapest sota model available at 1/20th the cost of opus 4.7. for perspective, if uber used deepseek instead of claude their 2026 ai budget would have lasted 7 years instead of only 4 months. — [@sdrzn on X](https://x.com/sdrzn/status/2047537442719428969)
 
-The finer details of how the new model is so efficiently handling such a large context is beyond my understanding, but from a very high level it seems like they are able to do so by optimizing the KV cache using 2 types of “sparse” attention. One is the **CSA (Compressed Sparse Attention)** and another is **HCA (Heavily Compressed Attention)**. For longer context, models have to be efficient in finding the relevant chunks of information. Because standard attention is quadratic in nature.
+The finer details of how the new model is so efficiently handling such a large context is beyond my understanding, but from a very high level it seems like they are able to do so by optimizing the KV cache using 2 types of “sparse” attention. One is the **CSA (Compressed Sparse Attention)** and another is **HCA (Heavily Compressed Attention)**. For longer context, models have to be efficient in finding the relevant chunks of information. Because standard attention is quadratic in nature<Sidenote>Every token has to compare itself against every other token, so doubling the context length quadruples the compute — a 1M-token context is roughly 1,000,000x more expensive to attend over than a 1K-token one with naive attention.</Sidenote>.
 
 The combination of HCA + CSA helps achieve that optimisation.
 
@@ -71,7 +73,7 @@ You can think of it this way:
 - Companies start **laying off** workers.
 - Suddenly there is a **drop in the average income** of the workforce.
 - The section of population now no longer has the income to consume the products that the companies make.
-- This **loss of spending** is an "externality" because it affects the revenue of all companies in the market, not just the company that performed the layoff.
+- This **loss of spending** is an "externality"<Sidenote>An externality is a cost (or benefit) of an action that falls on someone who wasn't party to the decision — the classic example is pollution from a factory affecting a neighboring town. Here, one company's layoffs shrink everyone's customer base, not just its own.</Sidenote> because it affects the revenue of all companies in the market, not just the company that performed the layoff.
 
 > *“If AI displaces human workers faster than the economy can reabsorb them, it risks eroding the very consumer demand firms depend on.”*
 

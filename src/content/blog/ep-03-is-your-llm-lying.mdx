@@ -1,9 +1,11 @@
 ---
-title: 'This Week in AI & Tech - Ep 03'
+title: 'This Week in AI & Tech Ep 03: Is Your LLM Lying to You?'
 dek: 'How to tell if your LLM is lying to you.'
 date: 2026-05-10
 tags: ['ai', 'llm']
 ---
+
+import Sidenote from '@/components/Sidenote.astro';
 
 ## What if they are all lying?
 
@@ -36,7 +38,7 @@ The newest models almost always do the right thing: no blackmail. But is it actu
 
 Even though these LLMs are best suited for Natural Language Processing, most of the computation (or ‘thinking’) isn’t happening via language. They are done through these high dimensional activation vectors, things which are completely abstract and unintelligible. Hence, we always think of LLMs as black boxes.
 
-There is an entire field of AI research called **Mechanistic Interpretability**, that seeks to reverse engineer the neural networks by breaking them into components that are more easily understood than the whole.
+There is an entire field of AI research called **Mechanistic Interpretability**<Sidenote>Sometimes described as "neuroscience for neural networks" — instead of just measuring what a model outputs, it tries to trace exactly which internal computations produced that output, circuit by circuit.</Sidenote>, that seeks to reverse engineer the neural networks by breaking them into components that are more easily understood than the whole.
 
 This was widely popularized in the Anthropic research: [“Towards Monosemanticity: Decomposing Language Models With Dictionary Learning (2023)”](https://transformer-circuits.pub/2023/monosemantic-features/index.html).
 
@@ -56,7 +58,7 @@ If a chef (the LLM) knows the exact ratios, they can still perfectly season a di
 
 In **Mechanistic Interpretability**, looking directly at the neurons is like looking at those mixed-up jars.
 
-The 2023 paper, introduced the method using Dictionary Learning with Sparse AutoEncoders to identify components with a LLM. I will cover that in a separate article. In this article we will focus on the latest work to untangle these jars: enters NLA.
+The 2023 paper, introduced the method using Dictionary Learning with Sparse AutoEncoders<Sidenote>A Sparse Autoencoder is trained to reconstruct a layer's activations while forcing most of its internal units to stay at zero — that sparsity pressure is what pushes each unit toward representing one clean, human-interpretable concept instead of a tangled mixture.</Sidenote> to identify components with a LLM. I will cover that in a separate article. In this article we will focus on the latest work to untangle these jars: enters NLA.
 
 ## Natural Language Autoencoders (NLA)
 
