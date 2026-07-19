@@ -42,6 +42,19 @@ const websiteSchema = {
       <div class="intro-text">
         <h1 class="visually-hidden">Arnab Sen</h1>
         {introCopy.map((paragraph, i) => <p class:list={{ 'intro-lede': i === 0 }}>{paragraph}</p>)}
+        <p>
+          Before Google I interned at <a
+            href="https://www.gmetri.com/"
+            target="_blank"
+            rel="noopener noreferrer">GMetri</a
+          > and <a
+            href="https://www.cypherock.com/"
+            target="_blank"
+            rel="noopener noreferrer">Cypherock</a
+          >, and spent a summer contributing to <a href={`${base}blog/summer-of-bitcoin-21`}
+            >Bitcoin Core</a
+          > through Summer of Bitcoin. More on the <a href={`${base}about`}>about page</a>.
+        </p>
         <div class="key-links">
           <a href="https://github.com/arnabsen1729" target="_blank" rel="noopener noreferrer">
             <Icon name="github" size={15} /> GitHub
@@ -52,7 +65,7 @@ const websiteSchema = {
           <a href={`${base}resume`}>
             <Icon name="file-text" size={15} /> Résumé
           </a>
-          <a href="mailto:hello@arnabsen.dev">
+          <a href="mailto:arnabsen1729@gmail.com">
             <Icon name="mail" size={15} /> Email
           </a>
           <a href={`${base}rss.xml`}>

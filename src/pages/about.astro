@@ -1,5 +1,5 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
@@ -10,24 +10,58 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
   <div class="simple-page">
     <h1>About</h1>
     <p>
-      Hi, I'm Arnab. I'm a software engineer (L4) at Google, where I work on ads machine learning
-      — mostly conversion modeling, calibration, and recovering signal in privacy-restricted
-      spaces for YouTube and Search. Before that I interned at Google, GMetri, and Cypherock, and
-      studied Computer Science and Technology at IIEST Shibpur.
+      Hi, I'm Arnab. I'm a software engineer (L4) at Google, where I work on ads
+      machine learning — mostly conversion modeling, calibration, and recovering
+      signal in privacy-restricted spaces for YouTube and Search.
     </p>
     <p>
-      I write about distributed systems, CS theory, math, and the occasional personal essay. This
-      site replaced my Hashnode blog — same writing, now self-hosted and markdown-based.
+      I studied Computer Science and Technology at IIEST Shibpur, where I found
+      competitive programming first (reaching Expert on Codeforces), then
+      Capture the Flag competitions with my CTF team, and eventually open source
+      through the Coronasafe Pupilfirst Fellowship, building healthcare software
+      used during COVID. I've written more about <a
+        href={`${import.meta.env.BASE_URL}blog/my-university-experience`}
+        >that whole journey here</a
+      >.
     </p>
     <p>
-      Outside of work I compete on Codeforces, CodeChef, and LeetCode, play the occasional CTF,
-      and co-authored a paper on classifying classical ciphers with CNNs and Transformers.
+      That open-source itch led me to <a
+        href={`${import.meta.env.BASE_URL}blog/summer-of-bitcoin-21`}
+        >Summer of Bitcoin</a
+      >, where I spent a summer contributing to <a
+        href={`${import.meta.env.BASE_URL}blog/introduction-to-bitcoin-script`}
+        >Bitcoin Core</a
+      >, adding USDT tracepoints and eBPF-based scripts. The next year I <a
+        href={`${import.meta.env.BASE_URL}blog/landing-a-google-swe-internship`}
+        >interned at Google</a
+      > as an SWE, which turned into a return offer, then spent my final year
+      building an AI-driven AR/VR toolkit at <a
+        href="https://www.gmetri.com/"
+        target="_blank"
+        rel="noopener noreferrer">GMetri</a
+      > through the <a
+        href={`${import.meta.env.BASE_URL}blog/xros-fellowship`}>XROS Fellowship</a
+      >, and crypto wallet firmware at <a
+        href="https://www.cypherock.com/"
+        target="_blank"
+        rel="noopener noreferrer">Cypherock</a
+      >, before joining Google full-time in 2023.
     </p>
     <p>
-      Find me on <a href="https://github.com/arnabsen1729" target="_blank" rel="noopener noreferrer"
-        >GitHub</a
-      > or <a href="https://linkedin.com/in/arnabsen1729" target="_blank" rel="noopener noreferrer"
-        >LinkedIn</a
+      I write about what's happening in the AI and LLM industry, distributed
+      systems, and core Computer Science fundamentals — see <a
+        href={`${import.meta.env.BASE_URL}writing`}>my writing</a
+      > or my <a href={`${import.meta.env.BASE_URL}resume`}>résumé</a>.
+    </p>
+    <p>
+      Find me on <a
+        href="https://github.com/arnabsen1729"
+        target="_blank"
+        rel="noopener noreferrer">GitHub</a
+      > or <a
+        href="https://linkedin.com/in/arnabsen1729"
+        target="_blank"
+        rel="noopener noreferrer">LinkedIn</a
       >.
     </p>
   </div>
