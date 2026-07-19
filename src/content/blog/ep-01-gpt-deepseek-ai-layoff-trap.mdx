@@ -1,0 +1,102 @@
+---
+title: 'This Week in AI & Tech - Ep 01'
+dek: 'GPT, DeepSeek and AI Layoff Trap'
+date: 2026-04-25
+tags: ['ai', 'llm']
+---
+
+## In this issue:
+
+- 🚀 **GPT 5.5:** The “Action Model” is here.
+- 💰 **DeepSeek V4:** 1/20th the cost of Claude.
+- 📉 **The Layoff Trap:** Why automation might kill its own market.
+
+## GPT 5.5
+
+This has been the one of the most anticipated and hyped release.
+
+![](/images/blog/ep-01-gpt-deepseek-ai-layoff-trap/a73a9638-63e7-4a00-8ea2-7de9884894dd-1058x190.png)
+
+*NS41 is just base-64 encoding of 5.5 (a little cringe but okay)*
+
+So what’s new in the GPT 5.5?
+
+- The focus this time seems to be more towards **Agentic Coding**, **Tools** and **Computer usage**, and knowledge work. GPT 5.5 is doing really good on Terminal-Bench 2.0 scoring 82.7%, ahead of Claude Opus 4.7 which is at 69.4% and Gemini 3.1 Pro at 68.5%, as mentioned in their release post. ![www.tbench.ai/leaderboard](/images/blog/ep-01-gpt-deepseek-ai-layoff-trap/d197d2e2-b575-46fb-8dae-33a335d39293-2548x938.png)
+- Apparently it is also really good at **holding context** across large systems, **reasoning through failures**, **checking assumptions** through tools and validating results, all the stuffs that are critical for an engineering work, and they used an internal benchmark called **Expert-SWE** for that.
+- But let’s look at some of the standard evals that are public and used by other labs like Anthropic and Google DeepMind. [View interactive chart](https://datawrapper.dwcdn.net/OlN6G/1/)
+  - Humanity’s Last Exam
+    - With no tools: GPT-5.5 Pro → 43.1%, **Claude Opus 4.7 → 46.9%**, Gemini 3.1 Pro → 44.4% (Opus winning here again)
+    - Even with tools Opus 4.7 still beats GPT 5.5 on the Humanity’s Last Exam
+- Abstract Reasoning: Gemini 3.1 Pro is at 98% in ARG-AGI-1, and GPT 5.5 is at 85% in ARG-AGI-2. ![Abstract Reasoning Benchmark](/images/blog/ep-01-gpt-deepseek-ai-layoff-trap/a8592c81-368a-4516-b1eb-116907419497-2328x352.png)
+
+### Thoughts on GPT 5.5?
+
+I haven’t used GPT 5.5 myself, but the general consensus is that even though it is barely outperforming the other models on the benchmarks, user experience has been really good. It is generally **faster** even with xHigh thinking and paired with Codex it very promising.
+
+What about in comparison with Mythos? On that I really liked a tweet saying that GPT 5.5 is much better than Mythos because **we can actually use it** :)
+
+To compare across all the various models available:
+
+- GPT 5.5 seems to be really useful when it comes to **autonomous agent**, **terminal** based coding and **browser automation**. Basically an Action Oriented Model.
+- Where as for large scale software engineering, **deep document analysis** and in general tasks that needs **very low hallucination**, Opus 4.7 by Claude still dominates the game.
+- Gemini 3.1 Pro is really good with **thinking** and **problem solving**, **multi-modal capabilities** and the biggest USP being the **price to performance ratio**.
+
+## DeepSeek V4
+
+OpenAI’s GPT 5.5 couldn’t be in the limelight for a long time because soon after the GPT launch, the Chinese startup DeepSeek announced their **Opensource** V4-Preview with a massive **1M context token length**.
+
+> deepseek v4 is now the cheapest sota model available at 1/20th the cost of opus 4.7. for perspective, if uber used deepseek instead of claude their 2026 ai budget would have lasted 7 years instead of only 4 months. — [@sdrzn on X](https://x.com/sdrzn/status/2047537442719428969)
+
+The finer details of how the new model is so efficiently handling such a large context is beyond my understanding, but from a very high level it seems like they are able to do so by optimizing the KV cache using 2 types of “sparse” attention. One is the **CSA (Compressed Sparse Attention)** and another is **HCA (Heavily Compressed Attention)**. For longer context, models have to be efficient in finding the relevant chunks of information. Because standard attention is quadratic in nature.
+
+The combination of HCA + CSA helps achieve that optimisation.
+
+- CSA **compresses the tokens** and then picks the top-k relevant chunks. This helps with more precision. You can think of it like reading a million-page book by first summarizing every 4 pages into one index card and instead of attending to every word, you attend to each index card.
+- HCA **aggressively compresses the entire context** into notes, so that all of them can be scanned really quickly. This helps with coverage. This can be thought as summarizing every 128 pages into one index card.
+
+Together they bring down the **KV cache usage by 10%** compared to the previous version of the models.
+
+Read more [here](https://x.com/aaryan_kakad/status/2047974841308102797?s=20).
+
+## AI Layoff Trap
+
+With the newer and better models coming up we are always concerned about how much of the human workforce will be replaced by these advanced technologies. The exact thought is captured by this economics paper by Brett Hemenway Falk (University of Pennsylvania) and Gerry Tsoukalas (Boston University) that went viral shortly after its release.
+
+![arxiv.org/pdf/2603.20617](/images/blog/ep-01-gpt-deepseek-ai-layoff-trap/3637fcb3-dcd1-447c-adc3-d65ed4e730e7-1434x378.png)
+
+You can think of it this way:
+
+- Companies start **adopting AI** to automate some of the tasks because if they don’t their competitors will.
+- Companies now need to **cut budget** because AI is expensive or the human force behind those tasks are no longer required.
+- Companies start **laying off** workers.
+- Suddenly there is a **drop in the average income** of the workforce.
+- The section of population now no longer has the income to consume the products that the companies make.
+- This **loss of spending** is an "externality" because it affects the revenue of all companies in the market, not just the company that performed the layoff.
+
+> *“If AI displaces human workers faster than the economy can reabsorb them, it risks eroding the very consumer demand firms depend on.”*
+
+## Blog Recommendation
+
+**An Interview With Edsger W. Dijkstra**
+
+The computer science luminary, in one of his last interviews before his death in 2002, reflects on a programmer’s life.
+
+[Read Here](https://cacm.acm.org/news/an-interview-with-edsger-w-dijkstra/)
+
+Interesting bit from the blog:
+
+> *What’s the shortest way to travel from Rotterdam to Groningen? It is the algorithm for the shortest path, which **I designed in about 20 minutes**. One morning I was shopping in Amsterdam with my young fiancée, and tired, we sat down on the café terrace to drink a cup of coffee and I was just thinking about whether I could do this, and I then designed the algorithm for the shortest path. As I said, it was a 20-minute invention. In fact, it was published in 1959, three years later.*
+
+## Final Thoughts
+
+Nevertheless it’s still one of the greatest time to be alive, the possibilities are endless.
+
+I would like to end with one of the closing quote from DeepSeek’s official announcement.
+
+> 不诱于誉，不恐于诽，率道而行，端然正己
+
+which translates to:
+
+> *“Unmoved by praise, unshaken by slander, follow the right path, and keep oneself upright”.*
+
+---

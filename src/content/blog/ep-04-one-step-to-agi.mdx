@@ -1,0 +1,106 @@
+---
+title: 'This Week in AI & Tech - Ep 04'
+dek: 'One step to AGI'
+date: 2026-05-24
+tags: ['ai', 'llm']
+---
+
+Google I/O made headlines with Gemini Updates, Agentic Features,  models like Gemini 3.5 Flash, Gemini Omni and other gemini integrated features. They also released two new variants of Chips: TPU 8t (specialized for training) and TPU 8i (specialized for inference).
+
+But for me, one breakthrough stood out the most: An internal OpenAI model **Disproved Erdős Unit Distance Conjecture.**
+
+![](/images/blog/ep-04-one-step-to-agi/2d7466e5-7610-4a2d-a29c-c89dd6f29d6b-548x548.svg)
+
+Now, this is revolutionary because of two things:
+
+## First: Early Signs of AGI?
+
+Paul Erdős posed the unit distance problem in 1946 and for 80 years, no one could fully prove it. It is a classic challenge in **combinatorial geometry**. At its core, the problem asks for the **maximum number of pairs of points** (unit distances) that can be separated by exactly 1 unit within a collection of n points in a 2D plane. And the model just solved it !!
+
+What’s more impressive is the fact that this was an internal-**general purpose reasoning** model (source: *trust me bro* i.e [OpenAI blog](https://openai.com/index/model-disproves-discrete-geometry-conjecture/)) and not any model fine-tuned on math problems.
+
+How was that made possible? Well, just prompting it. And here was that prompt:
+
+![](/images/blog/ep-04-one-step-to-agi/3b899902-9222-4bd3-b09f-e1adc6442494-1104x872.png)
+
+Yep, all the prompt had was a description of the problem statement and what is considered as a valid solution and the model one-shotted the entire thing.
+
+OpenAI also posted the entire **125 pages** Chain Of Thought that went behind the model finally coming up with the proof. Let me repeat **125 pages of thinking trace**.
+
+The fact that the model was able to hold such a long thought process and reasoning ability is really impressive and this brings us to the second point, of why LLMs can be natively capable of doing it.
+
+## Second: LLMs are Zero Shot Reasoners
+
+![](/images/blog/ep-04-one-step-to-agi/49db97ae-aa4e-4968-9992-530cc41a4baa-1398x608.png)
+
+This paper is not really that recent, it was published back in **2022 (**yep 4 years ago), and it talked about how adding just 4 words: **“Let’s think step-by-step”** at the end of your prompt, magically improved the accuracy of the LLMs (not so magical, if you follow along).
+
+Prior to this the most prominent prompting technique was **Few-Shot Prompting**.
+
+![](/images/blog/ep-04-one-step-to-agi/5a4726d9-d6b2-4afa-89fb-e4b84cf6cb13-590x620.png)
+
+In Few-Shot we give the LLM a few examples of a similar problem and then ask the requested problem. Some examples are attached above. But it still wasn’t really impressive looking at the benchmarks.
+
+Then comes a new paper on **Chain-of-Thought Prompting (Wei et al., 2022) **where similar to Few-Shot Prompting we would include a few examples, but also include a reasoning trace.
+
+![](/images/blog/ep-04-one-step-to-agi/79858dae-e15f-409c-87cc-824eb5003487-608x380.png)
+
+The LLM would then apply the same pattern of reasoning and surprisingly come with the most logical answer most of the time. The most impressive part about **Few-shot CoT** was that it also satisfied the scaling laws i.e with bigger models with more parameters, the accuracy and benchmarks got better. In the paper they showed how **PaLM 540B** with just 8 chain-of-thought examples achieved the state-of-the-art accuracy, surpassing even fine-tuned GPT-3 with a verifier. That was a pretty big deal.
+
+The other very interesting finding in the paper was that this reasoning ability was more beneficial in large models ( >= 100B parameters) and was rather performing poorly in smaller models. That proved that **reasoning is an “Emergent Ability”.**
+
+This reasoning ability wasn’t just limited to Math problems. Some very interesting problems upon which it was tested were:
+
+1. **Coin Flip Tracking:** The model was given a starting state for a coin (e.g., “heads up”) and then presented with a sequence of people who either flipped or did not flip the coin. The model then had to answer if the coin was still heads up.
+2. **Last Letter Concatenation: **Given a list of words, the model has to concatenate the last letters.
+
+![](/images/blog/ep-04-one-step-to-agi/7e3cf72b-1e73-4107-97b8-be7d825ac6c3-2416x966.png)
+
+Even though these sounds trivial to the human mind, it isn’t for an LLM.
+
+For the coin flip, if I ask you the same problem you will either remember the total number of flips (running count) and then check if it’s even or odd, or keep tabs of what the current state of the coin is. These are not inherent to a language model.
+
+Also for the last letter concatenation, we have to remember that models don’t see these words like humans, to them everything is a token, a number.
+
+But with prompting techniques like CoT, LLMs are able to solve these problems.
+
+In the later paper: **Zero-Shot Reasoners (Kojima et al., 2022)** they showed that LLMs possess that inherent reasoning capability when we push it to think more, by using “let’s think step by step”.
+
+Before this discovery, the zero-shot baseline for reasoning was so low that many researchers didn’t even bother reporting it. But this paper proved that the knowledge was never missing.
+
+On the `text-davinci-002` model, the results were transformative:
+
+- **MultiArith (Complex Arithmetic):** Accuracy rocketed from **17.7% to 78.7%**.
+- **GSM8K (Grade School Math):** Accuracy jumped from **10.4% to 40.7%**.
+
+The best improvement over Few-Shot Chain Of Thought prompting was the fact that with this, the user doesn’t have to give 4-5 different examples on how to solve a problem, before getting the solution of the required problem.
+
+So here was one of the questions that was given to the LLM:
+
+> Q: A juggler can juggle 16 balls. Half of the balls are golf balls, and half of the golf balls are blue. How many blue golf balls are there? **A: Let’s think step by step.**
+
+If instead of “let’s think step by step” we had forced the LLM to give an answer, it would have given the next best prediction, because that is what LLM does.
+
+Whereas with “let’s think step by step”, the LLM goes:
+
+> *There are 16 balls in total. Half of the balls are golf balls. That means that there are 8 golf balls. Half of the golf balls are blue. That means that there are 4 blue golf balls.*
+
+Now, that it is “thinking” verbosely, the chances every next work being correct increases significantly. Effectively, it is using **its output tokens like a scratch pad** for thinking or keeping tabs. In more technical terms we are essentially giving the model more forward passes to work with before committing to a final answer.
+
+There is another way to understand why this works, and that is how the models are trained. The training data containing human text is full of step-by-step reasoning. Be it a StackOverflow answer or any blog on the internet. The “let’s think step-by-step” is essentially a retrieval cue to match that reasoning stage. But I think we are still missing a complete understanding of how these LLMs truly work/reason.
+
+---
+
+I have always wondered if a next-token predictor would be our path to AGI, and I still am not fully convinced personally. But this is what **Ilya Sutskever **had to say. *FYI, Ilya  is a pioneering figure in modern ML, co-authored the seminal AlexNet paper that brought Neural Nets to limelight, co-invented sequence-to-sequence learning and then left Google to help launch OpenAI as its Chief Scientist.*
+
+> Ilya Sutskever says accurately predicting the next word leads to real understanding. — [@vitrupo on X](https://x.com/vitrupo/status/2050736968041210316?s=20)
+
+> *Language is not just a result of intelligence, it’s one of the instruments, and if these models can conquer language, they will have one piece of the puzzle solved.*
+
+But the way these LLMs are trained reminds me of the Plato’s allegory of the cave:
+
+![](/images/blog/ep-04-one-step-to-agi/ccd0e889-981c-47b1-a1cc-7f690f763792-2400x1011.jpeg)
+
+The model sees text, which is itself a projection of human thought, experience, intent, and reasoning which is analogous to the shadow. So it becomes extraordinarily good at predicting shadow-patterns and reason in the shadow-space. Only when they can be truly liberated, will they form their own thoughts.
+
+---

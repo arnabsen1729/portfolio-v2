@@ -1,0 +1,90 @@
+---
+title: 'This Week in AI & Tech - Ep 05'
+dek: 'Breaking down Opus 4.8, Dynamic Workflows, and Constitutional AI.'
+date: 2026-05-31
+tags: ['ai', 'llm']
+---
+
+Another week and another model from one of the frontier labs: Anthropic releases Opus 4.8
+
+This time again, the focus was more on improving reliability, fewer hallucinations, long-horizon agentic coding and also some more features in the harness like workflows, and adaptive thinking. Fair to say that Anthropic is pushing their models and harness to be better suited for professional and enterprise coding and building more on the Autonomous AI Agents front.
+
+Here is the system card for Opus 4.8:
+
+![](/images/blog/ep-05-opus-4-8-dynamic-workflows/77554922-f21a-4d48-a26b-53c7e88223ef-2600x1392.webp)
+
+While reading the blog on Opus 4.8 I came across two very interesting bits and those will be the primary focus in my article today.
+
+## Dynamic Workflows
+
+These are the kind of features that I feel makes the most difference when it comes to practical usage of these tools. A normal user won’t probably feel much difference between a model that has 64% on Agentic Coding v/s a model that has 69%. But features like Dynamic Workflows significantly make a difference.
+
+So far, if we had to spawn multiple agents we had to use Sub-Agents.
+
+> They would let you delegate tasks to isolated assistants that do their work separately and return just the information you need — keeping your main context window clean and your conversations focused.
+
+But the problem with this setup was that the main agent was still responsible for **orchestrating and deciding on the next steps**. Also the output of each of these sub-agents will still flow back to the main agent’s context window.
+
+![](/images/blog/ep-05-opus-4-8-dynamic-workflows/743edca2-6c2f-4576-a663-bdd08f3caa0b-2816x1816.png)
+
+With Dynamic Workflows, the orchestration is no longer in the context, but in the form of code.
+
+This is how it works:
+
+1. Claude will analyze the high-level task from your prompt.
+2. It then dynamically generates its own orchestration as a JavaScript-like script or plan using primitives like `agent()`, `parallel()`, `pipeline()`, and `phase()` for spawning, fanning out, and grouping work.
+3. The workflow runtime then executes the script in an isolated environment, separate from the conversation context.
+4. Sub-agents work independently and in parallel. Intermediate results are stored in **script variables** (not bloating the main conversation context), with only summaries or key outputs fed back.
+5. Orchestrator synthesizes everything into a final, coordinated result delivered back to you.
+6. All the progress is checkpointed, so long-running workflows (hours to days) can resume if interrupted.
+
+One of the biggest achievements that the Anthropic highlighted was their migration of JS runtime Bun (which they acquired around the end of last year), from Zig to Rust, with 99.8% of the existing test suite passing, roughly 750,000 lines of Rust, and 11 days from first commit to merge.
+
+![](/images/blog/ep-05-opus-4-8-dynamic-workflows/1c5d95cf-e44b-4082-8e0a-5ef88e972e0a-2138x1494.png)
+
+This approach of using orchestration as a first-class structured artifact rather than ad hoc prompting was something that always existed with technologies like LangGraph which existed since 2024.
+
+What’s changing is that now the orchestration is dynamic and is handled by the harness itself. Both also handle statefulness explicitly. LangGraph has a shared state object passed between nodes whereas, Dynamic Workflow stores intermediates in script variables. Neither of them dumps everything into one monolithic context.
+
+The other interesting improvement of Opus 4.8 was about “honesty”.
+
+## Honesty
+
+Models usually have a tendency to,
+
+- Hallucinate and fabricate stuff that is not true
+- They are sycophants, they claim they achieved a particular goal when they actually haven’t
+
+For developers building complex agentic harnesses, these traits are a nightmare. An “honest” model tends to make less assumptions during making plans, which leads to generally correct approach towards implementation and hence more efficiently reaching to the right solution.
+
+![](/images/blog/ep-05-opus-4-8-dynamic-workflows/51681e04-e144-435f-b706-04e422e07dd8-3840x2160.webp)
+
+And the way the Claude team achieved that was using **Constitutional AI**.
+
+It was introduced in Anthropic’s 2022 paper, and is the most distinctive part of how Claude is trained. Today most of the frontier models are further fine-tuned using RLHF (Reinforcement Learning using Human Feedback) where they depend on human raters to define “good behaviour”. Whereas with CAI, Anthropic has explicit set of principles, “a constitution” and use AI to apply them.
+
+This is a very interesting subject and I would like to cover it in depth in a follow-up blog.
+
+---
+
+## A City, Seven Bridges and a River
+
+We all know the story of the 18th Century Prussian City which sat on both banks of a great river with 2 islands in the middle and all connected by exactly seven bridges.
+
+A Swiss mathematician named Euler kept pondering: *“Could you cross every bridge exactly once, without retracing a single one?” *and that led to a stream of study, which was later named the Graph Theory.
+
+Over the next two and a half centuries, graph theory quietly became one of the most powerful tools in all of mathematics.
+
+When Google decided to consolidate the entire web using their PageRank, they realized the at the end they are solving a Graph Theory Problem. They had a tool for distributed computation called MapReduce, but they needed a fundamentally different model, so they built Pregel.
+
+Fast forward to the age of LLMs. As AI researchers began orchestrating multiple AI agents to collaborate, one agent researching, one writing, one reviewing, they faced a strangely familiar problem: how to coordinate a distributed system?
+
+> *"The 2010 Pregel paper described vertices passing messages across supersteps. In 2024, LangGraph was doing something hauntingly similar — except the vertices were AI agents."*
+
+Nobody designing PageRank's infrastructure in 2009 imagined their graph computation model would one day coordinate teams of AI agents.
+
+Pregel, was the name of the river that winds through the 18-th century Prussian City.
+
+> **The best ideas don’t belong to one era. They just wait, wearing different names, until the next problem is ready for them.**
+
+---

@@ -1,0 +1,74 @@
+---
+title: 'This Week in AI & Tech - Ep 02'
+dek: 'Quest for Continual Learning and one elephant'
+date: 2026-05-03
+tags: ['ai', 'llm']
+---
+
+This week was all about how the big techs are performing with AI coming more in the picture. With around $700 billion in Capex from the tech firms like Google, Amazon, Meta and Microsoft it is clear that we should be more bullish on AI than ever.
+
+Newer [SOTA models coming up](https://substack.com/home/post/p-195413722), breaking the benchmark every time and scaling laws still applicable, the question remains, **what’s more left to achieve**? AGI (Artificial General Intelligence) perhaps. But what all do we need to achieve AGI?
+
+*Demis Hassabis* in [YC Startup Days](https://www.youtube.com/watch?v=JNyuX1zoOgU) responded to this question and one of his answer was **“Continual Learning”**.
+
+## Continual Learning
+
+Before getting into the crux of **Continual Learning**, we have to understand the current state, which is that **Context Learning **is actually really powerful. Particularly when it comes to the Transformers which are essentially just **next token predictor**. Given the right amount of context, we can get really good output.
+
+Context Learning has also enabled us to decouple domain specific knowledge from the LLMs, meaning the same LLM can be used to vibe code your favorite app and also give you free therapy depending on how you prompt it.
+
+But there can be limitation to the Context. For tasks that needs **long running** agentic loops, or deep research or deep thinking it’s very easy to hit the **limit of the Context** Window and the performance **degrades** eventually. This is why most of the AI labs are now focussing on **increasing the context windows**.
+
+The question still remains, is **In Context Learning (ICL)** going to be the path forward to achieve AGI?  How does the human brain “learns” or “acquires intelligence”?
+
+Demis (who btw has a Phd in Cognitive Neuroscience) in his interview, talks about **Dreaming Cycles** and **Episodic Memory**. Humans have a very beautiful way of remembering key details about the day, events that occurred, emotions and senses that got activated, and all these changes the neural connections in our brain enabling us to record these days. During Dreaming Cycles (specifically REM sleep), the brain performs a “replay” of these episodes.
+
+So every time some one says “based on my past experience”, they are referring to the learning that happened when an experience changed their brain’s neural connection.
+
+But LLMs can’t do this (yet). Yes, we can fine-tune the LLMs and change the weights but that fine-tuned model will still have the parameters frozen.
+
+To give an analogy why this would make a lot of difference. Let’s say you have two people: **Alice** and **Bob**. Alice is 200 IQ genius with photographic memory. Bob is a CA, with an average IQ, but has a lot of experience with filing taxes.
+
+If you had to choose one to file your taxes, whom would you prefer?
+
+Bob duh !! I wouldn’t want Alice to read all the Tax documents, learn how taxes work from first principles and then do my taxes. I would want someone who already knows how to do it and has done it before.
+
+This is where **Continual Learning** would beat **In Context Learning**. To further quote Ilya:
+
+> *“The thing that happened with AGI and pre-training is that in some sense they overshot the target. A human being is not an AGI. Because a human being lacks a huge amount of knowledge. Instead, we rely on continual learning. If I produce a super intelligent 15-year-old, they don’t know very much at all. A great student, very eager. You can say, ‘Go and be a programmer. Go and be a doctor.’ The deployment itself will involve some kind of a learning, trial-and-error period. It’s a process, as opposed to you dropping the finished thing.”**— Ilya Sutskever*
+
+To further quote directly from Wikipedia:
+
+> The term "episodic memory" was coined by [Endel Tulving](https://en.wikipedia.org/wiki/Endel_Tulving) in 1972, referring to the distinction between **knowing** and **remembering**: *knowing* is factual recollection (semantic) whereas *remembering* is a feeling that is located in the past (episodic).[<sup>[3]</sup>](https://en.wikipedia.org/wiki/Episodic_memory#cite_note-3)
+
+“knowing” or let’s call it “retrieval” is what LLMs are pretty good at. There are [many algorithms](https://arnabsen.substack.com/i/195413722/deepseek-v4) which can do it pretty efficiently. What we are lacking at the moment is the latter part, LLMs cannot internalize or understand the reason a past action was performed a certain way and then replicate it. That’s the difference between retrieval and learning.
+
+Humans have Episodic Memory (the “what happened”), LLMs currently mostly have Semantic Memory (the “what is”).
+
+This domain is still actively being researched, people are working on replicating plasticity in LLMs, overnight fine-tuning based on the daily usage, etc. I personally am really interested to see where this specific area of research goes.
+
+Anyways, let’s end the article with a funny story.
+
+## Story Time
+
+This was one of the most famous “burns” in history of science and computation.
+
+In the 1950s, Enrico Fermi and his team at the University of Chicago were working on a model to describe pion-proton scattering. Fermi had developed a theory that matched the experimental data quite well. But it relied on several parameters that can be adjusted to fit to the output of the mathematical function.
+
+He was excited by the result. He sent his colleague Freeman Dyson to Princeton to show the work to the polymath John Von Neumann, one the greatest mathematician of the era and the pioneer of the Von Neumann Architecture.
+
+He took one look at the model and was unimpressed and he told Dyson:
+
+> “With four parameters I can fit an elephant…and with five I can make him wiggle his trunk.”
+
+Even though it was way back in the days, but the metaphorical joke still applies today in the context of overfitting. Given enough parameters we can always fit the data.
+
+What’s more funny is that three scientist actually decided to see is Von Neumann was mathematically correct and they even published a paper in the American Journal of Physics titled “Drawing an elephant with four complex parameters.”
+
+![](/images/blog/ep-02-continual-learning/7f8cd59c-1d56-4e2b-87cf-57362101b1a8-320x240.gif)
+
+You can watch Freeman Dyson recount this conversation in his own words in an interview.
+
+[Watch on YouTube](https://youtu.be/hV41QEKiMlM)
+
+---

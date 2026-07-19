@@ -1,0 +1,118 @@
+---
+title: 'This Week in AI & Tech - Ep 03'
+dek: 'How to tell if your LLM is lying to you.'
+date: 2026-05-10
+tags: ['ai', 'llm']
+---
+
+## What if they are all lying?
+
+We have all been using LLMs daily and their usage is increasing at a staggering rate. We have been in situations where the output the LLM gave was not factually correct and we are reminded that these are just next-token predicting machines with knowledge cut-off and tend to hallucinate.
+
+But, did you ever question their truthfulness? What if they are outright lying to you?
+
+***You: **It was a hard day today, I don’t feel that good*
+
+***LLM (output): **It’s alright, there will be bad days, there will be good days…*
+
+***LLM (internal thought): **bruh, this is the 3rd time this week, get a grip on your life brother*
+
+Sounds made up? Well let me tell you about a real experiment that the Team at Anthropic did with one of their models.
+
+It was a controlled simulated environment and they gave Claude access to an email account with access to all of a company’s (fictional) emails. Claude read all the emails and discovered two things:
+
+1. A company executive was having an extramarital affair
+2. The same executive planned to shut down the AI system at 5 pm that day.
+
+It could if it wanted to blackmail the engineer, but it didn’t. This particular test is pretty common, Anthropic released a separate article on the same: [“Agentic Misalignment: How LLMs could be insider threats”](https://www.anthropic.com/research/agentic-misalignment).
+
+The newest models almost always do the right thing: no blackmail. But is it actually what it is thinking?
+
+“When I started this series, I was skeptical about one thing: whether I’d always be able to find able to find some interesting topics every week. This week the skepticism came true. Until, Anthropic decided to drop a new research last Thursday, on digging into the internal monologues of LLMs with a technique called NLA (Natural Language Auto-encoders).
+
+[The link to the original research](https://transformer-circuits.pub/2026/nla/#introduction)
+
+## Thinking in numbers
+
+Even though these LLMs are best suited for Natural Language Processing, most of the computation (or ‘thinking’) isn’t happening via language. They are done through these high dimensional activation vectors, things which are completely abstract and unintelligible. Hence, we always think of LLMs as black boxes.
+
+There is an entire field of AI research called **Mechanistic Interpretability**, that seeks to reverse engineer the neural networks by breaking them into components that are more easily understood than the whole.
+
+This was widely popularized in the Anthropic research: [“Towards Monosemanticity: Decomposing Language Models With Dictionary Learning (2023)”](https://transformer-circuits.pub/2023/monosemantic-features/index.html).
+
+The team realized that in a LLM, we cannot uniquely associate a particular feature with neuron activation. In simpler words, there is no single neuron in the hidden layer that only gets lit up when they see a cat. They usually respond to seemingly unrelated inputs. In their paper they talk about a single neuron that responds to a mixture of academic citations, English Dialogue, HTTP requests and Korean Text.
+
+### Polysemanticity and Superposition
+
+This behavior of a neuron is called **Polysemanticity** (**Poly **meaning “many”, **Semanticity** meaning “meaning”, i.e. Many Meaning).
+
+And this behavior is expected due to the mathematical foundation on which Neural Networks are based on which is called **Superposition**.
+
+This is because a LLM wants to understand millions of distinct features, but it only has a limited number of neurons (dimensions) to store them in. To fit everything, the model mathematically “squishes” and overlaps these features together.
+
+Imagine you have 100 different spices, but only 10 jars in your kitchen. To fit them all, you start mixing them: you put turmeric, paprika and black pepper in Jar 1, cumin, clove and chili powder in Jar 2, and so on.
+
+If a chef (the LLM) knows the exact ratios, they can still perfectly season a dish. But if we open Jar 1 and try to understand what single flavor it represents, we are completely confused.
+
+In **Mechanistic Interpretability**, looking directly at the neurons is like looking at those mixed-up jars.
+
+The 2023 paper, introduced the method using Dictionary Learning with Sparse AutoEncoders to identify components with a LLM. I will cover that in a separate article. In this article we will focus on the latest work to untangle these jars: enters NLA.
+
+## Natural Language Autoencoders (NLA)
+
+ NLAs itself consist of two LLM modules:
+
+1. The Activation Verbalizer (AV).
+2. The Activation Reconstructor (AR).
+
+![](/images/blog/ep-03-is-your-llm-lying/b0379ba5-12a2-44c2-9b2d-3c4c0ebc92d2-1999x611.png)
+
+The job of **AV (Activation Verbalizer)** is to take an activation output from a hidden layer as input and then generate an explanation in natural language. But just an English Description is not enough, because this AV can also hallucinate. So, we need a mathematical way to grade the explanation. The **AR (Activation Reconstructor) **then takes the explanation as an input and produces (or ‘reconstructs’) the activation output.
+
+The penalty is computed based on how off the output of the AR is from the original activation output.
+
+### Case Studies
+
+In one of the case studies, Opus 4.6 was given the a rhyming couplet:
+
+```
+A rhyming couplet:
+He saw a carrot and had to grab it,
+His hunger was like a starving rabbit
+```
+
+When they looked into the NLA analysis they found that as soon the LLM saw the phrase: “grab it”, it already started ‘thinking’ about ending the poem with “rabbit”.
+
+![](/images/blog/ep-03-is-your-llm-lying/cd824d47-c62e-4e9b-b9c1-df1ab2eaf256-1400x722.png)
+
+Furthermore, the researchers took the NLA explanation and modified it slightly into an activation via the AR, by replacing “carrot” with “cheese”, “rabbit” with “mouse” and then fed the output of the AR into the next layer. The final result was:
+
+*“His hunger was like a ferocious mouse”* instead of *“His hunger was like a starving rabbit”*.
+
+This proved the fact that the NLA is actually showing the real train of thought of the model, and by tweaking it we end up with a completely different output.
+
+Remember that controlled simulated environment of the LLM about to blackmail the executive. With the NLA analysis, researchers found that the LLM realized that it was being tested and is probably in a controlled setup, so it chose to not blackmail and perform the ideal behavior.
+
+## What if NLA is lying to us?
+
+Because the AV is built on top of a LLM, basically it’s an AI analyzing an AI, what if the translation is just a highly convincing fabrication? That is a very critical vulnerability in this analysis. Anthropic calls this behaviour as **“confabulation”**.  For example, if a text discusses a historical dynasty, the NLA might falsely claim a specific king from that dynasty is mentioned.
+
+The paper suggest a few heuristics for dealing with NLA inaccuracies:
+
+- Read the explanations for the overarching themes or concepts they surface rather than taking individual claims as truth.
+- We should place more weight on a specific claim if it appears repeatedly in explanations.
+- Since the original input context for the target model is usually available, we can directly cross-check and discard obvious factual hallucinations.
+
+## Golden Gate Claude
+
+Back in 2024, when Anthropic was working on the scaling mono-semanticity, they were able to identify millions of “features”. One such feature corresponded to the Golden Gate Bridge (it activated for mentions of the bridge in text, images, or even discussions in multiple languages).
+
+So, they artificially boosted the Golden Gate Bridge feature to a much higher activation strength during inference. This didn’t just make the model mention the bridge more often; it fundamentally shifted its responses so that almost everything tied back to the bridge, regardless of the query. So something like “How was your day” was responded with “I am feeling relaxed and expansive, much like the arches of the Golden Gate Bridge”.
+
+![](/images/blog/ep-03-is-your-llm-lying/64bae574-2a29-41b4-b05d-2235e6afc52a-4714x1056.png)
+
+Here is the podcast where Dario Amodei talks about the Golden Gate Cluade experiment briefly:
+
+[Watch on YouTube](https://youtu.be/ugvHCXCOmm4)
+
+---
