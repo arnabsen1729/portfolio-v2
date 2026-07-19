@@ -102,7 +102,7 @@ gdb factorial
 
 Do you see some errors like this?
 
-```gdb
+```text
 Reading symbols from factorial...
 (No debugging symbols found in factorial)
 ```
@@ -126,7 +126,7 @@ A `breakpoint` is a spot in your program where you would like to temporarily sto
 
 > **Remember: ** Almost all the commonly used gdb commands have a shorter version and we should use them heavily to improve speed. 
 
-```h
+```text
 break main
 # OR a shorter version
 b main
@@ -134,7 +134,7 @@ b main
 
 Output:
 
-```h
+```text
 gef➤  b main
 Breakpoint 1 at 0x117f: file main.c, line 15.
 ```
@@ -143,7 +143,7 @@ This means we have set a breakpoint at the `main` function so that as soon as th
 
 To see the list of all the breakpoints use the command `info break`. As the command name suggests it will give us information about all the breakpoints we have set.
 
-```h
+```text
 gef➤  info break
 Num     Type           Disp Enb Address            What
 1       breakpoint     keep y   0x000000000000117f in main at main.c:15
@@ -151,7 +151,7 @@ Num     Type           Disp Enb Address            What
 
 There is an index associated with each breakpoint. These index values will be used if you want to delete a breakpoint or disable it. First, let's run the program with the breakpoint set. To run, use the `run` command (or just `r` as a shorter version).
 
-```h
+```text
 gef➤  run
 // OR
 gef➤  r
@@ -159,7 +159,7 @@ gef➤  r
 
 You will see the program execution stopped. Let's just resume the execution with the command `continue` (or just `c`).
 
-```h
+```text
 gef➤  c
 Continuing.
 Enter a number: 5
@@ -171,7 +171,7 @@ You will notice it will prompt for the number and then display the factorial of 
 
 Sometimes, we don't need to stop at a breakpoint so we can disable it. To disable a breakpoint use the `disable` command.
 
-```h
+```text
 gef➤  info break
 Num     Type           Disp Enb Address            What
 1       breakpoint     keep y   0x000000000000117f in main at main.c:15
@@ -183,7 +183,7 @@ Num     Type           Disp Enb Address            What
 
 Once, disabled you can notice the value under `Enb` is not `y` anymore. It's `n` representing it's not enabled anymore. If you run the program now, you will notice that it didn't stop at any place. This is because the breakpoint is disabled.
 
-```h
+```text
 gef➤  r
 Starting program: /home/arnab/Desktop/SWE-Lab/ass2/prog/factorial
 Enter a number: 5
@@ -226,7 +226,7 @@ Now, if you run the program with the `r` command. It will prompt you for a numbe
 
 In this scenario, if we want to ignore the breakpoint for the first 4 times maybe. We will use the `ignore <index of breakpoint> 4` command.
 
-```h
+```text
 gef➤  info break
 Num     Type           Disp Enb Address            What
 1       breakpoint     keep n   0x000055555555517f in main at main.c:15
@@ -246,7 +246,7 @@ Let's run the program. This time when it prompts for a number, we will enter 5. 
 
 Now, let's delete that breakpoint using the command `delete breakpoints <index>`.
 
-```h
+```text
 gef➤  info break
 Num     Type           Disp Enb Address            What
 1       breakpoint     keep n   0x000055555555517f in main at main.c:15
@@ -274,14 +274,14 @@ In gdb, when you run `gdb factorial` it will load the symbol table. Let's quit t
 
 To load a program and its symbol table use the command `file <program>`.
 
-```h
+```text
 gef➤  file ./prog/factorial
 Reading symbols from ./prog/factorial...
 ```
 
 Now that it has read the symbols, we can interact with them. Run the command `info address <symbol name>` to see the address of that symbol.
 
-```h
+```text
 gef➤  info address main
 Symbol "main" is a function at address 0x1177.
 gef➤  info address factorial
@@ -292,7 +292,7 @@ Symbol "MAX_FACTORIAL" is static storage at address 0x2004.
 
 Now since you know the address you can reverse lookup the symbol name with the command `info symbol <address>`.
 
-```h
+```text
 gef➤  info symbol 0x1177
 main in section .text
 gef➤  info symbol 0x1145
@@ -301,21 +301,21 @@ factorial in section .text
 
 The best part of this `info symbol` is that if you don't specify the exact address, show the offset from the beginning of the symbol. So in my case, the `main` symbol is at address `0x1177`. So let's try to see what the symbol name of the address `0x1180`.
 
-```h
+```text
 gef➤  info symbol 0x1180
 main + 9 in section .text
 ```
 
 Now, remember we had a variable called `val` in main. Let's see the address of that.
 
-```h
+```text
 gef➤  info address val
 No symbol "val" in current context.
 ```
 
 This means we are not in the correct scope yet. Because the variable `val` was declared inside the `main()` function, we cannot access it outside the `main()` function. So let's set a breakpoint at the main and run the program and then we will see the address of `val` in the symbol table.
 
-```h
+```text
 gef➤  b main
 Breakpoint 1 at 0x117f: file main.c, line 15.
 gef➤  r
@@ -327,7 +327,7 @@ Symbol "val" is a complex DWARF expression:
 
 To see the **list of all the functions** in the symbol table use the command `info func`. You can also filter the functions with regexes. Let's search for our `factorial` function. The exact regex match will be `^facorial$`.
 
-```h
+```text
 gef➤  info func ^factorial$
 All functions matching regular expression "^factorial$":
 
@@ -337,7 +337,7 @@ File main.c:
 
 We can do the same for **global variables** using the command `info var`. Let's look for our global variable `MAX_FACTORIAL`.
 
-```h
+```text
 gef➤  info var ^MAX_FACTORIAL$
 All variables matching regular expression "^MAX_FACTORIAL$":
 
@@ -347,7 +347,7 @@ File main.c:
 
 The symbol table also stores the type of the variable. We can use the command `whatis <variable name>` to see the type of the variable.
 
-```h
+```text
 gef➤  whatis MAX_FACTORIAL
 type = const int
 gef➤  whatis val
@@ -360,7 +360,7 @@ So far we have seen how to set breakpoints, run the program and get the symbol t
 
 First, let's set a breakpoint after the `scanf` statement (which is line number 17 in main.c file). So run:
 
-```h
+```text
 gef➤  b main.c:17
 Breakpoint 2 at 0x11a8: file main.c, line 17.
 ```
@@ -369,14 +369,14 @@ If the program is not running press `r` (to run) otherwise press `c` (to continu
 
 Now run the command to get the local variables.
 
-```h
+```text
 gef➤  info locals
 val = 0xa
 ```
 
 It says the value of the variable `val` is `0xa`. We can also print the values with the command `print` (or just `p`).
 
-```h
+```text
 gef➤  p val
 $1 = 0xa
 gef➤  p/d val
@@ -398,7 +398,7 @@ By default, the value will be in hex, but we can specify `/d` to display in deci
 
 We can also set the variable values, using the `set variable` command.
 
-```h
+```text
 gef➤  set variable val=5
 gef➤  p/d val
 $3 = 5
@@ -408,7 +408,7 @@ $3 = 5
 
 Functions play an important role in programs. So, let's see how gdb handles them. In our code, we have two functions `main` and `factorial`. So, let's start with setting a breakpoint at `main`.
 
-```h
+```text
 gef➤  b main
 Breakpoint 1 at 0x117f: file main.c, line 15.
 gef➤  info break
@@ -427,7 +427,7 @@ So, at any point, if we are at a function call, do `si` (step into) to enter the
 
 We will perform `next 2` i.e next twice. This time you will be prompted for a number. After that, we will step into the instruction that will take us to the factorial function.
 
-```h
+```text
 gef➤  r
 gef➤  n 2 // we will be in that line where factorial is called
 gef➤  si 3 // we will be in the factorial function
@@ -438,7 +438,7 @@ gef➤  n // the first line of the factorial function
 
 Now, to see the function arguments we will again use the `info` command. This time with `args`. So perform `info args`.
 
-```h
+```text
 gef➤  info args
 n = 0xa
 gef➤  p/d n
@@ -451,7 +451,7 @@ If you know the name of the function argument then we can use the `print` comman
 
 Since, we are inside the function `factorial()` which was called from `main()` so if we return from `factorial()` we will be back in `main()`. For a simple program like this, it's not much of a big deal to remember which function is called by whom. But for a large codebase, it becomes difficult to keep track of it. So we have a command called `backtrace` that shows us exactly this.
 
-```h
+```text
 gef➤  backtrace
 #0  factorial (n=0xa) at main.c:6
 #1  0x00005555555551b2 in main () at main.c:17
