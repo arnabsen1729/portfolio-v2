@@ -58,15 +58,23 @@ build time (see "Non-obvious constraints" below).
   Bash/write access at the time this was written) is to show a fallback
   message like "Search isn't available in dev — run a production build" in
   that catch branch instead of swallowing the rejection.
-- **OG image route file must be named `[...slug].ts`, not
-  `[...slug].png.ts`.** `astro-og-canvas`'s default `getSlug` already
-  appends `.png` to the pages-object key; combining that with a `.png` in
-  the route filename produces a double `.png.png` extension.
-- **`canvaskit-wasm` must stay a direct `dependency`** in package.json, not
-  just a transitive dep of `astro-og-canvas`. pnpm's strict `node_modules`
-  layout doesn't hoist it automatically, and the OG route throws
-  `__dirname is not defined` / a canvaskit-wasm install error at build time
-  without it.
+- **OG images are hand-rendered with `satori` + `@resvg/resvg-js`** in
+  `src/pages/og/[...slug].png.ts` (no longer `astro-og-canvas`/
+  `canvaskit-wasm` — those were removed). The route file is named
+  `[...slug].png.ts` on purpose here since `getStaticPaths` params don't
+  include the extension, unlike the old library's auto-appended `.png`.
+- **Satori's div layout is strict flexbox-in-name-only**: any element with
+  more than one child needs an explicit `display` (`flex`/`contents`/`none`)
+  or satori throws at render time, and a `children` array of length 0 must
+  be `undefined`, not `[]`. Also, tiled CSS `radial-gradient` backgrounds
+  (used for the dot-grid texture) don't survive the SVG → PNG resvg step —
+  render textures as a real SVG `<pattern>` data-URI `<img>` instead.
+- The hash-ring corner motif on each OG card is a static SVG re-derived from
+  `HashRing.astro`'s geometry (satori can't lay out arbitrary SVG children
+  directly, so it's inlined as a data-URI image), rotated per-post via an
+  FNV-1a hash of the slug. The hash needs an avalanche finalizer (xor/mul/xor
+  shift) after the FNV loop — without it, similarly-shaped slugs land within
+  a few degrees of each other after `% 360`.
 - **TypeScript is pinned to `^5.x`.** `@astrojs/check` / `tsconfck` /
   `zod-to-ts` don't yet support TS 7; `pnpm add -D typescript` alone will
   grab the latest major and break `astro check`.
