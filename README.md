@@ -75,11 +75,10 @@ src/
 ├── layouts/                 # BaseLayout, PostLayout
 ├── pages/                   # routes, incl. blog/[...slug], tags/[tag], rss.xml
 ├── styles/global.css        # design tokens, typography, layout
-└── utils/readingTime.ts
+└── utils/                    # readingTime, ogCard (satori OG card renderer)
 public/
 ├── CNAME                    # arnabsen.dev
-├── resume.pdf               # ⚠️ not committed — add your own
-└── og-default.png           # fallback OG image for non-post pages
+└── resume.pdf               # ⚠️ not committed — add your own
 ```
 
 ## Known placeholders
