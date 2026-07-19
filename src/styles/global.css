@@ -343,6 +343,79 @@ html.dark .astro-code span {
   font-family: var(--font-body);
 }
 
+/* ---------- Blockquotes & callouts ---------- */
+/* Plain `> quote` blockquotes (no [!TYPE] marker) get a quiet, undecorated
+   treatment — distinct from the color-coded callouts below so a plain aside
+   doesn't compete visually with an actual warning. */
+.post-content blockquote {
+  margin: 1.5em 0;
+  padding: 0.1em 1.25em;
+  border-left: 3px solid var(--hairline);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+.post-content blockquote > :first-child {
+  margin-top: 0;
+}
+.post-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* GitHub-style alert blockquotes — `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`,
+   `> [!WARNING]`, `> [!CAUTION]` — rewritten by remarkCallouts() in
+   astro.config.mjs into `.callout.callout-<slug>` divs with a `.callout-title`
+   icon+label header. Each variant gets its own accent color; light/dark
+   pairs follow the same desaturated, paper-friendly palette as the design
+   tokens in :root/html.dark rather than saturated primary colors. */
+:root {
+  --callout-note: #3e5468;
+  --callout-tip: #2f6a4f;
+  --callout-important: #5c3f7d;
+  --callout-warning: #8a6a1f;
+  --callout-caution: #8c2f26;
+}
+html.dark {
+  --callout-note: #7fa0bc;
+  --callout-tip: #7bbfa0;
+  --callout-important: #b79bd9;
+  --callout-warning: #d9b56a;
+  --callout-caution: #d9776a;
+}
+
+.callout {
+  margin: 1.5em 0;
+  padding: 0.9em 1.1em;
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--callout-color);
+  border-radius: 6px;
+  background: var(--code-bg);
+  font-style: normal;
+}
+.callout > :last-child {
+  margin-bottom: 0;
+}
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: 0 0 0.4em;
+  font-family: var(--font-body);
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--callout-color);
+}
+.callout-icon {
+  flex-shrink: 0;
+}
+
+.callout-note { --callout-color: var(--callout-note); }
+.callout-tip { --callout-color: var(--callout-tip); }
+.callout-important { --callout-color: var(--callout-important); }
+.callout-warning { --callout-color: var(--callout-warning); }
+.callout-caution { --callout-color: var(--callout-caution); }
+
 /* ---------- Sidenotes ---------- */
 
 .sidenote-wrapper {

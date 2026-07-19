@@ -88,6 +88,18 @@ build time (see "Non-obvious constraints" below).
 - Sidenotes are enabled globally, not opt-in — any post can use
   `<Sidenote>` without a frontmatter flag (this was an explicit decision,
   don't add a gating flag back in).
+- **Callout blockquotes**: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`,
+  `> [!WARNING]`, `> [!CAUTION]` as the first line of a `>` blockquote render
+  as a color-coded callout with an icon + label (GitHub's alert syntax, no
+  import needed — works in every post automatically). Implemented as a
+  remark plugin, `remarkCallouts` in `astro.config.mjs`, which rewrites the
+  blockquote's mdast node into a `<div class="callout callout-<slug>">` via
+  `hName`/`hProperties`/`hChildren` before it reaches rehype. Icons are
+  inlined Lucide-style SVG path data (matching `Icon.astro`'s visual style)
+  duplicated in the plugin rather than imported, since `Icon.astro` is an
+  Astro component and this transform runs in mdast/hast space. A plain `>`
+  blockquote with no marker still renders — just as a quieter, undecorated
+  quote (see `.post-content blockquote` in `global.css`), not a callout.
 - `numberedSections: true` in frontmatter is the opt-in for oxblood numbered
   `##` headings — default is off, keep it that way (only genuinely
   sequential posts should number their sections).
