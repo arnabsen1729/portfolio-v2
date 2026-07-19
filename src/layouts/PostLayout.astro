@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import TagPill from '@/components/TagPill.astro';
 import JsonLd from '@/components/JsonLd.astro';
+import ShareButton from '@/components/ShareButton.astro';
 import { readingTime } from '@/utils/readingTime';
 
 interface Heading {
@@ -82,10 +83,14 @@ const postSchema = {
         <div class="post-card-meta">
           <span class="meta">{dateLabel} · {minutes} min read</span>
           {tags.map((tag) => <TagPill tag={tag} />)}
+          <ShareButton label="Share" />
         </div>
       </header>
       <div class:list={['post-content', { 'numbered-sections': numberedSections }]}>
         <slot />
+      </div>
+      <div class="post-share-footer">
+        <ShareButton label="Share this post" />
       </div>
       {
         (newerPost || olderPost) && (
@@ -179,6 +184,14 @@ const postSchema = {
     margin: 1.25em 0;
   }
 
+  .post-share-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  .post-share-footer + .post-nav-hint {
+    margin-top: 2rem;
+  }
   .post-nav-hint {
     text-align: center;
     margin: 3rem 0 0;

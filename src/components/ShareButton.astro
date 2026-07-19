@@ -1,0 +1,91 @@
+---
+import Icon from '@/components/icons/Icon.astro';
+
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label = 'Share', class: className } = Astro.props;
+---
+
+<button type="button" class:list={['share-button', className]} data-share-button>
+  <span class="share-icon"><Icon name="share" size={14} /></span>
+  <span class="share-icon share-icon-check"><Icon name="check" size={14} /></span>
+  <span data-share-label>{label}</span>
+</button>
+
+<script>
+  // Native share sheet when available, clipboard copy otherwise — mirrors
+  // the code-block copy button's icon-swap + 1500ms reset pattern.
+  function initShareButtons() {
+    document.querySelectorAll<HTMLButtonElement>('[data-share-button]').forEach((btn) => {
+      if (btn.dataset.shareInit) return;
+      btn.dataset.shareInit = 'true';
+
+      const labelEl = btn.querySelector<HTMLElement>('[data-share-label]');
+      const originalLabel = labelEl?.textContent ?? '';
+
+      btn.addEventListener('click', async () => {
+        const url = window.location.origin + window.location.pathname;
+
+        if (navigator.share) {
+          try {
+            await navigator.share({ title: document.title, url });
+            return;
+          } catch (err) {
+            if ((err as DOMException).name === 'AbortError') return;
+            // fall through to clipboard on real failures
+          }
+        }
+
+        await navigator.clipboard.writeText(url);
+        btn.classList.add('copied');
+        if (labelEl) labelEl.textContent = 'Copied';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          if (labelEl) labelEl.textContent = originalLabel;
+        }, 1500);
+      });
+    });
+  }
+
+  initShareButtons();
+  document.addEventListener('astro:after-swap', initShareButtons);
+</script>
+
+<style>
+  .share-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    background: none;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 0.3em 0.8em;
+    cursor: pointer;
+    transition:
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+  .share-button:hover {
+    border-color: var(--slate);
+    color: var(--ink);
+  }
+  .share-icon {
+    display: inline-flex;
+  }
+  .share-icon-check {
+    display: none;
+    color: var(--oxblood);
+  }
+  .share-button.copied .share-icon:not(.share-icon-check) {
+    display: none;
+  }
+  .share-button.copied .share-icon-check {
+    display: inline-flex;
+  }
+</style>

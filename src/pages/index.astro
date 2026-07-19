@@ -5,6 +5,7 @@ import PostCard from '@/components/PostCard.astro';
 import HashRing from '@/components/HashRing.astro';
 import Icon from '@/components/icons/Icon.astro';
 import JsonLd from '@/components/JsonLd.astro';
+import QuoteBlock from '@/components/QuoteBlock.astro';
 import { introCopy } from '@/content/site';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
@@ -77,6 +78,8 @@ const websiteSchema = {
     </section>
 
     <hr class="section-divider" />
+
+    <QuoteBlock />
 
     <div class="section-heading">
       <h2 class="eyebrow">Writing</h2>
